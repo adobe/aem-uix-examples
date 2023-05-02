@@ -48,5 +48,6 @@ function ExtensionRegistration() {
     })
   }
   init().catch(console.error)
+}
 
 export default ExtensionRegistration;
