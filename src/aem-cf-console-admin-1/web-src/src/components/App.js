@@ -17,7 +17,10 @@ function App() {
             exact path="index.html"
             element={<ExtensionRegistration />} 
           />
-          // YOUR CUSTOM ROUTES SHOULD BE HERE
+          <Route
+            exact path="content-fragment/:selection/generate-image-modal"
+            element={<GenerateImageModal />}
+          />
         </Routes>
       </ErrorBoundary>
     </Router>
