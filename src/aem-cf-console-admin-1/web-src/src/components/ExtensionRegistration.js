@@ -12,12 +12,41 @@ function ExtensionRegistration() {
     const guestConnection = await register({
       id: extensionId,
       methods: {
-      },
-    });
-  };
-  init().catch(console.error);
+        // Configure your Action Bar button here
+        actionBar: {
+          getButton() {
+            return {
+              'id': 'generate-image',     // Unique ID for the button
+              'label': 'Generate Image',  // Button label
+              'icon': 'PublishCheck'      // Button icon; get name from: https://spectrum.adobe.com/page/icons/ (Remove spaces, keep uppercase)
+            }
+          },
 
-  return <Text>IFrame for integration with Host (AEM)...</Text>
-}
+          // Click handler for the extension button
+          onClick(selections) {
+            // Collect the selected content fragment paths
+            const selectionIds = selections.map(selection => selection.id);
+
+            // Create a URL that maps to the
+            const modalURL = "/index.html#" + generatePath(
+              "/content-fragment/:selection/generate-image-modal",
+              {
+                // Set the :selection React route parameter to an encoded, delimited list of paths of the selected content fragments
+                selection: encodeURIComponent(selectionIds.join('|')),
+              }
+            );
+
+            // Open the route in the extension modal using the constructed URL
+            guestConnection.host.modal.showUrl({
+              title: "Generate Image",
+              url: modalURL
+            })
+          }
+        },
+
+      }
+    })
+  }
+  init().catch(console.error)
 
 export default ExtensionRegistration;

@@ -4,3 +4,15 @@ operations:
       impl: index.html
 actions: actions
 web: web-src
+    runtimeManifest:
+      packages:
+        aem-cf-console-admin-1:
+          license: Apache-2.0
+          actions:
+            generate-image:
+              function: actions/generate-image/index.js
+              web: 'yes'
+              runtime: nodejs:16
+              inputs:
+                LOG_LEVEL: debug
+                OPENAI_API_KEY: $OPENAI_API_KEY
