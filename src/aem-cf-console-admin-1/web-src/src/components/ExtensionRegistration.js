@@ -48,6 +48,8 @@ function ExtensionRegistration() {
     })
   }
   init().catch(console.error)
+
+  return <Text>IFrame for integration with Host (AEM)...</Text>
 }
 
 export default ExtensionRegistration;

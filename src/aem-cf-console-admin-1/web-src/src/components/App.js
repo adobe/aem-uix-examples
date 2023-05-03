@@ -6,6 +6,7 @@ import React from "react";
 import ErrorBoundary from "react-error-boundary";
 import { HashRouter as Router, Routes, Route } from "react-router-dom";
 import ExtensionRegistration from "./ExtensionRegistration";
+import GenerateImageModal from "./GenerateImageModal"
 
 function App() {
   return (
