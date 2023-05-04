@@ -105,9 +105,11 @@ async function uploadImageToAEMFromRuntime(logger, aemURL, downloadedImgName, ac
       .withUploadFiles(uploadFiles);
 
     // Add headers like content type and authorization
-    options.withHeaders({
-      'content-type': 'image/png',
-      Authorization: `Bearer ${accessToken}`,
+    options.withHttpOptions({
+      headers: {
+        'content-type': 'image/png',
+        Authorization: `Bearer ${accessToken}`,
+      }
     });
 
     // Start the upload to AEM
