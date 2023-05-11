@@ -16,8 +16,6 @@ const {
 const codes = DirectBinaryUploadErrorCodes;
 const IMG_EXTENSION = '.png';
 
-const GENERATED_IMAGES_DAM_PATH = '/content/dam/wknd-shared/en/generated';
-
 async function downloadImageToRuntime(logger, generatedImageURL) {
   logger.log('Downloading generated image to the runtime');
 
@@ -76,7 +74,7 @@ async function getImageSize(downloadedImgName) {
   return stats.size;
 }
 
-async function uploadImageToAEMFromRuntime(logger, aemURL, downloadedImgName, accessToken) {
+async function uploadImageToAEMFromRuntime(logger, aemURL, imageDamPath, downloadedImgName, accessToken) {
   let aemImageURL;
   try {
     logger.log('Uploading generated image to AEM from the runtime');
@@ -101,7 +99,7 @@ async function uploadImageToAEMFromRuntime(logger, aemURL, downloadedImgName, ac
 
     // Provide AEM URL and DAM Path where images will be uploaded
     const options = new DirectBinaryUploadOptions()
-      .withUrl(`${aemURL}${GENERATED_IMAGES_DAM_PATH}`)
+      .withUrl(`${aemURL}${imageDamPath}`)
       .withUploadFiles(uploadFiles);
 
     // Add headers like content type and authorization
@@ -141,7 +139,7 @@ async function uploadImageToAEMFromRuntime(logger, aemURL, downloadedImgName, ac
 
     logger.info('Successfully uploaded generated image to AEM');
 
-    aemImageURL = `${aemURL + GENERATED_IMAGES_DAM_PATH}/${downloadedImgName}`;
+    aemImageURL = `${aemURL + imageDamPath}/${downloadedImgName}`;
   } catch (error) {
     logger.info(`Error while uploading generated image to AEM, see ${error}`);
   }
@@ -166,6 +164,7 @@ async function uploadGeneratedImageToAEM(params, generatedImageURL, accessToken)
   const logger = Core.Logger('uploadGeneratedImageToAEM', { level: params.LOG_LEVEL || 'info' });
 
   const aemURL = params.aemHost;
+  const imageDamPath = params.GENERATED_IMAGES_DAM_PATH;
 
   logger.info(`Uploading generated image from ${generatedImageURL} to AEM ${aemURL} by streaming the bytes.`);
 
@@ -173,7 +172,7 @@ async function uploadGeneratedImageToAEM(params, generatedImageURL, accessToken)
   const downloadedImgName = await downloadImageToRuntime(logger, generatedImageURL);
 
   // Upload image to AEM from the App Builder runtime
-  const aemImageURL = await uploadImageToAEMFromRuntime(logger, aemURL, downloadedImgName, accessToken);
+  const aemImageURL = await uploadImageToAEMFromRuntime(logger, aemURL, imageDamPath, downloadedImgName, accessToken);
 
   // Delete the downloaded image from the App Builder runtime
   await deleteFileFromRuntime(logger, downloadedImgName);
