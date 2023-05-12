@@ -1,22 +1,25 @@
-import React, {useEffect, useState} from "react";
-import {useParams} from "react-router-dom";
 import {
     Button,
     ButtonGroup,
-    Content, ContextualHelp,
-    defaultTheme,
+    Content,
+    ContextualHelp,
     Flex,
     Form,
     Heading,
+    Link,
     Provider,
     Text,
-    TextField
+    TextField,
+    defaultTheme
 } from "@adobe/react-spectrum";
-import { attach } from "@adobe/uix-guest";
-import { extensionId } from "./Constants";
+import React, {useEffect, useState} from "react";
+
+import Spinner from "./Spinner";
 import actionWebInvoke from "../utils";
 import allActions from "../config.json";
-import Spinner from "./Spinner";
+import { attach } from "@adobe/uix-guest";
+import { extensionId } from "./Constants";
+import {useParams} from "react-router-dom";
 
 export default function GenerateImageModal() {
     // Set up state used by the React component
