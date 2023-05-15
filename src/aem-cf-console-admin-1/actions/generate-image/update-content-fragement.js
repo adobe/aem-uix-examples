@@ -5,27 +5,15 @@
  */
 const { Core } = require('@adobe/aio-sdk');
 
-const ADVENTURE_MODEL_IMG_PROPERTY_NAME = 'primaryImage';
-
-const ARTICLE_MODEL_IMG_PROPERTY_NAME = 'featuredImage';
-
-const AUTHOR_MODEL_IMG_PROPERTY_NAME = 'profilePicture';
-
-function findImgPropertyName(fragmenPath) {
-  if (fragmenPath && fragmenPath.includes('/adventures')) {
-    return ADVENTURE_MODEL_IMG_PROPERTY_NAME;
-  } if (fragmenPath && fragmenPath.includes('/magazine')) {
-    return ARTICLE_MODEL_IMG_PROPERTY_NAME;
-  }
-  return AUTHOR_MODEL_IMG_PROPERTY_NAME;
-}
 
 async function updateContentFragmentToUseGeneratedImg(params, uploadedImagePath, accessToken) {
   // create a Logger
   const logger = Core.Logger('updateContentFragment', { level: params.LOG_LEVEL || 'info' });
 
   const fragmenPath = params.fragmentId;
-  const imgPropName = findImgPropertyName(fragmenPath);
+  
+  // this is our prop name
+  const imgPropName = 'adventurePrimaryImage';
   const relativeImgPath = uploadedImagePath.substring(uploadedImagePath.indexOf('/content/dam'));
 
   logger.info(`Update CF ${fragmenPath} to use ${relativeImgPath} image path`);
