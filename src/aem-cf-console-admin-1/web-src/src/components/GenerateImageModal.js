@@ -85,7 +85,6 @@ export default function GenerateImageModal() {
               {' '}
               such as DALL.E 2 (or Stable Dufusion), we allow only one Generate Image at a time.
               <p />
-              <strong>So please select only one Content Fragment at this moment.</strong>
             </Text>
   
             <Flex width="100%" justifyContent="end" alignItems="center" marginTop="size-400">
@@ -137,11 +136,6 @@ export default function GenerateImageModal() {
                     )}
                 />
   
-                <Text>
-                  <p />
-                  Please note this will use credits from Generative AI services such as OpenAI/DALL.E 2. The AI-generated images are saved to this AEM as a Cloud Service Author service using logged user access (IMS) token.
-                </Text>
-  
                 <ButtonGroup align="end">
                   <Button variant="accent" onPress={onSubmitHandler}>Use Credits</Button>
                   <Button variant="accent" onPress={() => guestConnection.host.modal.close()}>Close</Button>
@@ -176,7 +170,7 @@ export default function GenerateImageModal() {
               && (
                 <>
                   <Heading level="4">
-                    Successfully generated an image, uploaded it to this AEM-CS Author service, and associated it to the selected Content Fragment.
+                    Successfully generated an image and associated it to the selected Content Fragment.
                   </Heading>
   
                   <Text>
