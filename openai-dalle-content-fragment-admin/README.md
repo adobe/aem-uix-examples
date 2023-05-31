@@ -1,6 +1,12 @@
-# uixgenaidemo
+# Image genaration through 3rd party GenAI
 
-Welcome to my Adobe I/O Application!
+In this extension we will connect AEM to a 3rd Party GenAI, OpenAI Dall-E in our case. This extension includes:
+- an Action Button with Content Fragment Console
+- a Modal for the user to enter the prompt for generation
+- a serverless function that will:
+  1. Generate an image through the 3rd party GenAI
+  2. Upload this asset to AEM Assets
+  3. Link the asset to the Content Fragment
 
 ## Setup
 
