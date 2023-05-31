@@ -1,3 +1,13 @@
+/*
+Copyright 2023 Adobe
+All Rights Reserved.
+
+NOTICE: Adobe permits you to use, modify, and distribute this file in
+accordance with the terms of the Adobe license agreement accompanying
+it.
+*/
+
+
 /**
  * This module calls OpenAI API to generate an image based on image description provided to Action
  *
