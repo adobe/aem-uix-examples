@@ -1,12 +1,16 @@
-# Image genaration through 3rd party GenAI
+# Image genaration through GenAI
 
-In this extension we will connect AEM to a 3rd Party GenAI, OpenAI Dall-E in our case. This extension includes:
+This extension will connect AEM to a 3rd-party GenAI (OpenAI Dall-E in our case). This extension includes:
 - an Action Button with Content Fragment Console
 - a Modal for the user to enter the prompt for generation
-- a serverless function that will:
-  1. Generate an image through the 3rd party GenAI
+- a serverless function that will
+  1. Generate an image through the 3rd-party GenAI
   2. Upload this asset to AEM Assets
   3. Link the asset to the Content Fragment
+
+## Reading List
+1. [Experience League Tutorial - AEM image asset generation using OpenAI](https://experienceleague.adobe.com/docs/experience-manager-learn/cloud-service/developing/extensibility/content-fragments/example-extensions/image-generation-and-image-upload.html?lang=en)
+2. [UI Extensibility Docs Homepage](https://developer.adobe.com/uix/docs)
 
 ## Setup
 
@@ -19,11 +23,6 @@ In this extension we will connect AEM to a 3rd Party GenAI, OpenAI Dall-E in our
 
 By default the UI will be served locally but actions will be deployed and served from Adobe I/O Runtime. To start a
 local serverless stack and also run your actions locally use the `aio app run --local` option.
-
-## Test & Coverage
-
-- Run `aio app test` to run unit tests for ui and actions
-- Run `aio app test --e2e` to run e2e tests
 
 ## Deploy & Cleanup
 
@@ -50,41 +49,6 @@ You can generate this file using the command `aio app use`.
 - More information on this file, application configuration, and extension configuration 
   can be found [here](https://developer.adobe.com/app-builder/docs/guides/appbuilder-configuration/#appconfigyaml)
 
-#### Action Dependencies
-
-- You have two options to resolve your actions' dependencies:
-
-  1. **Packaged action file**: Add your action's dependencies to the root
-   `package.json` and install them using `npm install`. Then set the `function`
-   field in `app.config.yaml` to point to the **entry file** of your action
-   folder. We will use `webpack` to package your code and dependencies into a
-   single minified js file. The action will then be deployed as a single file.
-   Use this method if you want to reduce the size of your actions.
-
-  2. **Zipped action folder**: In the folder containing the action code add a
-     `package.json` with the action's dependencies. Then set the `function`
-     field in `app.config.yaml` to point to the **folder** of that action. We will
-     install the required dependencies within that directory and zip the folder
-     before deploying it as a zipped action. Use this method if you want to keep
-     your action's dependencies separated.
-
-## Debugging in VS Code
-
-While running your local server (`aio app run`), both UI and actions can be debugged, to do so open the vscode debugger
-and select the debugging configuration called `WebAndActions`.
-Alternatively, there are also debug configs for only UI and each separate action.
-
-## Typescript support for UI
-
-To use typescript use `.tsx` extension for react components and add a `tsconfig.json` 
-and make sure you have the below config added
-```
- {
-  "compilerOptions": {
-      "jsx": "react"
-    }
-  } 
-```
 ### Contributing
 
 Contributions are welcomed! Read the [Contributing Guide](../.github/CONTRIBUTING.md) for more information.
