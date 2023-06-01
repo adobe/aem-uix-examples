@@ -9,7 +9,7 @@ This extension will connect AEM to a 3rd-party GenAI (OpenAI Dall-E in our case)
   3. Link the asset to the Content Fragment
 
 ## Reading List
-1. [Experience League Tutorial - AEM image asset generation using OpenAI](https://experienceleague.adobe.com/docs/experience-manager-learn/cloud-service/developing/extensibility/content-fragments/example-extensions/image-generation-and-image-upload.html?lang=en)
+1. [Experience League Tutorial](https://experienceleague.adobe.com/docs/experience-manager-learn/cloud-service/developing/extensibility/content-fragments/example-extensions/image-generation-and-image-upload.html?lang=en) - AEM image asset generation using OpenAI
 2. [UI Extensibility Docs Homepage](https://developer.adobe.com/uix/docs)
 
 ## Setup
