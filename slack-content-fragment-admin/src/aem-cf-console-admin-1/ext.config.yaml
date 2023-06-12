@@ -1,0 +1,71 @@
+operations:
+  view:
+    - type: web
+      impl: index.html
+actions: actions
+web: web-src
+runtimeManifest:
+  packages:
+    aem-cf-console-admin-1:
+      license: Apache-2.0
+      actions:
+        export-to-slack:
+          function: actions/export-to-slack/index.js
+          web: 'yes'
+          runtime: nodejs:16
+          inputs:
+            LOG_LEVEL: debug
+            SLACK_WEBHOOK: $SLACK_WEBHOOK
+            SLACK_CHANNEL: $SLACK_CHANNEL
+            SLACK_OAUTH_TOKEN: $SLACK_OAUTH_TOKEN
+          annotations:
+            require-adobe-auth: false
+            final: true
+        get-slack-config:
+          function: actions/get-slack-config/index.js
+          web: 'yes'
+          runtime: nodejs:16
+          inputs:
+            LOG_LEVEL: debug
+            SLACK_WEBHOOK: $SLACK_WEBHOOK
+            SLACK_CHANNEL: $SLACK_CHANNEL
+            SLACK_OAUTH_TOKEN: $SLACK_OAUTH_TOKEN
+          annotations:
+            require-adobe-auth: false
+            final: true
+        get-slack-channels:
+          function: actions/get-slack-channels/index.js
+          web: 'yes'
+          runtime: nodejs:16
+          inputs:
+            LOG_LEVEL: debug
+            SLACK_WEBHOOK: $SLACK_WEBHOOK
+            SLACK_CHANNEL: $SLACK_CHANNEL
+            SLACK_OAUTH_TOKEN: $SLACK_OAUTH_TOKEN
+          annotations:
+            require-adobe-auth: false
+            final: true
+        import-from-slack:
+          function: actions/import-from-slack/index.js
+          web: 'yes'
+          runtime: nodejs:16
+          inputs:
+            LOG_LEVEL: debug
+            SLACK_WEBHOOK: $SLACK_WEBHOOK
+            SLACK_CHANNEL: $SLACK_CHANNEL
+            SLACK_OAUTH_TOKEN: $SLACK_OAUTH_TOKEN
+          annotations:
+            require-adobe-auth: false
+            final: true
+        create-new-fragments:
+          function: actions/create-new-fragments/index.js
+          web: 'yes'
+          runtime: nodejs:16
+          inputs:
+            LOG_LEVEL: debug
+            SLACK_WEBHOOK: $SLACK_WEBHOOK
+            SLACK_CHANNEL: $SLACK_CHANNEL
+            SLACK_OAUTH_TOKEN: $SLACK_OAUTH_TOKEN
+          annotations:
+            require-adobe-auth: false
+            final: true
