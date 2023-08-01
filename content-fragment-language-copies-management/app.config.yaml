@@ -1,0 +1,51 @@
+application:
+  actions: src/actions
+  web: src/web-src
+  runtimeManifest:
+    packages:
+      cf-translations:
+        license: Apache-2.0
+        actions:
+          get-translations:
+            function: src/actions/get-translations/index.js
+            web: 'yes'
+            runtime: nodejs:14
+            inputs:
+              LOG_LEVEL: debug
+              HOST_INSTANCE_ENTRY_POINT_TRANSLATIONS: $HOST_INSTANCE_ENTRY_POINT_TRANSLATIONS
+            annotations:
+              require-adobe-auth: false
+              final: true
+          quick-publish-translations:
+            function: src/actions/quick-publish-translations/index.js
+            web: 'yes'
+            runtime: nodejs:14
+            inputs:
+              LOG_LEVEL: debug
+              HOST_INSTANCE_ENTRY_POINT_QUICK_PUBLISH: $HOST_INSTANCE_ENTRY_POINT_QUICK_PUBLISH
+            annotations:
+              require-adobe-auth: false
+              final: true
+          unpublish-translations:
+            function: src/actions/unpublish-translations/index.js
+            web: 'yes'
+            runtime: nodejs:14
+            inputs:
+              LOG_LEVEL: debug
+              HOST_INSTANCE_ENTRY_POINT_UNPUBLISH: $HOST_INSTANCE_ENTRY_POINT_UNPUBLISH
+            annotations:
+              require-adobe-auth: false
+              final: true
+extensions:
+  aem/cf-console-admin/1:
+    operations:
+      view:
+        - type: web
+          impl: index.html#/cf-admin-console
+    web: src/web-src
+  aem/cf-editor/1:
+    operations:
+      view:
+        - type: web
+          impl: index.html#/cf-editor
+    web: src/web-src
