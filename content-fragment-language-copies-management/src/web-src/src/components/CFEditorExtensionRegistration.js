@@ -32,6 +32,7 @@ export default function () {
                   id: `${extensionId}.manage-translations`,
                   label: 'Manage Translations',
                   icon: 'PublishCheck',
+                  variant: "action",
                   onClick: async () => {
                     const contentFragment = await guestConnection.host.contentFragment.getContentFragment();
 
