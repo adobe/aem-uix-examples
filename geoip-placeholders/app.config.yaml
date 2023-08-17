@@ -1,0 +1,17 @@
+extensions:
+  aem/cf-editor/1:
+    $include: src/aem-cf-editor-1/ext.config.yaml
+    runtimeManifest:
+      packages:
+        geoip-placeholders:
+          license: Apache-2.0
+          actions:
+            values:
+              function: src/aem-cf-editor-1/actions/values/index.js
+              web: 'yes'
+              runtime: nodejs:16
+              inputs:
+                LOG_LEVEL: debug
+              annotations:
+                require-adobe-auth: false
+                final: true

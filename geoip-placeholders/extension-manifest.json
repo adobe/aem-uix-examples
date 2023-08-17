@@ -1,0 +1,19 @@
+{
+  "name": "GeoIP Placeholders",
+  "id": "geoip-placeholders",
+  "description": "GeoIP placeholders for WKND headless applications",
+  "version": "0.0.1",
+  "rte": {
+    "widgets": [
+      {
+        "label": "Dynamic Values",
+        "id": "dynamic-values"
+      }
+    ],
+    "badges": [
+      {
+        "id": "placeholder"
+      }
+    ]
+  }
+}
