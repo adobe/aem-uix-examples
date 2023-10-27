@@ -1,3 +1,3 @@
 module.exports = {
-  extensionId: 'cf-simple-export'
-}
+  extensionId: 'cf-simple-export',
+};

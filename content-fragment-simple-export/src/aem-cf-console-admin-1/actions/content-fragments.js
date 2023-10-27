@@ -11,7 +11,7 @@ async function generateExportFile(params, logger) {
     "Content-Type": "application/json",
     Accept: "application/json",
     "x-adobe-accept-unsupported-api": 1,
-    'Authorization': 'Bearer ' + params.authConfig.imsToken
+    'Authorization': 'Bearer ' + params.authConfig.imsToken,
   };
 
   const query = `

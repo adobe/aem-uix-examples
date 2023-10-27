@@ -19,39 +19,39 @@
 async function actionWebInvoke (actionUrl, headers = {}, params = {}, options = { method: 'POST' }) {  
   const actionHeaders = {
     'Content-Type': 'application/json',
-    ...headers
-  }
+    ...headers,
+  };
 
   const fetchConfig = {
-    headers: actionHeaders
-  }
+    headers: actionHeaders,
+  };
 
   if (window.location.hostname === 'localhost') {
-    actionHeaders['x-ow-extra-logging'] = 'on'
+    actionHeaders['x-ow-extra-logging'] = 'on';
   }
 
-  fetchConfig.method = options.method.toUpperCase()
+  fetchConfig.method = options.method.toUpperCase();
 
   if (fetchConfig.method === 'GET') {
-    actionUrl = new URL(actionUrl)
-    Object.keys(params).forEach(key => actionUrl.searchParams.append(key, params[key]))
+    actionUrl = new URL(actionUrl);
+    Object.keys(params).forEach(key => actionUrl.searchParams.append(key, params[key]));
   } else if (fetchConfig.method === 'POST') {
-    fetchConfig.body = JSON.stringify(params)
+    fetchConfig.body = JSON.stringify(params);
   }
   
-  const response = await fetch(actionUrl, fetchConfig)
+  const response = await fetch(actionUrl, fetchConfig);
 
-  let content = await response.text()
+  let content = await response.text();
   
   if (!response.ok) {
-    return JSON.parse(content)
+    return JSON.parse(content);
   }
   try {
-    content = JSON.parse(content)
+    content = JSON.parse(content);
   } catch (e) {
     // response is not json
   }
-  return content
+  return content;
 }
 
-export default actionWebInvoke
+export default actionWebInvoke;

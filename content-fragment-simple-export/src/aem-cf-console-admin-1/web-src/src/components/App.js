@@ -21,7 +21,7 @@ function App() {
         </Routes>
       </ErrorBoundary>
     </Router>
-  )
+  );
 
   // Methods
 
@@ -37,8 +37,8 @@ function App() {
         </h1>
         <pre>{componentStack + "\n" + error.message}</pre>
       </React.Fragment>
-    )
+    );
   }
 }
 
-export default App
+export default App;
