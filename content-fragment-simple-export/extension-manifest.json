@@ -1,0 +1,13 @@
+{
+  "name": "CF Simple Export",
+  "id": "cf-simple-export",
+  "description": "Example of CF export based on selected filters",
+  "version": "0.0.1",
+  "headerMenuButtons": [
+    {
+      "label": "CF Export",
+      "needsModal": false,
+      "id": "cf-export"
+    }
+  ]
+}
