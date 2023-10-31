@@ -1,0 +1,21 @@
+{
+  "name": "CFtoAdobeTarget",
+  "id": "cftoadobetarget",
+  "description": "Export AEM Content Fragments to Adobe Target",
+  "version": "0.0.1",
+  "actionBarButtons": [
+    {
+      "label": "Export to Adobe Target Offers",
+      "needsModal": true,
+      "id": "export-to-adobe-target-offers"
+    }
+  ],
+  "runtimeActions": [
+    {
+      "name": "export"
+    },
+    {
+      "name": "delete"
+    }
+  ]
+}
