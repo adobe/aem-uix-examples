@@ -18,9 +18,10 @@ function ExtensionRegistration() {
             return [
               // YOUR HEADER BUTTONS CODE SHOULD BE HERE
               {
-                'id': 'cf-export',
-                'label': 'CF Export',
-                'icon': 'OpenIn',
+                'id': 'uix-examples.cf-simple-export',
+                'label': 'UIX CF Export',
+                'icon': 'Export',
+                variant: 'action',
                 async onClick() {
                   console.log("UIX Export has been pressed.");
 
@@ -53,8 +54,6 @@ function ExtensionRegistration() {
                     });
                     return;
                   }
-
-                  // console.log(presignUrl);
                   window.open(presignUrl);
                 },
               },
