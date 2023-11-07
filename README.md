@@ -17,7 +17,8 @@ and follow its `README.md` file.
 
 Here is the list of examples:
 - [Image genaration through 3rd party GenAI](./openai-dalle-content-fragment-admin/)
-
+- [Content Fragment language copies management](./content-fragment-language-copies-management/)
+- [Slack Content Fragment management](./slack-content-fragment-admin/)
 
 ## Contributing
 
