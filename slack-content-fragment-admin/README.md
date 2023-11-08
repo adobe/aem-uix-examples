@@ -1,6 +1,6 @@
-# 336GreenEgret
+# Slack Import/Export Extension Demo
 
-Welcome to my Adobe I/O Application!
+Demo Extension to showcase import/export functionality using custom buttons within AEM Content Fragment Admin Console
 
 ## Setup
 
