@@ -4,6 +4,7 @@
 
 const fetch = require('node-fetch');
 const filesLib = require('@adobe/aio-lib-files');
+const { buildFilterExpression, buildSortExpression } = require('./filters');
 
 async function generateExportFile(params, logger) {
   const apiEndpoint = `https://${params.aemHost}/adobe/sites/cf/graphql`;
@@ -67,10 +68,10 @@ async function generateExportFile(params, logger) {
     }
   `;
   const variables = {
-    sort: "modifiedOrCreated DESC",
+    sort: buildSortExpression(params.filters),
     after: null,
     first: 50,
-    filter: "path=/content/dam/ui-extensibility;status=new,published;",
+    filter: buildFilterExpression(params.filters),
     withStatusPreview: true,
     withTags: true,
   };

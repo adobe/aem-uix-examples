@@ -23,17 +23,14 @@ function ExtensionRegistration() {
                 'icon': 'Export',
                 variant: 'action',
                 async onClick() {
-                  console.log("UIX Export has been pressed.");
-
                   guestConnection.host.toaster.display({
                     variant: "positive",
                     message: "Export generation has started. The download will begin automatically once the process is complete.",
                     timeout: 3000,
                   });
 
-                  // const filters = await guestConnection.host.fragmentSelector.getFilters();
-                  // console.log('Filters: ', JSON.stringify(filters));
-                  const filters = ["test"];
+                  const filters = await guestConnection.host.fragmentSelector.getFilters();
+                  console.log('Filters: ', JSON.stringify(filters));
 
                   const presignUrl = await actionWebInvoke(
                       actions['export-content-fragments'],
