@@ -8,6 +8,7 @@
     "@adobe/exc-app": "^0.2.21",
     "@adobe/react-spectrum": "^3.4.0",
     "@adobe/uix-guest": "^0.8.0",
+    "@googlemaps/js-api-loader": "^1.16.2",
     "@react-spectrum/list": "^3.0.0-rc.0",
     "@spectrum-icons/workflow": "^3.2.0",
     "core-js": "^3.6.4",

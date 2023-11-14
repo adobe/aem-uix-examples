@@ -5,10 +5,9 @@
 import { Text } from "@adobe/react-spectrum";
 import { register } from "@adobe/uix-guest";
 import { extensionId } from "./Constants";
+import { getAddressAutocompleteFieldName } from "../web-config";
 
 function ExtensionRegistration() {
-  console.log("Address Autocomplete UIX Extension");
-
   const init = async () => {
     await register({
       id: extensionId,
@@ -17,7 +16,7 @@ function ExtensionRegistration() {
           getDefinitions: () => {
             return [
               {
-                fieldNameExp: '^address_autocomplete$',
+                fieldNameExp: `^${getAddressAutocompleteFieldName()}`,
                 url: '/#/address-autocomplete-field',
               },
             ];
