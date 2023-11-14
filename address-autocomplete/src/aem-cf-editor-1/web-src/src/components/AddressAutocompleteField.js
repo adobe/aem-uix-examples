@@ -25,6 +25,8 @@ export default () => {
             setConnection(connection);
             const dataApi = await connection.host.dataApi.get();
 
+            inputRef.current.getInputElement().setAttribute("placeholder", await connection.host.field.getDefaultValue());
+
             const autocomplete = new window.google.maps.places.Autocomplete(inputRef.current.getInputElement(), {
                 types: ['address'],
                 componentRestrictions: { country: 'US' },
@@ -42,16 +44,13 @@ export default () => {
                     address: getCombinedStreetAddress(place),
                     city: place.address_components.find(component => component.types.includes('locality'))?.long_name,
                     state: place.address_components.find(component => component.types.includes('administrative_area_level_1'))?.short_name,
-                    postalCode: place.address_components.find(component => component.types.includes('postal_code'))?.short_name
+                    postalCode: place.address_components.find(component => component.types.includes('postal_code'))?.short_name,
                 };
-                console.log(addressObject);
 
                 inputRef.current.getInputElement().value = addressObject.address;
                 await dataApi.setValue("city", addressObject.city);
                 await dataApi.setValue("state", addressObject.state);
                 await dataApi.setValue("postcode", addressObject.postalCode);
-
-                event.preventDefault();
             });
         };
         init().catch(console.error);
@@ -65,8 +64,7 @@ export default () => {
                 ref={inputRef}
                 onBlur={async () => await connection.host.field.setHeight(70)}
                 onFocus={async () => await connection.host.field.setHeight(270)}
-                autoComplete="off"
             />
         </Provider>
     );
-}
+};
