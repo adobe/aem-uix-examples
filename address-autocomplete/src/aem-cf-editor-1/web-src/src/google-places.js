@@ -21,7 +21,6 @@ export default (element, callback) => {
         .importLibrary("places")
         .then(({ Autocomplete }) => {
             const autocomplete = new Autocomplete(element, {
-                types: ["address"],
                 componentRestrictions: { country: "US" },
                 fields: ["address_components", "formatted_address", "geometry"],
             });
