@@ -25,25 +25,28 @@ function ExtensionRegistration() {
                   if (!hasUnpublished) {
                     guestConnection.host.progressCircle.start();
                     try {
+                      const auth = await guestConnection.sharedContext.get("auth");
+                      const token = auth.imsToken;
+                      const imsOrg = auth.imsOrg;
+                      const repo = await guestConnection.sharedContext.get("aemHost");
+
                       const exported = await triggerExportToAdobeTarget(
-                        guestConnection.sharedContext.get('auth').imsToken,
-                        {
-                          fragments: selections.map(cf => cf.id)
-                        }
+                        token,
+                        repo,
+                        imsOrg,
+                        selections.map(cf => cf.id)
                       );
-                      
                       guestConnection.host.progressCircle.stop()
-                      if (exported.succeed) {
+                      if (exported) {
                         guestConnection.host.toaster.display({
                             variant: "positive",
                             message: "Selected content fragments have been successfully synced with Adobe Target.",
                         })
-                      }
-                      if (exported.failed) {
+                      } else {
                         guestConnection.host.toaster.display({
                           variant: "negative",
                           message: 'Sync with Adobe Target failed. Please make sure CF offer is not being used in activity!'
-                        })  
+                        })
                       }
                     } catch (e) {
                       console.log(e);
@@ -75,10 +78,25 @@ function ExtensionRegistration() {
               },
               {
                 'id': 'delete-in-adobe-target',
-                'label': 'Delete in Adobe Target',
+                'label': 'Delete From Adobe Target',
                 'icon': 'Target',
                 onClick(selections) {
-                  
+                  const batchId = `cf2at_batch_${Math.random().toString().substring(2, 7)}`;
+                  sessionStorage.setItem(batchId, JSON.stringify(
+                    selections.map(cf => {
+                      return {id: cf.id, title: cf.title, status: cf.status};
+                    })
+                  ));
+
+                  guestConnection.host.modal.showUrl({
+                    title: "Delete Confirmation",
+                    url: "/index.html#" + generatePath("/content-fragment/:batchId/delete-from-adobe-target-offers-modal", {
+                      batchId: encodeURIComponent(batchId),
+                    }),
+                    width: "650px",
+                    height: "auto",
+                    isDismissable: true
+                  });
                 },
               },
             ];

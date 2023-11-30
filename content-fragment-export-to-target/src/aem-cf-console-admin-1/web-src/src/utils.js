@@ -1,6 +1,7 @@
 /*
 * <license header>
 */
+import allActions from './config.json'
 
 /* global fetch */
 
@@ -16,7 +17,7 @@
  *
  */
 
-async function actionWebInvoke (actionUrl, authToken, params = {}, options = { method: 'POST' }) {  
+async function actionWebInvoke (actionUrl, authToken, params = {}, options = { method: 'POST' }) {
   const actionHeaders = {
     'Content-Type': 'application/json',
     'authorization': `Bearer ${authToken}`,
@@ -38,7 +39,7 @@ async function actionWebInvoke (actionUrl, authToken, params = {}, options = { m
   } else if (fetchConfig.method === 'POST') {
     fetchConfig.body = JSON.stringify(params)
   }
-  
+
   const resp = await fetch(actionUrl, fetchConfig);
   if (!resp.ok) {
     throw new Error(
@@ -50,15 +51,22 @@ async function actionWebInvoke (actionUrl, authToken, params = {}, options = { m
   return data;
 }
 
-export async function triggerExportToAdobeTarget(authToken, {fragments, publish}) {
-  return await actionWebInvoke('export', {
-    
-    
+const getActionUrl = (action) => {
+  return allActions[action];
+}
+
+export const triggerExportToAdobeTarget = async (authToken, aemHost, imsOrg, paths = [], publish = false) => {
+  return await actionWebInvoke(getActionUrl("export"), authToken, {
+    aemHost: "https://" + aemHost,
+    imsOrg,
+    paths
   });
 }
 
-export async function triggerDeleteFromAdobeTarget(authToken, {fragments}) {
-  return await actionWebInvoke('delete', {
-    fragments
+export const triggerDeleteFromAdobeTarget = async (authToken, aemHost, imsOrg, paths = []) => {
+  return await actionWebInvoke(getActionUrl("delete"), authToken, {
+    aemHost: "https://" + aemHost,
+    imsOrg,
+    paths
   });
 }

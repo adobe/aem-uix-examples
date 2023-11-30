@@ -7,6 +7,7 @@ import ErrorBoundary from "react-error-boundary";
 import { HashRouter as Router, Routes, Route } from "react-router-dom";
 import ExtensionRegistration from "./ExtensionRegistration";
 import ExporttoAdobeTargetOffersModal from "./ExporttoAdobeTargetOffersModal";
+import DeletefromAdobeTargetOffersModal from "./DeleteFromAdobeTargetOffersModal";
 
 function App() {
   return (
@@ -16,11 +17,15 @@ function App() {
           <Route index element={<ExtensionRegistration />} />
           <Route
             exact path="index.html"
-            element={<ExtensionRegistration />} 
+            element={<ExtensionRegistration />}
           />
           <Route
             exact path="content-fragment/:batchId/export-to-adobe-target-offers-modal"
             element={<ExporttoAdobeTargetOffersModal />}
+          />
+          <Route
+            exact path="content-fragment/:batchId/delete-from-adobe-target-offers-modal"
+            element={<DeletefromAdobeTargetOffersModal />}
           />
           // YOUR CUSTOM ROUTES SHOULD BE HERE
         </Routes>

@@ -16,7 +16,7 @@
 
 const fetch = require('node-fetch')
 const { Core } = require('@adobe/aio-sdk')
-const { errorResponse, getBearerToken, stringParameters, checkMissingRequestInputs } = require('../utils')
+const { errorResponse, getBearerToken, stringParameters, checkMissingRequestInputs, getAemHeaders } = require('../utils')
 
 // main function that will be executed by Adobe I/O Runtime
 async function main (params) {
@@ -39,25 +39,28 @@ async function main (params) {
       return errorResponse(400, errorMessage, logger)
     }
 
-    // extract the user Bearer token from the Authorization header
-    const token = getBearerToken(params)
+    const headers = await getAemHeaders(params);
+    const formData = new FormData();
+    params.paths.map(el => formData.append("paths", el));
+    formData.append("action", "export");
+    formData.append("_charset_", "UTF-8");
 
-    // replace this with the api you want to access
-    const apiEndpoint = `${params.API_ENDPOINT}`
-    // fetch content from external api endpoint
-    const res = await fetch(apiEndpoint)
-    if (!res.ok) {
-      throw new Error('request to ' + apiEndpoint + ' failed with status code ' + res.status)
+    const exportResponse = await fetch(params.aemHost + params.paths[0] + ".cfm.targetexport", {
+      headers: headers,
+      method: "POST",
+      body: formData
+    });
+
+    if (!exportResponse.ok) {
+      throw new Error('request to ' + params.aemHost + ' failed with status code ' + res.status)
     }
-    const content = await res.json()
-    const response = {
+
+    logger.info(`${exportResponse.statusCode}: successful export request`)
+    return {
       statusCode: 200,
-      body: content
-    }
+      body: "{}"
+    };
 
-    // log the response status code
-    logger.info(`${response.statusCode}: successful request`)
-    return response
   } catch (error) {
     // log any server errors
     logger.error(error)
