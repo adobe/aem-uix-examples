@@ -1,0 +1,14 @@
+{
+  "name": "CF Editor Rich Text Editor Toolbar Button",
+  "id": "cf-editor-rich-text-editor-toolbar-button",
+  "description": "Enhance your CF Editor experience by seamlessly adding a Rich Text Editor toolbar button for expanded functionality.",
+  "version": "0.0.1",
+  "rte": {
+    "toolbarButtons": [
+      {
+        "id": "aem-extensibility-cf-editor-rte-toolbar-button",
+        "tooltip": "Explore expanded CF Editor functionality with the addition of a Rich Text Editor toolbar button for enhanced text customization."
+      }
+    ]
+  }
+}
