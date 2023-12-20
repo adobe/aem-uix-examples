@@ -22,7 +22,7 @@ function ExtensionRegistration() {
       "<div><p>Here is the link to the <a href=\"https://developer.adobe.com/uix/docs/\" target=\"_blank\" referrerpolicy=\"no-referrer\">UI extensibility docs</a>. One more click to explore further! 🕵️</p></div>",
       "<div><p>With the UI Extensibility framework, you can extend various components within this AEM Content Fragment Editor, including:</p><ol><li>Rich Text Editor Toolbar</li><li>Rich Text Editor Widgets</li><li>Header Menu, and more.</li></ol><p>Check out the <a href=\"https://developer.adobe.com/uix/docs/services/aem-cf-editor/api/\" target=\"_blank\" referrerpolicy=\"no-referrer\">AEM Content Fragment Editor docs</a> for further details.</p></div>",
       "<div><p>Contact your Adobe account manager to get help with your first extension. 🤝︎</p></div>",
-      "<div><p>Click again to return to the original content. ✅︎</p></div>",
+      "<div><p>Click again to return to the original content! ✅︎</p></div>",
     ];
     const messagesCount = messages.length;
     const messagesCopy = [...messages];
@@ -52,7 +52,7 @@ function ExtensionRegistration() {
           getCustomButtons: () => ([
             // RTE Toolbar custom button
             {
-              id: "aem-extensibility-cf-editor-rte-toolbar-button",
+              id: "aem-uix-examples-cf-editor-rte-toolbar-button",
               tooltip: "Click to explore the extensibility features",
               icon: "Plug",
               onClick: onClickHandler(),

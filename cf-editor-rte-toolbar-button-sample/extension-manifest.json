@@ -6,7 +6,7 @@
   "rte": {
     "toolbarButtons": [
       {
-        "id": "aem-extensibility-cf-editor-rte-toolbar-button",
+        "id": "aem-uix-examples-cf-editor-rte-toolbar-button",
         "tooltip": "Click to explore the extensibility features"
       }
     ]
