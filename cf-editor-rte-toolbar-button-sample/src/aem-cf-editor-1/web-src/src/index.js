@@ -9,6 +9,8 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
+import 'core-js/stable'
+
 window.React = require('react')
 import ReactDOM from 'react-dom'
 
