@@ -10,7 +10,7 @@ creativity.
 
 ## Installation
 
-Each of the folder contains a fully working UI Extension integrated with AEM. Just navigate one 
+Each of the folder contains a fully working UI Extension integrated with AEM. Just navigate one
 and follow its `README.md` file.
 
 ## Examples
@@ -19,6 +19,7 @@ Here is the list of examples:
 - [Image genaration through 3rd party GenAI](./openai-dalle-content-fragment-admin/)
 - [Content Fragment language copies management](./content-fragment-language-copies-management/)
 - [Slack Content Fragment management](./slack-content-fragment-admin/)
+- [Custom AEM Content Fragment Editor RTE Toolbar Button](./cf-editor-rte-toolbar-button-sample/)
 
 ## Contributing
 

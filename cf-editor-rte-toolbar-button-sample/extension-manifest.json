@@ -1,0 +1,14 @@
+{
+  "name": "CF Editor Rich Text Editor Toolbar Button",
+  "id": "cf-editor-rich-text-editor-toolbar-button",
+  "description": "Sample extension showcasing the extensibility of the Rich Text Editor Toolbar.",
+  "version": "0.0.1",
+  "rte": {
+    "toolbarButtons": [
+      {
+        "id": "aem-uix-examples-cf-editor-rte-toolbar-button",
+        "tooltip": "Click to explore the extensibility features"
+      }
+    ]
+  }
+}
