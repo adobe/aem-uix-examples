@@ -13,30 +13,30 @@ import { Text } from "@adobe/react-spectrum";
 import { register } from "@adobe/uix-guest";
 import { extensionId } from "./Constants";
 
+const messages = [
+  "<div><p>Welcome to the extension journey! 🚀 Click once more to discover the UI extensibility docs. 📚︎</p></div>",
+  "<div><p>Here is the link to the <a href=\"https://developer.adobe.com/uix/docs/\" target=\"_blank\" referrerpolicy=\"no-referrer\">UI extensibility docs</a>. One more click to explore further! 🕵️</p></div>",
+  "<div><p>With the UI Extensibility framework, you can extend various components within this AEM Content Fragment Editor, including:</p><ol><li>Rich Text Editor Toolbar</li><li>Rich Text Editor Widgets</li><li>Header Menu, and more.</li></ol><p>Check out the <a href=\"https://developer.adobe.com/uix/docs/services/aem-cf-editor/api/\" target=\"_blank\" referrerpolicy=\"no-referrer\">AEM Content Fragment Editor docs</a> for further details.</p></div>",
+  "<div><p>Contact your Adobe account manager to get help with your first extension. 🤝︎</p></div>",
+  "<div><p>Click again to return to the original content. ✅︎</p></div>",
+];
+
 // This function is called when the extension is registered with the host and runs in an iframe in the Content Fragment Editor browser window.
 function ExtensionRegistration() {
   const onClickHandler = () => {
-    let originalContent = "";
-    const messages = [
-      "<div><p>Welcome to the extension journey! 🚀 Click once more to discover the UI extensibility docs. 📚︎</p></div>",
-      "<div><p>Here is the link to the <a href=\"https://developer.adobe.com/uix/docs/\" target=\"_blank\" referrerpolicy=\"no-referrer\">UI extensibility docs</a>. One more click to explore further! 🕵️</p></div>",
-      "<div><p>With the UI Extensibility framework, you can extend various components within this AEM Content Fragment Editor, including:</p><ol><li>Rich Text Editor Toolbar</li><li>Rich Text Editor Widgets</li><li>Header Menu, and more.</li></ol><p>Check out the <a href=\"https://developer.adobe.com/uix/docs/services/aem-cf-editor/api/\" target=\"_blank\" referrerpolicy=\"no-referrer\">AEM Content Fragment Editor docs</a> for further details.</p></div>",
-      "<div><p>Contact your Adobe account manager to get help with your first extension. 🤝︎</p></div>",
-      "<div><p>Click again to return to the original content. ✅︎</p></div>",
-    ];
-    const messagesCount = messages.length;
-    const messagesCopy = [...messages];
+    let originalContent;
+    let messagesCopy = [...messages];
     return (state) => {
-      if (messages.length === messagesCount) {
+      if (originalContent === undefined) {
         originalContent = state.html;
       }
-      if (messages.length > 0) {
+      if (messagesCopy.length > 0) {
         return [{
           type: "insertContent",
-          value: messages.shift(),
+          value: messagesCopy.shift(),
         }];
       } else {
-        messages.push(...messagesCopy);
+        messagesCopy = [...messages];
         return [{
           type: "replaceContent",
           value: originalContent,
