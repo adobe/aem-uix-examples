@@ -9,6 +9,7 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
+import React, { useRef } from "react";
 import { Text } from "@adobe/react-spectrum";
 import { register } from "@adobe/uix-guest";
 import { extensionId } from "./Constants";
@@ -23,27 +24,27 @@ const messages = [
 
 // This function is called when the extension is registered with the host and runs in an iframe in the Content Fragment Editor browser window.
 function ExtensionRegistration() {
-  const onClickHandler = () => {
-    let originalContent;
-    let messagesCopy = [...messages];
-    return (state) => {
-      if (originalContent === undefined) {
-        originalContent = state.html;
-      }
-      if (messagesCopy.length > 0) {
-        return [{
-          type: "insertContent",
-          value: messagesCopy.shift(),
-        }];
-      } else {
-        messagesCopy = [...messages];
-        return [{
-          type: "replaceContent",
-          value: originalContent,
-        }];
-      }
+  const originalContentRef = useRef(null);
+  const messagesRef = useRef([...messages]);
+
+  const onClickHandler = (state) => {
+    if (originalContentRef.current === null) {
+      originalContentRef.current = state.html;
     }
-  }
+    if (messagesRef.current.length > 0) {
+      return [{
+        type: "insertContent",
+        value: messagesRef.current.shift(),
+      }];
+    } else {
+      messagesRef.current = [...messages];
+      return [{
+        type: "replaceContent",
+        value: originalContentRef.current,
+      }];
+    }
+  };
+
   const init = async () => {
     const guestConnection = await register({
       id: extensionId,
@@ -55,7 +56,7 @@ function ExtensionRegistration() {
               id: "aem-uix-examples-cf-editor-rte-toolbar-button",
               tooltip: "Click to explore the extensibility features",
               icon: "Plug",
-              onClick: onClickHandler(),
+              onClick: onClickHandler,
             },
           ]),
         }
