@@ -9,13 +9,6 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-.info-block {
-  font-size: 12px;
-  border: 1px solid gray;
-  padding: 6px;
-  border-radius: 6px;
-}
-
 .validation-error {
-  color: red;
+  color: #d31510;
 }
