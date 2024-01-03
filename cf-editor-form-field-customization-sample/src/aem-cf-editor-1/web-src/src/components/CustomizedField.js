@@ -13,41 +13,40 @@ import React, { useEffect, useState, useRef } from "react";
 import { attach } from "@adobe/uix-guest";
 import { extensionId } from "./Constants";
 import {
-  Provider, View, Flex, TextField, Button, lightTheme
+  Provider, View, TextField, Button, TooltipTrigger, Tooltip, lightTheme
 } from "@adobe/react-spectrum";
+import "./CustomizedField.css";
 
-const messages = [
-  {
-    value: "Welcome to the extension journey! Click once more to discover the UI extensibility docs.",
-    tip: "<div><p>Welcome to the extension journey! 🚀 Click once more to discover the UI extensibility docs. 📚︎</p></div>",
-  },
-  {
-    value: "The following is the link to the UI extensibility docs, https://developer.adobe.com/uix/docs/",
-    tip: "<div><p>Here is the link to the <a href=\"https://developer.adobe.com/uix/docs/\" target=\"_blank\" referrerpolicy=\"no-referrer\">UI extensibility docs</a>. One more click to explore further! 🕵️</p></div>",
-  },
-  {
-    value: "With the UI Extensibility framework, you can extend various components within this AEM Content Fragment Editor!",
-    tip: "<div><p>With the UI Extensibility framework, you can extend various components within this AEM Content Fragment Editor, including:</p><ol><li>Rich Text Editor Toolbar</li><li>Rich Text Editor Widgets</li><li>Header Menu, and more.</li></ol><p>Check out the <a href=\"https://developer.adobe.com/uix/docs/services/aem-cf-editor/api/\" target=\"_blank\" referrerpolicy=\"no-referrer\">AEM Content Fragment Editor docs</a> for further details.</p></div>",
-  },
-  {
-    value: "Contact your Adobe account manager to get help with your first extension.",
-    tip: "<div><p>Contact your Adobe account manager to get help with your first extension. 🤝︎</p></div>",
-  },
-  {
-    value: "Click again to return to the original content.",
-    tip: "<div><p>Click again to return to the original content. ✅︎</p></div>",
-  },
+const tips = [
+  "The following is the link to the UI extensibility docs, https://developer.adobe.com/uix/docs/ 📚︎",
+  "With the UI Extensibility framework, you can extend various components within this AEM Content Fragment Editor, including: Rich Text Editor Toolbar, Rich Text Editor Widgets, Header Menu, and more 🚀 Check out https://developer.adobe.com/uix/docs/services/aem-cf-editor/api/ for further details.",
+  "Contact your Adobe account manager to get help with your first extension. 🤝︎",
 ];
 
-function CustomizedField() {
-  const [guestConnection, setGuestConnection] = useState();
+const validateFirstLetters = (sentence) => {
+  // Split the sentence into words
+  const words = sentence.split(" ");
+
+  // Check if the first letter of each word is uppercase
+  for (const i = 0; i < words.length; i++) {
+    if (words[i].charAt(0) !== words[i].charAt(0).toUpperCase()) {
+      return false;
+    }
+  }
+
+  return true;
+};
+
+const CustomizedField = () => {
+  const [guestConnection, setGuestConnection] = useState(null);
   const [fieldData, setFieldData] = useState({
     ready: false,
   });
   const [validationState, setValidationState] = useState("invalid");
-  const [value, setValue] = useState();
-  const [tip, setTip] = useState();
-  const messagesRef = useRef([...messages]);
+  const [value, setValue] = useState("");
+  // our custom validation status
+  const [isValid, setIsValid] = useState(false);
+  const tipsRef = useRef([...tips]);
 
   useEffect(() => {
     const init = async () => {
@@ -66,6 +65,7 @@ function CustomizedField() {
       const name = fieldModel.name;
       const maxLength = fieldModel.maxLength ?? "";
       setValue(defaultValue);
+      setIsValid(validateFirstLetters(defaultValue));
       setFieldData({
         defaultValue,
         required,
@@ -81,28 +81,22 @@ function CustomizedField() {
 
   const onChangeHandler = (v) => {
     setValue(v);
-    guestConnection.host.field.onChange(v);
-  };
-
-  const onPressUIExtensibilityBtnHandler = (e) => {
-    if (messagesRef.current.length > 0) {
-      const item = messagesRef.current.shift();
-      setValue(item.value);
-      guestConnection.host.field.onChange(item.value);
-      setTip(item.tip);
-    } else {
-      messagesRef.current = [...messages];
-      setValue(fieldData.defaultValue);
-      guestConnection.host.field.onChange(fieldData.defaultValue);
-      setTip(undefined);
+    const isValid = validateFirstLetters(v);
+    setIsValid(isValid);
+    if (isValid) {
+      guestConnection.host.field.onChange(v);
     }
   };
 
-  const onPressResetBtnHandler = () => {
-    messagesRef.current = [...messages];
-    setValue(fieldData.defaultValue);
-    guestConnection.host.field.onChange(fieldData.defaultValue);
-    setTip(undefined);
+  const onPressUIExtensibilityTipBtnHandler = (e) => {
+    if (tipsRef.current.length === 0) {
+      tipsRef.current = [...tips];
+    }
+    guestConnection.host.toaster.display({
+      variant: "info",
+      message: tipsRef.current.shift(),
+      timeout: 5000,
+    });
   };
 
   return (
@@ -116,29 +110,24 @@ function CustomizedField() {
             name={fieldData.name}
             maxLength={fieldData.maxLength}
             onChange={onChangeHandler}
-            validationState={validationState}
+            validationState={(validationState === "valid" && isValid) ? "valid" : "invalid"}
             width="100%"
             marginBottom="size-100"
           />
-          <TextField
-            defaultValue={fieldData.defaultValue}
-            isDisabled={true}
-            isReadOnly={true}
-            label="Original Content"
-            width="100%"
-            marginBottom="size-100"
-          />
-          <Flex gap="size-100" marginBottom="size-100">
-            <Button variant="accent" height="size-500" width="size-2400" onPress={onPressUIExtensibilityBtnHandler}>
-              Click me to see UI Extensibility in action!
+          {!isValid && <View marginBottom="size-100" UNSAFE_className="validation-error">First letters must be uppercase.</View>}
+          <View marginBottom="size-100" UNSAFE_className="info-block">
+            This customized AEM CF Editor form field showcases the ability to incorporate custom elements, display toasts, and perform extra actions on form field values, like adding additional validation to ensure that all words begin with an uppercase letter.
+          </View>
+          <TooltipTrigger delay={0}>
+            <Button
+              aria-label="Click me to see some UI Extensibility tip"
+              variant="accent"
+              onPress={onPressUIExtensibilityTipBtnHandler}
+            >
+              UI Extensibility Tip
             </Button>
-            <Button variant="primary" height="size-500" width="size-2400" onPress={onPressResetBtnHandler}>
-              Reset to the original content
-            </Button>
-          </Flex>
-          {tip &&
-            <div dangerouslySetInnerHTML={{__html: tip}} style={{marginBottom: "8px"}} />
-          }
+            <Tooltip>Click me to see some UI Extensibility tip</Tooltip>
+          </TooltipTrigger>
         </View>
       }
     </Provider>
