@@ -1,0 +1,13 @@
+{
+  "name": "cf-console-action-bar-button-sample",
+  "id": "cf-console-action-bar-button-sample",
+  "description": "Adding a button to the action bar in AEM Content Fragment Console",
+  "version": "0.0.1",
+  "actionBarButtons": [
+    {
+      "label": "Click Me",
+      "needsModal": true,
+      "id": "click-me"
+    }
+  ]
+}
