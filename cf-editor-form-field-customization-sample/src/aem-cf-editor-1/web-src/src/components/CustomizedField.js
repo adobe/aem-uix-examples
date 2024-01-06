@@ -9,7 +9,7 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback, useRef } from "react";
 import { attach } from "@adobe/uix-guest";
 import { extensionId } from "./Constants";
 import {
@@ -31,6 +31,10 @@ const validateFirstLetters = (sentence) => {
   return true;
 };
 
+const wait = async (timeout) => new Promise(
+  (resolve) => setTimeout(() => resolve(true), timeout * 1000)
+);
+
 const CustomizedField = () => {
   const [guestConnection, setGuestConnection] = useState(null);
   const [fieldData, setFieldData] = useState({
@@ -40,6 +44,19 @@ const CustomizedField = () => {
   const [value, setValue] = useState("");
   // our custom validation status
   const [isValid, setIsValid] = useState(false);
+
+  // A workaround for fixing an issue with the right scroll bar.
+  const heightRef = useRef(0);
+  const containerRef = useCallback(async (node) => {
+    if (node !== null) {
+      const height = Number((document.body.clientHeight).toFixed(0)) + 10; // we add extra 10px
+      if (heightRef.current !== height) {
+        heightRef.current = height;
+        await wait(0.5); // we need to wait for some time to ensure that setHeight() is available for use
+        await guestConnection.host.field.setHeight(height);
+      }
+    }
+  }, [guestConnection]);
 
   useEffect(() => {
     const init = async () => {
@@ -84,7 +101,9 @@ const CustomizedField = () => {
   return (
     <Provider theme={lightTheme} colorScheme="light">
       {fieldData.ready &&
-        <View>
+        <View
+          ref={containerRef}
+        >
           <TextField
             value={value}
             isRequired={fieldData.required}

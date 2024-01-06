@@ -9,15 +9,7 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import 'core-js/stable'
-import './index.css'
-
-window.React = require('react')
-import ReactDOM from 'react-dom'
-
-import App from './components/App'
-
-ReactDOM.render(
-  <App />,
-  document.getElementById('root')
-)
+html,
+body {
+  margin: 0;
+}
