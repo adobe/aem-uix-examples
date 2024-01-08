@@ -118,7 +118,7 @@ const CustomizedField = () => {
           {!isValid && <View marginBottom="size-100" UNSAFE_className="validation-error">Start each word with an uppercase letter.</View>}
           <View marginBottom="size-100">
             <Text>
-              This customized field, powered by the sample extension, adds extra validation, ensuring that each word starts with an uppercase letter. Enter text to see input validation in action.
+              Enter text with each word capitalized to meet validation requirements.
             </Text>
           </View>
         </View>

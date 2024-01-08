@@ -9,41 +9,42 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
+import React, { useRef } from "react";
 import { Text } from "@adobe/react-spectrum";
 import { register } from "@adobe/uix-guest";
 import { extensionId } from "./Constants";
 
+const messages = [
+  "<div><p>Welcome to the extension journey! 🚀 Click once more to discover the UI extensibility docs. 📚︎</p></div>",
+  "<div><p>Here is the link to the <a href=\"https://developer.adobe.com/uix/docs/\" target=\"_blank\" referrerpolicy=\"no-referrer\">UI extensibility docs</a>. One more click to explore further! 🕵️</p></div>",
+  "<div><p>With the UI Extensibility framework, you can extend various components within this AEM Content Fragment Editor, including:</p><ol><li>Rich Text Editor Toolbar</li><li>Rich Text Editor Widgets</li><li>Header Menu, and more.</li></ol><p>Check out the <a href=\"https://developer.adobe.com/uix/docs/services/aem-cf-editor/api/\" target=\"_blank\" referrerpolicy=\"no-referrer\">AEM Content Fragment Editor docs</a> for further details.</p></div>",
+  "<div><p>Contact your Adobe account manager to get help with your first extension. 🤝︎</p></div>",
+  "<div><p>Click again to return to the original content. ✅︎</p></div>",
+];
+
 // This function is called when the extension is registered with the host and runs in an iframe in the Content Fragment Editor browser window.
 function ExtensionRegistration() {
-  const onClickHandler = () => {
-    let originalContent = "";
-    const messages = [
-      "<div><p>Welcome to the extension journey! 🚀 Click once more to discover the UI extensibility docs. 📚︎</p></div>",
-      "<div><p>Here is the link to the <a href=\"https://developer.adobe.com/uix/docs/\" target=\"_blank\" referrerpolicy=\"no-referrer\">UI extensibility docs</a>. One more click to explore further! 🕵️</p></div>",
-      "<div><p>With the UI Extensibility framework, you can extend various components within this AEM Content Fragment Editor, including:</p><ol><li>Rich Text Editor Toolbar</li><li>Rich Text Editor Widgets</li><li>Header Menu, and more.</li></ol><p>Check out the <a href=\"https://developer.adobe.com/uix/docs/services/aem-cf-editor/api/\" target=\"_blank\" referrerpolicy=\"no-referrer\">AEM Content Fragment Editor docs</a> for further details.</p></div>",
-      "<div><p>Contact your Adobe account manager to get help with your first extension. 🤝︎</p></div>",
-      "<div><p>Click again to return to the original content. ✅︎</p></div>",
-    ];
-    const messagesCount = messages.length;
-    const messagesCopy = [...messages];
-    return (state) => {
-      if (messages.length === messagesCount) {
-        originalContent = state.html;
-      }
-      if (messages.length > 0) {
-        return [{
-          type: "insertContent",
-          value: messages.shift(),
-        }];
-      } else {
-        messages.push(...messagesCopy);
-        return [{
-          type: "replaceContent",
-          value: originalContent,
-        }];
-      }
+  const originalContentRef = useRef(null);
+  const messagesRef = useRef([...messages]);
+
+  const onClickHandler = (state) => {
+    if (originalContentRef.current === null) {
+      originalContentRef.current = state.html;
     }
-  }
+    if (messagesRef.current.length > 0) {
+      return [{
+        type: "insertContent",
+        value: messagesRef.current.shift(),
+      }];
+    } else {
+      messagesRef.current = [...messages];
+      return [{
+        type: "replaceContent",
+        value: originalContentRef.current,
+      }];
+    }
+  };
+
   const init = async () => {
     const guestConnection = await register({
       id: extensionId,
@@ -55,7 +56,7 @@ function ExtensionRegistration() {
               id: "aem-uix-examples-cf-editor-rte-toolbar-button",
               tooltip: "Click to explore the extensibility features",
               icon: "Plug",
-              onClick: onClickHandler(),
+              onClick: onClickHandler,
             },
           ]),
         }
