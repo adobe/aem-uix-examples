@@ -9,7 +9,6 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { generatePath } from "react-router";
 import { Text } from "@adobe/react-spectrum";
 import { register } from "@adobe/uix-guest";
 import { extensionId } from "./Constants";
@@ -24,18 +23,41 @@ function ExtensionRegistration() {
             return [
               // YOUR HEADER BUTTONS CODE SHOULD BE HERE
               {
-                'id': 'sample-header-button',
-                'label': 'Sample Header Button',
-                'icon': 'OpenIn',
-                onClick() {
-                  const modalURL = "/index.html#/sample-header-button-modal";
-                  console.log("Modal URL: ", modalURL);
+                id: "aem-uix-examples-cf-console-header-menu-button",
+                label: "Sample Header Button",
+                icon: "Plug",
+                variant: "cta",
+                subItems: [
+                  {
+                    id: "aem-uix-examples-cf-console-header-menu-button-insights",
+                    label: "Show Insights",
+                    icon: "ConfidenceFour",
+                    onClick: () => {
+                      const modalURL = "/index.html#/aem-uix-examples-cf-console-header-menu-button-insights";
 
-                  guestConnection.host.modal.showUrl({
-                    title: "Sample Header Button",
-                    url: modalURL,
-                  });
-                },
+                      guestConnection.host.modal.showUrl({
+                        title: "Insights",
+                        url: modalURL,
+                        fullscreen: true,
+                      });
+                    },
+                  },
+                  {
+                    id: "aem-uix-examples-cf-console-header-menu-button-tips",
+                    label: "Show Tips",
+                    icon: "InfoOutline",
+                    onClick: () => {
+                      const modalURL = "/index.html#/aem-uix-examples-cf-console-header-menu-button-tips";
+
+                      guestConnection.host.modal.showUrl({
+                        title: "Tips",
+                        url: modalURL,
+                        height: "250px",
+                        width: "550px",
+                      });
+                    },
+                  },
+                ],
               },
             ];
           },

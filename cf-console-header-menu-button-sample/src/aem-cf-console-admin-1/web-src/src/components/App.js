@@ -13,7 +13,8 @@ import React from "react";
 import ErrorBoundary from "react-error-boundary";
 import { HashRouter as Router, Routes, Route } from "react-router-dom";
 import ExtensionRegistration from "./ExtensionRegistration";
-import SampleHeaderButtonModal from "./SampleHeaderButtonModal";
+import InsightsModal from "./InsightsModal";
+import TipsModal from "./TipsModal";
 
 function App() {
   return (
@@ -26,8 +27,12 @@ function App() {
             element={<ExtensionRegistration />}
           />
           <Route
-            exact path="sample-header-button-modal"
-            element={<SampleHeaderButtonModal />}
+            exact path="aem-uix-examples-cf-console-header-menu-button-insights"
+            element={<InsightsModal />}
+          />
+          <Route
+            exact path="aem-uix-examples-cf-console-header-menu-button-tips"
+            element={<TipsModal />}
           />
           // YOUR CUSTOM ROUTES SHOULD BE HERE
         </Routes>
