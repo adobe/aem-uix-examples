@@ -48,7 +48,7 @@ const CustomizedField = () => {
   // A workaround for fixing an issue with the right scroll bar.
   const heightRef = useRef(0);
   const containerRef = useCallback(async (node) => {
-    if (node !== null) {
+    if (node !== null && guestConnection !== null) {
       const height = Number((document.body.clientHeight).toFixed(0)) + 10; // we add extra 10px
       if (heightRef.current !== height) {
         heightRef.current = height;
