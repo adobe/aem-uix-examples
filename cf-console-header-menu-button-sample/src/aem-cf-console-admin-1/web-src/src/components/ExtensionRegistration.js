@@ -26,7 +26,7 @@ function ExtensionRegistration() {
                 id: "aem-uix-examples-cf-console-header-menu-button",
                 label: "Sample Header Button",
                 icon: "Plug",
-                variant: "cta",
+                variant: "secondary",
                 subItems: [
                   {
                     id: "aem-uix-examples-cf-console-header-menu-button-insights",
