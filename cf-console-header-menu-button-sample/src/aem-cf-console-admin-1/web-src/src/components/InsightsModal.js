@@ -9,7 +9,7 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { attach } from "@adobe/uix-guest";
 import {
   Flex,
@@ -75,8 +75,10 @@ export default InsightsModal = () => {
     try {
       const result = await getWeatherForecast(city);
       setWeatherForecast(result);
+      displayToast(`Weather forecast for ${city} has been successfully fetched.`);
     } catch (error) {
-      console.log("error", error);
+      console.error("error", error);
+      displayToast(`Error fetching weather forecast for ${city}`, false);
     } finally {
       setIsLoading(false);
     }
@@ -85,6 +87,14 @@ export default InsightsModal = () => {
   const onCloseHandler = () => {
     guestConnection.host.modal.close();
   };
+
+  const displayToast = useCallback((toast, successful = true) => {
+    guestConnection.host.toaster.display({
+      variant: successful ? "primary" : "negative",
+      message: toast,
+      timeout: 1500,
+    });
+  }, [guestConnection]);
 
   return (
     <Provider theme={defaultTheme} colorScheme="light">
