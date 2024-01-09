@@ -1,4 +1,4 @@
-# AEM Content Fragments Console Header Menu
+# AEM Content Fragments Console Header Menu Button
 
 A sample extension illustrating the extensibility of the AEM Content Fragments Console header menu by adding a custom button.
 
