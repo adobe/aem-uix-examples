@@ -38,7 +38,8 @@ function ExtensionRegistration() {
                       guestConnection.host.modal.showUrl({
                         title: "Insights",
                         url: modalURL,
-                        fullscreen: true,
+                        height: "320px",
+                        width: "550px",
                       });
                     },
                   },

@@ -80,5 +80,5 @@ export default TipsModal = () => {
         </Button>
       </Content>
     </Provider>
-  )
+  );
 };
