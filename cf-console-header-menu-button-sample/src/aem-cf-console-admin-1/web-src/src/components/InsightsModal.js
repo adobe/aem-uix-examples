@@ -13,11 +13,9 @@ import React, { useState, useEffect } from "react";
 import { attach } from "@adobe/uix-guest";
 import {
   Flex,
-  ProgressCircle,
   Provider,
   Content,
   defaultTheme,
-  Text,
   Button,
   Heading,
   MenuTrigger,
@@ -26,6 +24,7 @@ import {
   Item,
   View
 } from "@adobe/react-spectrum";
+import Spinner from "./Spinner";
 import "./InsightsModal.css";
 
 import { extensionId } from "./Constants";
@@ -61,6 +60,7 @@ export default InsightsModal = () => {
   const [guestConnection, setGuestConnection] = useState();
 
   const [weatherForecast, setWeatherForecast] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     (async () => {
@@ -71,11 +71,14 @@ export default InsightsModal = () => {
   }, []);
 
   const onActionBtnHandler = async (city) => {
+    setIsLoading(true);
     try {
       const result = await getWeatherForecast(city);
       setWeatherForecast(result);
     } catch (error) {
       console.log("error", error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -86,35 +89,44 @@ export default InsightsModal = () => {
   return (
     <Provider theme={defaultTheme} colorScheme="light">
       <Content width="100%">
-        <View marginBottom="size-100">
-          <MenuTrigger>
-            <ActionButton>
-              Display Weather Forecast
-            </ActionButton>
-            <Menu onAction={onActionBtnHandler}>
-              <Item key={AUSTIN}>{AUSTIN}</Item>
-              <Item key={NEW_YORK}>{NEW_YORK}</Item>
-              <Item key={LOS_ANGELES}>{LOS_ANGELES}</Item>
-            </Menu>
-          </MenuTrigger>
-        </View>
+        {isLoading
+          ? (
+            <Spinner />
+          )
+          : (
+            <>
+              <View marginBottom="size-100">
+                <MenuTrigger>
+                  <ActionButton>
+                    Display Weather Forecast
+                  </ActionButton>
+                  <Menu onAction={onActionBtnHandler}>
+                    <Item key={AUSTIN}>{AUSTIN}</Item>
+                    <Item key={NEW_YORK}>{NEW_YORK}</Item>
+                    <Item key={LOS_ANGELES}>{LOS_ANGELES}</Item>
+                  </Menu>
+                </MenuTrigger>
+              </View>
 
-        {(weatherForecast !== null) &&
-          <Flex height="size-3000" gap="size-100">
-            <View flexBasis="20%" flexGrow="0" flexShrink="0">
-              <img src={weatherForecast.icon} className="weather-forecast-img" />
-            </View>
-            <View UNSAFE_className="weather-forecast-description">
-              <Heading level={2} marginTop="0">{weatherForecast.city}</Heading>
-              <p>
-                Temperature: {weatherForecast.temperature}°{weatherForecast.temperatureUnit} /{" "}
-                {Math.round(((weatherForecast.temperature - 32) * 50) / 9) / 10}°C
-              </p>
-              <p>{weatherForecast.shortForecast}</p>
-              <p>{weatherForecast.detailedForecast}</p>
-              <p>{new Date(weatherForecast.startTime).toLocaleString()}</p>
-            </View>
-          </Flex>
+              {(weatherForecast !== null) &&
+                <Flex height="size-3000" gap="size-100">
+                  <View flexBasis="20%" flexGrow="0" flexShrink="0">
+                    <img src={weatherForecast.icon} className="weather-forecast-img" />
+                  </View>
+                  <View UNSAFE_className="weather-forecast-description">
+                    <Heading level={2} marginTop="0">{weatherForecast.city}</Heading>
+                    <p>
+                      Temperature: {weatherForecast.temperature}°{weatherForecast.temperatureUnit} /{" "}
+                      {Math.round(((weatherForecast.temperature - 32) * 50) / 9) / 10}°C
+                    </p>
+                    <p>{weatherForecast.shortForecast}</p>
+                    <p>{weatherForecast.detailedForecast}</p>
+                    <p>{new Date(weatherForecast.startTime).toLocaleString()}</p>
+                  </View>
+                </Flex>
+              }
+            </>
+          )
         }
 
         <Button variant="primary" onPress={onCloseHandler} position="fixed" bottom="0px" right="8px">
