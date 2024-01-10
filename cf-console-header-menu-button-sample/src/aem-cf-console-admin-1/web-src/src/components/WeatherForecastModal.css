@@ -15,4 +15,5 @@ governing permissions and limitations under the License.
 
 .weather-forecast-img {
   margin-top: 8px;
+  border-radius: 5px;
 }

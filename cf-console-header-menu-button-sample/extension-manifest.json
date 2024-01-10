@@ -5,7 +5,7 @@
   "version": "0.0.1",
   "headerMenuButtons": [
     {
-      "label": "Sample Header Button",
+      "label": "Sample Button",
       "needsModal": true,
       "id": "sample-header-button"
     }

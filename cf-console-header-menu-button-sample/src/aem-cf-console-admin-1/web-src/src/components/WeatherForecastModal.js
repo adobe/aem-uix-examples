@@ -9,23 +9,22 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect } from "react";
 import { attach } from "@adobe/uix-guest";
 import {
   Flex,
   Provider,
   Content,
   defaultTheme,
+  LabeledValue,
+  Image,
   Button,
   Heading,
-  MenuTrigger,
-  Menu,
-  ActionButton,
-  Item,
+  ButtonGroup,
   View
 } from "@adobe/react-spectrum";
 import Spinner from "./Spinner";
-import "./InsightsModal.css";
+import "./WeatherForecastModal.css";
 
 import { extensionId } from "./Constants";
 
@@ -35,6 +34,8 @@ const NEW_YORK = "New York";
 const NEW_YORK_WEATHER_FORECAST_URL = "https://api.weather.gov/gridpoints/OKX/33,37/forecast";
 const LOS_ANGELES = "Los Angeles";
 const LOS_ANGELES_WEATHER_FORECAST_URL = "https://api.weather.gov/gridpoints/LOX/152,49/forecast";
+
+const DEFAULT_CITY = AUSTIN;
 
 const getWeatherForecast = async (city) => {
   let url = AUSTIN_WEATHER_FORECAST_URL;
@@ -56,10 +57,11 @@ const getWeatherForecast = async (city) => {
   return data;
 };
 
-export default InsightsModal = () => {
-  const [guestConnection, setGuestConnection] = useState();
+export default WeatherForecastModal = () => {
+  const [guestConnection, setGuestConnection] = useState(null);
 
   const [weatherForecast, setWeatherForecast] = useState(null);
+  const [selectedCity, setSelectedCity] = useState(DEFAULT_CITY);
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
@@ -70,31 +72,32 @@ export default InsightsModal = () => {
     })();
   }, []);
 
-  const onActionBtnHandler = async (city) => {
+  const displayWeatherForecast = async (city) => {
     setIsLoading(true);
     try {
       const result = await getWeatherForecast(city);
       setWeatherForecast(result);
-      displayToast(`Weather forecast for ${city} has been successfully fetched.`);
+      setSelectedCity(city);
     } catch (error) {
       console.error("error", error);
-      displayToast(`Error fetching weather forecast for ${city}`, false);
     } finally {
       setIsLoading(false);
     }
   };
 
+  useEffect(() => {
+    if (guestConnection !== null) {
+      displayWeatherForecast(DEFAULT_CITY);
+    }
+  }, [guestConnection]);
+
+  const onActionBtnHandler = async (city) => {
+    await displayWeatherForecast(city);
+  };
+
   const onCloseHandler = () => {
     guestConnection.host.modal.close();
   };
-
-  const displayToast = useCallback((toast, successful = true) => {
-    guestConnection.host.toaster.display({
-      variant: successful ? "primary" : "negative",
-      message: toast,
-      timeout: 1500,
-    });
-  }, [guestConnection]);
 
   return (
     <Provider theme={defaultTheme} colorScheme="light">
@@ -105,33 +108,50 @@ export default InsightsModal = () => {
           )
           : (
             <>
-              <View marginBottom="size-100">
-                <MenuTrigger>
-                  <ActionButton>
-                    Display Weather Forecast
-                  </ActionButton>
-                  <Menu onAction={onActionBtnHandler}>
-                    <Item key={AUSTIN}>{AUSTIN}</Item>
-                    <Item key={NEW_YORK}>{NEW_YORK}</Item>
-                    <Item key={LOS_ANGELES}>{LOS_ANGELES}</Item>
-                  </Menu>
-                </MenuTrigger>
+              <View marginBottom="size-150">
+                <ButtonGroup>
+                  <Button
+                    onPress={() => onActionBtnHandler(AUSTIN)}
+                    key={AUSTIN}
+                    variant={selectedCity === AUSTIN ? "accent" : "secondary"}
+                  >
+                    {AUSTIN}
+                  </Button>
+                  <Button
+                    onPress={() => onActionBtnHandler(LOS_ANGELES)}
+                    key={LOS_ANGELES}
+                    variant={selectedCity === LOS_ANGELES ? "accent" : "secondary"}
+                  >
+                    {LOS_ANGELES}
+                  </Button>
+                  <Button
+                    onPress={() => onActionBtnHandler(NEW_YORK)}
+                    key={NEW_YORK}
+                    variant={selectedCity === NEW_YORK ? "accent" : "secondary"}
+                  >
+                    {NEW_YORK}
+                  </Button>
+                </ButtonGroup>
               </View>
 
               {(weatherForecast !== null) &&
                 <Flex height="size-3000" gap="size-100">
                   <View flexBasis="20%" flexGrow="0" flexShrink="0">
-                    <img src={weatherForecast.icon} className="weather-forecast-img" />
+                    <Image src={weatherForecast.icon} alt={`Weather forecast for ${weatherForecast.city}`} UNSAFE_className="weather-forecast-img" />
                   </View>
                   <View UNSAFE_className="weather-forecast-description">
-                    <Heading level={2} marginTop="0">{weatherForecast.city}</Heading>
+                    <Flex gap="size-100" alignItems="center">
+                      <Heading level={2} marginTop="0" marginBottom="0">{weatherForecast.city}</Heading>
+                      <LabeledValue
+                        value={new Date(weatherForecast.startTime).toLocaleString()}
+                      />
+                    </Flex>
                     <p>
                       Temperature: {weatherForecast.temperature}°{weatherForecast.temperatureUnit} /{" "}
                       {Math.round(((weatherForecast.temperature - 32) * 50) / 9) / 10}°C
                     </p>
                     <p>{weatherForecast.shortForecast}</p>
                     <p>{weatherForecast.detailedForecast}</p>
-                    <p>{new Date(weatherForecast.startTime).toLocaleString()}</p>
                   </View>
                 </Flex>
               }

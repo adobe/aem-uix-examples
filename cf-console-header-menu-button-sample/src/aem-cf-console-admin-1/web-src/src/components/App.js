@@ -13,7 +13,7 @@ import React from "react";
 import ErrorBoundary from "react-error-boundary";
 import { HashRouter as Router, Routes, Route } from "react-router-dom";
 import ExtensionRegistration from "./ExtensionRegistration";
-import InsightsModal from "./InsightsModal";
+import WeatherForecastModal from "./WeatherForecastModal";
 import TipsModal from "./TipsModal";
 
 function App() {
@@ -27,8 +27,8 @@ function App() {
             element={<ExtensionRegistration />}
           />
           <Route
-            exact path="aem-uix-examples-cf-console-header-menu-button-insights"
-            element={<InsightsModal />}
+            exact path="aem-uix-examples-cf-console-header-menu-button-weather-forecast"
+            element={<WeatherForecastModal />}
           />
           <Route
             exact path="aem-uix-examples-cf-console-header-menu-button-tips"

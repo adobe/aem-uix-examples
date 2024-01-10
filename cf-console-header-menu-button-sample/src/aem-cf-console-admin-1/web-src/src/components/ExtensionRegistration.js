@@ -24,19 +24,19 @@ function ExtensionRegistration() {
               // YOUR HEADER BUTTONS CODE SHOULD BE HERE
               {
                 id: "aem-uix-examples-cf-console-header-menu-button",
-                label: "Sample Header Button",
+                label: "Sample Button",
                 icon: "Plug",
                 variant: "secondary",
                 subItems: [
                   {
-                    id: "aem-uix-examples-cf-console-header-menu-button-insights",
-                    label: "Show Insights",
-                    icon: "ConfidenceFour",
+                    id: "aem-uix-examples-cf-console-header-menu-button-weather-forecast",
+                    label: "Weather Forecast",
+                    icon: "Cloud",
                     onClick: () => {
-                      const modalURL = "/index.html#/aem-uix-examples-cf-console-header-menu-button-insights";
+                      const modalURL = "/index.html#/aem-uix-examples-cf-console-header-menu-button-weather-forecast";
 
                       guestConnection.host.modal.showUrl({
-                        title: "Insights",
+                        title: "Weather Forecast",
                         url: modalURL,
                         height: "320px",
                         width: "550px",
@@ -45,8 +45,8 @@ function ExtensionRegistration() {
                   },
                   {
                     id: "aem-uix-examples-cf-console-header-menu-button-tips",
-                    label: "Show Tips",
-                    icon: "InfoOutline",
+                    label: "Show Components",
+                    icon: "Homepage",
                     onClick: () => {
                       const modalURL = "/index.html#/aem-uix-examples-cf-console-header-menu-button-tips";
 
