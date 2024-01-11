@@ -14,7 +14,7 @@ import ErrorBoundary from "react-error-boundary";
 import { HashRouter as Router, Routes, Route } from "react-router-dom";
 import ExtensionRegistration from "./ExtensionRegistration";
 import WeatherForecastModal from "./WeatherForecastModal";
-import TipsModal from "./TipsModal";
+import UIExtensibilityModal from "./UIExtensibilityModal";
 
 function App() {
   return (
@@ -31,8 +31,8 @@ function App() {
             element={<WeatherForecastModal />}
           />
           <Route
-            exact path="aem-uix-examples-cf-console-header-menu-button-tips"
-            element={<TipsModal />}
+            exact path="aem-uix-examples-cf-console-header-menu-button-ui-extensibility"
+            element={<UIExtensibilityModal />}
           />
           // YOUR CUSTOM ROUTES SHOULD BE HERE
         </Routes>

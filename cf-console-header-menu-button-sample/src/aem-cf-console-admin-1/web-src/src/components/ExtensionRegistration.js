@@ -44,14 +44,14 @@ function ExtensionRegistration() {
                     },
                   },
                   {
-                    id: "aem-uix-examples-cf-console-header-menu-button-tips",
-                    label: "Show Components",
-                    icon: "Homepage",
+                    id: "aem-uix-examples-cf-console-header-menu-button-ui-extensibility",
+                    label: "UI Extensibility Features",
+                    icon: "Hammer",
                     onClick: () => {
-                      const modalURL = "/index.html#/aem-uix-examples-cf-console-header-menu-button-tips";
+                      const modalURL = "/index.html#/aem-uix-examples-cf-console-header-menu-button-ui-extensibility";
 
                       guestConnection.host.modal.showUrl({
-                        title: "Tips",
+                        title: "UI Extensibility Features",
                         url: modalURL,
                         height: "250px",
                         width: "550px",
