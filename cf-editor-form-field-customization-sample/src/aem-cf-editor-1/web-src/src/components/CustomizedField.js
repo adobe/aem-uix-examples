@@ -32,6 +32,7 @@ const CustomizedField = () => {
   const [fieldData, setFieldData] = useState({
     ready: false,
   });
+  const [validationState, setValidationState] = useState("invalid");
   const [value, setValue] = useState("");
   const [wordCount, setWordCount] = useState(0);
 
@@ -39,6 +40,11 @@ const CustomizedField = () => {
     const init = async () => {
       const connection = await attach({ id: extensionId });
       setGuestConnection(connection);
+
+      // configure a validation state subscriber
+      await connection.host.field.onValidationStateChange(
+        (state) => setValidationState(state)
+      );
 
       const defaultValue = await connection.host.field.getDefaultValue();
       const fieldModel = await connection.host.field.getModel();
@@ -79,6 +85,7 @@ const CustomizedField = () => {
             name={fieldData.name}
             maxLength={fieldData.maxLength}
             onChange={onChangeHandler}
+            validationState={validationState}
             width="100%"
             marginBottom="size-100"
           />
