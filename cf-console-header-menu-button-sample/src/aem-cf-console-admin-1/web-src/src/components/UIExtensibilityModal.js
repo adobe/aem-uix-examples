@@ -61,31 +61,35 @@ export default UIExtensibilityModal = () => {
       <Content width="100%">
         <Heading level={3}>Check out some of AEM UI Extensibility features</Heading>
         <View marginBottom="size-150">
+          <Heading level={4} marginTop="size-85" marginBottom="size-85">Toaster</Heading>
+          <View marginBottom="size-85">
+            You can use Adobe React Spectrum Toast component to trigger in-app notifications.
+          </View>
           <ButtonGroup>
             <Button
-              onPress={(e) => displayToast("Toast available", "neutral")}
+              onPress={(e) => displayToast("Toast available!", "neutral")}
               variant="secondary"
             >
-              Show Neutral Toast
+              Neutral Toast
             </Button>
             <Button
               onPress={(e) => displayToast("Toast is done!", "positive")}
               variant="primary"
             >
-              Show Positive Toast
+              Positive Toast
             </Button>
             <Button
               onPress={(e) => displayToast("Toast is burned!", "negative")}
               variant="negative"
             >
-              Show Negative Toast
+              Negative Toast
             </Button>
             <Button
               onPress={(e) => displayToast("Toasting…", "info")}
               variant="accent"
               style="outline"
             >
-              Show Info Toast
+              Info Toast
             </Button>
           </ButtonGroup>
         </View>

@@ -45,13 +45,13 @@ function ExtensionRegistration() {
                   },
                   {
                     id: "aem-uix-examples-cf-console-header-menu-button-ui-extensibility",
-                    label: "UI Extensibility Features",
+                    label: "Developer Tools",
                     icon: "Hammer",
                     onClick: () => {
                       const modalURL = "/index.html#/aem-uix-examples-cf-console-header-menu-button-ui-extensibility";
 
                       guestConnection.host.modal.showUrl({
-                        title: "UI Extensibility Features",
+                        title: "Developer Tools",
                         url: modalURL,
                         height: "250px",
                         width: "550px",
