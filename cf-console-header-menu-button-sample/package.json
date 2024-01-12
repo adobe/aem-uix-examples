@@ -6,6 +6,7 @@
     "@adobe/aem-cf-admin-ui-ext-tpl": "^1.0.0-beta.24",
     "@adobe/react-spectrum": "^3.4.0",
     "@adobe/uix-guest": "^0.8.0",
+    "@spectrum-icons/workflow": "^4.2.8",
     "chalk": "^4",
     "core-js": "^3.6.4",
     "react": "^16.13.1",

@@ -17,9 +17,13 @@ import {
   Content,
   Divider,
   defaultTheme,
+  ButtonGroup,
   Button,
-  View
+  Flex,
+  View,
+  Text
 } from "@adobe/react-spectrum";
+import Info from "@spectrum-icons/workflow/Info";
 import "./UIExtensibilityModal.css";
 
 import { extensionId } from "./Constants";
@@ -38,12 +42,14 @@ export default UIExtensibilityModal = () => {
     init().catch(console.error);
   }, []);
 
-  const displayToast = useCallback((toast) => {
-    guestConnection.host.toaster.display({
-      variant: "positive",
-      message: toast,
-      timeout: 2500,
-    });
+  const displayToast = useCallback((toast, variant) => {
+    if (guestConnection !== null) {
+      guestConnection.host.toaster.display({
+        variant,
+        message: toast,
+        timeout: 1500,
+      });
+    }
   }, [guestConnection]);
 
   const onCloseHandler = () => {
@@ -53,20 +59,43 @@ export default UIExtensibilityModal = () => {
   return (
     <Provider theme={defaultTheme} colorScheme="light">
       <Content width="100%">
-        <Heading level={3}>These are some of AEM UI Extensibility features</Heading>
-        <Divider size="M" marginBottom="size-200" />
+        <Heading level={3}>Check out some of AEM UI Extensibility features</Heading>
         <View marginBottom="size-150">
-          <Button
-            onPress={(e) => displayToast("Toast displayed successfully!")}
-            variant="primary"
-          >
-            Show toast
-          </Button>
+          <ButtonGroup>
+            <Button
+              onPress={(e) => displayToast("Toast available", "neutral")}
+              variant="secondary"
+            >
+              Show Neutral Toast
+            </Button>
+            <Button
+              onPress={(e) => displayToast("Toast is done!", "positive")}
+              variant="primary"
+            >
+              Show Positive Toast
+            </Button>
+            <Button
+              onPress={(e) => displayToast("Toast is burned!", "negative")}
+              variant="negative"
+            >
+              Show Negative Toast
+            </Button>
+            <Button
+              onPress={(e) => displayToast("Toasting…", "info")}
+              variant="accent"
+              style="outline"
+            >
+              Show Info Toast
+            </Button>
+          </ButtonGroup>
         </View>
         {(sharedContext !== null) &&
           <View marginBottom="size-150">
             <Divider size="S" />
             <Heading level={4} marginTop="size-85" marginBottom="size-85">Shared Context</Heading>
+            <View>
+              The sharedContext object provides data that enables UI Extensions to execute essential actions, including AEM API calls.
+            </View>
             <pre className="shared-context">
               {`
 {
@@ -86,9 +115,9 @@ export default UIExtensibilityModal = () => {
           </View>
         }
         <Divider size="S" marginBottom="size-150" />
-        <View UNSAFE_className="more-ui-features-notice">
-          More UI Extensibility features coming soon ...
-        </View>
+        <Flex UNSAFE_className="more-ui-features-notice" gap="size-75">
+          <Info aria-label="Info" /> <Text>More UI Extensibility features coming soon ...</Text>
+        </Flex>
 
         <Button variant="primary" onPress={onCloseHandler} position="fixed" bottom="0px" right="8px">
           Close
