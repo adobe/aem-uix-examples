@@ -51,11 +51,12 @@ async function main (params) {
       body: formData
     });
 
+    logger.info(` Export response status text ${exportResponse.statusText}`)
     if (!exportResponse.ok) {
-      throw new Error('request to ' + params.aemHost + ' failed with status code ' + res.status)
+      throw new Error('request to ' + params.aemHost + ' failed with status code ' + exportResponse.status)
     }
 
-    logger.info(`${exportResponse.statusCode}: successful export request`)
+    logger.info(`${exportResponse.status}: successful export request`)
     return {
       statusCode: 200,
       body: "{}"

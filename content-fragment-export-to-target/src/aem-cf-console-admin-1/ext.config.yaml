@@ -29,3 +29,13 @@ runtimeManifest:
           annotations:
             require-adobe-auth: false
             final: true
+        publish:
+          function: actions/publish/index.js
+          web: 'yes'
+          runtime: nodejs:16
+          inputs:
+            LOG_LEVEL: debug
+            API_ENDPOINT: $API_ENDPOINT
+          annotations:
+            require-adobe-auth: false
+            final: true

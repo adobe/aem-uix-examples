@@ -20,7 +20,7 @@ import {
   Divider
 } from '@adobe/react-spectrum'
 import { useParams } from "react-router-dom"
-import { triggerExportToAdobeTarget } from '../utils'
+import { triggerExportToAdobeTarget, triggerPublish } from '../utils'
 import { extensionId } from "./Constants"
 
 const CF_PUBLISH_PROMPT_MESSAGE =
@@ -112,11 +112,29 @@ export default function ExporttoAdobeTargetOffersModal () {
     await guestConnection.host.modal.close();
   }
 
-  const onPublishAndExportHandler = () => {
+  const onPublishAndExportHandler = async () => {
     setInprogress(true);
-    setTimeout(() => {
-      guestConnection.host.modal.close()
-    }, 5000)
+    try {
+      const auth = await guestConnection.sharedContext.get("auth");
+      const token = auth.imsToken;
+      const imsOrg = auth.imsOrg;
+      const repo = await guestConnection.sharedContext.get("aemHost");
+      const paths = selectedContentFragments.map(el => el.id);
+      console.log(`Path: ${paths}`);
+      await triggerPublish(token, repo, imsOrg, paths);
+      await triggerExportToAdobeTarget(token, repo, imsOrg, paths);
+      await guestConnection.host.toaster.display({
+        variant: "positive",
+        message: "Content fragment(s) published and exported successfully",
+      });
+    } catch (e) {
+      console.error('Export to target got an error', e);
+      await guestConnection.host.toaster.display({
+        variant: "negative",
+        message: "There was an error while exporting Content Fragment(s)",
+      });
+    }
+    await guestConnection.host.modal.close();
   }
 
   const onTaskCompleted = () => {

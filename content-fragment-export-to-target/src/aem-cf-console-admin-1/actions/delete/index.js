@@ -52,8 +52,9 @@ async function main (params) {
       method: "POST",
       body: formData
     });
+    logger.info(` Delete response status text ${deleteResponse.statusText}`)
     if (!deleteResponse.ok) {
-      throw new Error('request to ' + params.aemHost + ' failed with status code ' + exportResponse.status)
+      throw new Error('request to ' + params.aemHost + ' failed with status code ' + deleteResponse.status)
     }
 
     const response = {
@@ -62,7 +63,7 @@ async function main (params) {
     };
 
     // log the response status code
-    logger.info(`${deleteResponse.statusCode}: successful request`)
+    logger.info(`${deleteResponse.status}: successful request`)
     return response;
   } catch (error) {
     // log any server errors

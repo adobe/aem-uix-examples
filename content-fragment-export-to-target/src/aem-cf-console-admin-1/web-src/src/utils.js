@@ -70,3 +70,12 @@ export const triggerDeleteFromAdobeTarget = async (authToken, aemHost, imsOrg, p
     paths
   });
 }
+
+export const triggerPublish = async (authToken, aemHost, imsOrg, paths = []) => {
+  /** @todo  check if we can use API here and update column text*/
+  return await actionWebInvoke(getActionUrl("publish"), authToken, {
+    aemHost: "https://" + aemHost,
+    imsOrg,
+    paths
+  });
+}
