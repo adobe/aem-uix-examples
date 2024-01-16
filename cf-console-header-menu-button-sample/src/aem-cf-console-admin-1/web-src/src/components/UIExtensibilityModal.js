@@ -58,50 +58,51 @@ export default UIExtensibilityModal = () => {
 
   return (
     <Provider theme={defaultTheme} colorScheme="light">
-      <Content width="100%">
-        <Heading level={3}>Check out some of AEM UI Extensibility features</Heading>
-        <View marginBottom="size-150">
-          <Heading level={4} marginTop="size-85" marginBottom="size-85">Toaster</Heading>
-          <View marginBottom="size-85">
-            You can use Adobe React Spectrum Toast component to trigger in-app notifications.
-          </View>
-          <ButtonGroup>
-            <Button
-              onPress={(e) => displayToast("Toast available!", "neutral")}
-              variant="secondary"
-            >
-              Neutral Toast
-            </Button>
-            <Button
-              onPress={(e) => displayToast("Toast is done!", "positive")}
-              variant="primary"
-            >
-              Positive Toast
-            </Button>
-            <Button
-              onPress={(e) => displayToast("Toast is burned!", "negative")}
-              variant="negative"
-            >
-              Negative Toast
-            </Button>
-            <Button
-              onPress={(e) => displayToast("Toasting…", "info")}
-              variant="accent"
-              style="outline"
-            >
-              Info Toast
-            </Button>
-          </ButtonGroup>
-        </View>
-        {(sharedContext !== null) &&
+      <Flex direction="column">
+        <Content width="100%">
+          <Heading level={3}>Check out some of AEM UI Extensibility features</Heading>
           <View marginBottom="size-150">
-            <Divider size="S" />
-            <Heading level={4} marginTop="size-85" marginBottom="size-85">Shared Context</Heading>
-            <View>
-              The sharedContext object provides data that enables UI Extensions to execute essential actions, including AEM API calls.
+            <Heading level={4} marginTop="size-85" marginBottom="size-85">Toaster</Heading>
+            <View marginBottom="size-85">
+              You can use Adobe React Spectrum Toast component to trigger in-app notifications.
             </View>
-            <pre className="shared-context">
-              {`
+            <ButtonGroup>
+              <Button
+                onPress={(e) => displayToast("Toast available!", "neutral")}
+                variant="secondary"
+              >
+                Neutral Toast
+              </Button>
+              <Button
+                onPress={(e) => displayToast("Toast is done!", "positive")}
+                variant="primary"
+              >
+                Positive Toast
+              </Button>
+              <Button
+                onPress={(e) => displayToast("Toast is burned!", "negative")}
+                variant="negative"
+              >
+                Negative Toast
+              </Button>
+              <Button
+                onPress={(e) => displayToast("Toasting…", "info")}
+                variant="accent"
+                style="outline"
+              >
+                Info Toast
+              </Button>
+            </ButtonGroup>
+          </View>
+          {(sharedContext !== null) &&
+            <View marginBottom="size-150">
+              <Divider size="S" />
+              <Heading level={4} marginTop="size-85" marginBottom="size-85">Shared Context</Heading>
+              <View>
+                The sharedContext object provides data that enables UI Extensions to execute essential actions, including AEM API calls.
+              </View>
+              <pre className="shared-context">
+                {`
 {
   aemHost: "${sharedContext.get("aemHost")}", // string, hostname of connected AEM environment
   locale: "${sharedContext.get("locale")}", // string, locale of current user
@@ -115,18 +116,20 @@ export default UIExtensibilityModal = () => {
   }
 }
               `}
-            </pre>
-          </View>
-        }
-        <Divider size="S" marginBottom="size-150" />
-        <Flex UNSAFE_className="more-ui-features-notice" gap="size-75">
-          <Info aria-label="Info" /> <Text>More UI Extensibility features coming soon ...</Text>
-        </Flex>
-
-        <Button variant="primary" onPress={onCloseHandler} position="fixed" bottom="0px" right="8px">
-          Close
-        </Button>
-      </Content>
+              </pre>
+            </View>
+          }
+          <Divider size="S" marginBottom="size-150" />
+          <Flex UNSAFE_className="more-ui-features-notice" gap="size-75">
+            <Info aria-label="Info" /> <Text>More UI Extensibility features coming soon ...</Text>
+          </Flex>
+        </Content>
+        <View position="relative" width="100%" height="size-300" marginBottom="size-150">
+          <Button variant="primary" onPress={onCloseHandler} position="absolute" bottom="0" right="size-75">
+            Close
+          </Button>
+        </View>
+      </Flex>
     </Provider>
   );
 };
