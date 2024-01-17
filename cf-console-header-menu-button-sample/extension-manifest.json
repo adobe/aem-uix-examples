@@ -1,0 +1,13 @@
+{
+  "name": "AEM Content Fragments Console Header Menu",
+  "id": "aem-content-fragments-console-header-menu",
+  "description": "A sample extension illustrating the extensibility of the AEM Content Fragments Console header menu by adding a custom button.",
+  "version": "0.0.1",
+  "headerMenuButtons": [
+    {
+      "label": "Sample Button",
+      "needsModal": true,
+      "id": "sample-header-button"
+    }
+  ]
+}
