@@ -38,7 +38,7 @@ function ExtensionRegistration() {
                       guestConnection.host.modal.showUrl({
                         title: "Weather Forecast",
                         url: modalURL,
-                        height: "320px",
+                        height: "240px",
                         width: "550px",
                       });
                     },
@@ -53,7 +53,7 @@ function ExtensionRegistration() {
                       guestConnection.host.modal.showUrl({
                         title: "Developer Tools",
                         url: modalURL,
-                        height: "250px",
+                        height: "360px",
                         width: "550px",
                       });
                     },

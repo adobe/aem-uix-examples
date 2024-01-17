@@ -9,7 +9,7 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, useRef } from "react";
 import { attach } from "@adobe/uix-guest";
 import {
   Heading,
@@ -31,6 +31,20 @@ import { extensionId } from "./Constants";
 export default UIExtensibilityModal = () => {
   const [guestConnection, setGuestConnection] = useState(null);
   const [sharedContext, setSharedContext] = useState(null);
+
+  // A workaround for fixing an issue with the right scroll bar.
+  const heightRef = useRef(0);
+  const containerRef = useCallback(async (node) => {
+    if (node !== null && guestConnection !== null) {
+      const height = Number((document.body.clientHeight).toFixed(0));
+      if (heightRef.current !== height) {
+        heightRef.current = height;
+        await guestConnection.host.modal.set({
+          height
+        });
+      }
+    }
+  }, [guestConnection]);
 
   useEffect(() => {
     const init = async () => {
@@ -58,7 +72,10 @@ export default UIExtensibilityModal = () => {
 
   return (
     <Provider theme={defaultTheme} colorScheme="light">
-      <Flex direction="column">
+      <Flex
+        direction="column"
+        ref={containerRef}
+      >
         <Content width="100%">
           <Heading level={3}>Check out some of AEM UI Extensibility features</Heading>
           <View marginBottom="size-150">

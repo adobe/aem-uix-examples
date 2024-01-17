@@ -135,7 +135,7 @@ export default WeatherForecastModal = () => {
               </View>
 
               {(weatherForecast !== null) &&
-                <Flex height="size-3000" gap="size-100">
+                <Flex height="size-2400" gap="size-100">
                   <View flexBasis="20%" flexGrow="0" flexShrink="0">
                     <Image src={weatherForecast.icon} alt={`Weather forecast for ${weatherForecast.city}`} UNSAFE_className="weather-forecast-img" />
                   </View>
