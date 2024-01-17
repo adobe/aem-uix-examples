@@ -13,22 +13,18 @@ import React, { useEffect, useState } from "react";
 import { attach } from "@adobe/uix-guest";
 import { extensionId } from "./Constants";
 import {
-  Provider, View, TextField, Text, lightTheme
+  Flex, Provider, View, TextField, Text, lightTheme
 } from "@adobe/react-spectrum";
+import Info from '@spectrum-icons/workflow/Info';
 import "./CustomizedField.css";
 
-const validateFirstLetters = (sentence) => {
-  // Split the sentence into words
-  const words = sentence.split(" ");
-
-  // Check if the first letter of each word is uppercase
-  for (const i = 0; i < words.length; i++) {
-    if (words[i].charAt(0) !== words[i].charAt(0).toUpperCase()) {
-      return false;
-    }
+const countWords = (sentence) => {
+  const trimmedString = sentence.trim();
+  if (trimmedString === '') {
+    return 0;
   }
-
-  return true;
+  const words = trimmedString.split(/\s+/);
+  return words.length;
 };
 
 const CustomizedField = () => {
@@ -38,8 +34,7 @@ const CustomizedField = () => {
   });
   const [validationState, setValidationState] = useState("invalid");
   const [value, setValue] = useState("");
-  // our custom validation status
-  const [isValid, setIsValid] = useState(false);
+  const [wordCount, setWordCount] = useState(0);
 
   useEffect(() => {
     const init = async () => {
@@ -58,7 +53,7 @@ const CustomizedField = () => {
       const name = fieldModel.name;
       const maxLength = fieldModel.maxLength ?? "";
       setValue(defaultValue);
-      setIsValid(validateFirstLetters(defaultValue));
+      setWordCount(countWords(defaultValue));
       setFieldData({
         defaultValue,
         required,
@@ -74,11 +69,9 @@ const CustomizedField = () => {
 
   const onChangeHandler = (v) => {
     setValue(v);
-    const isValid = validateFirstLetters(v);
-    setIsValid(isValid);
-    if (isValid) {
-      guestConnection.host.field.onChange(v);
-    }
+    const count = countWords(v);
+    setWordCount(count);
+    guestConnection.host.field.onChange(v);
   };
 
   return (
@@ -92,16 +85,18 @@ const CustomizedField = () => {
             name={fieldData.name}
             maxLength={fieldData.maxLength}
             onChange={onChangeHandler}
-            validationState={(validationState === "valid" && isValid) ? "valid" : "invalid"}
+            validationState={validationState}
             width="100%"
             marginBottom="size-100"
           />
-          {!isValid && <View marginBottom="size-100" UNSAFE_className="validation-error">Start each word with an uppercase letter.</View>}
-          <View marginBottom="size-100">
+          <Flex alignItems="center" UNSAFE_className="info-block">
+            <Info aria-label="Info" size="S" marginEnd={5}/>
             <Text>
-              Enter text with each word capitalized to meet validation requirements.
+              {wordCount === 0
+                ? "No words entered yet. Add some text!"
+                : `You've entered ${wordCount} ${wordCount === 1 ? 'word' : 'words'}.`}
             </Text>
-          </View>
+          </Flex>
         </View>
       }
     </Provider>
