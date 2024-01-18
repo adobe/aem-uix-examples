@@ -1,3 +1,19 @@
 extensions:
   aem/cf-console-admin/1:
     $include: src/aem-cf-console-admin-1/ext.config.yaml
+    runtimeManifest:
+      packages:
+        aem-sites-events-app:
+          license: Apache-2.0
+          actions:
+            get-cf-info:
+              function: src/aem-cf-console-admin-1/actions/get-cf-info/index.js
+              web: 'yes'
+              runtime: nodejs:18
+              inputs:
+                LOG_LEVEL: debug
+              include:
+                - ["src/aem-cf-console-admin-1/configuration/aem-integration-data.json"]
+              annotations:
+                require-adobe-auth: true
+                final: true

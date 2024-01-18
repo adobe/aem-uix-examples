@@ -1,0 +1,10 @@
+{
+  "meta_scopes": [
+    "ent_aem_cloud_api"
+  ],
+  "client_id": "<client_id>",
+  "client_secret": "<client_secret>",
+  "technical_account_id": "<technical_account_id>",
+  "ims_org_id": "<ims_org_id>",
+  "private_key": "<private_key>"
+}

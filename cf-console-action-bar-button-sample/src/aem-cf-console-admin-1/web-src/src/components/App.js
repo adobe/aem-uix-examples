@@ -7,25 +7,30 @@ import ErrorBoundary from "react-error-boundary";
 import { HashRouter as Router, Routes, Route } from "react-router-dom";
 import ExtensionRegistration from "./ExtensionRegistration";
 import ClickMeModal from "./ClickMeModal";
+import {Provider as ProviderV3, defaultTheme} from '@adobe/react-spectrum';
+import Provider from '@react/react-spectrum/Provider';
 
 function App() {
   return (
-    <Router>
-      <ErrorBoundary onError={onError} FallbackComponent={fallbackComponent}>
-        <Routes>
-          <Route index element={<ExtensionRegistration />} />
-          <Route
-            exact path="index.html"
-            element={<ExtensionRegistration />} 
-          />
-          <Route
-            exact path="content-fragment/:fragmentId/click-me-modal"
-            element={<ClickMeModal />}
-          />
-          // YOUR CUSTOM ROUTES SHOULD BE HERE
-        </Routes>
-      </ErrorBoundary>
-    </Router>
+    <ProviderV3 theme={defaultTheme} colorScheme={`light`}>
+      <Provider toastPlacement="bottom center" theme="light">
+        <Router>
+          <ErrorBoundary onError={onError} FallbackComponent={fallbackComponent}>
+            <Routes>
+              <Route index element={<ExtensionRegistration />} />
+              <Route
+                exact path="index.html"
+                element={<ExtensionRegistration />} 
+              />
+              <Route
+                exact path="content-fragment/:selection/click-me-modal"
+                element={<ClickMeModal />}
+              />
+            </Routes>
+          </ErrorBoundary>
+        </Router>
+      </Provider>
+    </ProviderV3>
   )
 
   // Methods

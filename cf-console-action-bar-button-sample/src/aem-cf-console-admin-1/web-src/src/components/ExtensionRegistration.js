@@ -19,16 +19,23 @@ function ExtensionRegistration() {
               {
                 'id': 'click-me',
                 'label': 'Click Me',
-                'icon': 'PublishCheck',
+                'icon': 'SelectionChecked',
                 onClick(selections) {
-                  const modalURL = "/index.html#" + generatePath("/content-fragment/:fragmentId/click-me-modal", {
-                    fragmentId: encodeURIComponent(selections[0].id),
-                  });
+                  console.log(selections);
+                  const selectionIds = selections.map(selection => selection.fragmentId);
+                  const modalURL = "/index.html#" + generatePath(
+                    "/content-fragment/:selection/click-me-modal",
+                    {
+                      // Set the :selection React route parameter to an encoded, delimited list of ids of the selected content fragments
+                      selection: encodeURIComponent(selectionIds.join('|'))
+                    }
+                  );
                   console.log("Modal URL: ", modalURL);
 
                   guestConnection.host.modal.showUrl({
-                    title: "Click Me",
+                    title: "Action Bar Extension Demo",
                     url: modalURL,
+                    fullscreen: true
                   });
                 },
               },
