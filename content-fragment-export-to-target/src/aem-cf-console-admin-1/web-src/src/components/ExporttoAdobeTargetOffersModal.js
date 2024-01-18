@@ -100,7 +100,7 @@ export default function ExporttoAdobeTargetOffersModal () {
       await triggerExportToAdobeTarget(token, repo, imsOrg, paths);
       await guestConnection.host.toaster.display({
         variant: "positive",
-        message: "Content fragment(s) exported successfully",
+        message: "Selected content fragment(s) are successfully scheduled to sync with Adobe Target.",
       });
     } catch (e) {
       console.error('Export to target got an error', e);
@@ -125,13 +125,13 @@ export default function ExporttoAdobeTargetOffersModal () {
       await triggerExportToAdobeTarget(token, repo, imsOrg, paths);
       await guestConnection.host.toaster.display({
         variant: "positive",
-        message: "Content fragment(s) published and exported successfully",
+        message: "Selected content fragment(s) are successfully scheduled to be published and synced with Adobe Target.",
       });
     } catch (e) {
       console.error('Export to target got an error', e);
       await guestConnection.host.toaster.display({
         variant: "negative",
-        message: "There was an error while exporting Content Fragment(s)",
+        message: "There was an error while publishing and exporting Content Fragment(s)",
       });
     }
     await guestConnection.host.modal.close();

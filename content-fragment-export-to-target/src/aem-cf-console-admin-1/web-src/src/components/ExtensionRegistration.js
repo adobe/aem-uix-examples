@@ -42,7 +42,7 @@ function ExtensionRegistration() {
                                                 if (exported) {
                                                     guestConnection.host.toaster.display({
                                                         variant: "positive",
-                                                        message: "Selected content fragments have been successfully synced with Adobe Target.",
+                                                        message: "Selected content fragment(s) are successfully scheduled to sync with Adobe Target.",
                                                     })
                                                 } else {
                                                     guestConnection.host.toaster.display({
