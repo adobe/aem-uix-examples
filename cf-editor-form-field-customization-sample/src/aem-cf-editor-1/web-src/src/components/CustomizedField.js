@@ -47,7 +47,7 @@ const CustomizedField = () => {
       const height = Number((document.body.clientHeight).toFixed(0)) + 10; // we add extra 10px
       if (heightRef.current !== height) {
         heightRef.current = height;
-        await wait(0.5); // we need to wait for some time to ensure that setHeight() is available for use
+        await wait(1); // we need to wait for some time to ensure that setHeight() is available for use
         await guestConnection.host.field.setHeight(height);
       }
     }
@@ -109,7 +109,7 @@ const CustomizedField = () => {
             marginBottom="size-100"
           />
           <Flex alignItems="center" UNSAFE_className="info-block">
-            <Info aria-label="Info" size="S" marginEnd={5}/>
+            <Info aria-label="Info" size="S" marginEnd="size-65" />
             <Text>
               {wordCount === 0
                 ? "No words entered yet. Add some text!"
