@@ -18,7 +18,7 @@ function ExtensionRegistration() {
               // YOUR ACTION BAR BUTTONS CODE SHOULD BE HERE
               {
                 'id': 'click-me',
-                'label': 'Click Me',
+                'label': 'Display Metadata',
                 'icon': 'SelectionChecked',
                 onClick(selections) {
                   console.log(selections);
@@ -35,7 +35,7 @@ function ExtensionRegistration() {
                   guestConnection.host.modal.showUrl({
                     title: "Action Bar Extension Demo",
                     url: modalURL,
-                    fullscreen: true
+                    fullscreen: true,
                   });
                 },
               },

@@ -47,3 +47,8 @@ body {
   color: var(--spectrum-alias-text-color-hover,var(--spectrum-global-color-gray-900));
   background-color: var(--spectrum-alias-highlight-hover);
 }
+
+.spectrum-Accordion-itemHeader {
+  font-size: var(--spectrum-global-dimension-font-size-100);
+  font-weight: bold;
+}

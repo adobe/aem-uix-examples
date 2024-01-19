@@ -26,6 +26,7 @@ import {
   Column,
   View
 } from '@adobe/react-spectrum'
+import {Accordion, AccordionItem} from '@react/react-spectrum/Accordion';
 import Spinner from './Spinner';
 import CFTable from './CFTable';
 import { useParams } from "react-router-dom"
@@ -55,10 +56,16 @@ async function getCFInfo(auth, fragmentIds, aemHost) {
       });
 }
 
-const columns = [
-  {name: 'Title', uid: 'title'},
-  {name: 'Id', uid: 'id'},
-  {name: 'Path', uid: 'path'}
+const versionColumns = [
+  {name: 'Version Number', uid: 'title'},
+  {name: 'Version ID', uid: 'id'},
+  {name: 'Created At', uid: 'created'},
+  {name: 'Created By', uid: 'createdBy'}
+];
+
+const fieldColumns = [
+  {name: 'Name', uid: 'name'},
+  {name: 'Type', uid: 'type'},
 ];
 
 export default function ClickMeModal () {
@@ -128,34 +135,96 @@ export default function ClickMeModal () {
         </Flex>
     </Grid>
   ) : (
-    <Content width="100%">
-      <Text>Number of Fragments Selected: {fragmentIds.length}</Text>
+      <Flex direction="column" width="100%" wrap="wrap">
+      <Heading level={3}>This extension displays the metadata of the {fragmentIds.length} content fragments you selected.</Heading>
+      <View>
       <ErrorBoundary onError={onError} FallbackComponent={fallbackComponent}>
-      <TableView
-      aria-label="Content Fragments Table">
-        <TableHeader columns={columns}>
-          {column => (
-            <Column
-              key={column.uid}>
-              {column.name}
-            </Column>
-          )}
-        </TableHeader>
-        <TableBody items={fragments}>
-          {item => (
-            <Row>
-              {columnKey => <Cell>{item[columnKey]}</Cell>}
-            </Row>
-          )}
-        </TableBody>
-      </TableView>
+      <Accordion aria-label="Default" 
+                 ariaLevel={1} 
+                 multiselectable={true}
+                 defaultSelectedIndex={[0]}
+                 >
+        {fragments.map((cf, index) => 
+            <AccordionItem
+                key={index}
+                disabled={false}
+                header={cf.title}
+            >
+            <Heading level={4}>Fragment ID</Heading>
+            {cf.id}
+            <Heading level={4}>Created on</Heading>
+            {new Date(cf.created.at).toDateString()} by {cf.created.by}
+            {cf.published ? (
+              <>
+              <Heading level={4}>Last published on</Heading>
+              {new Date(cf.published.at).toDateString()} by {cf.published.by}
+              </>
+            ) : <></>
+            }
+            <Heading level={4}>Version History</Heading>
+            {cf.versions.length > 0 ? (
+              <>
+              <TableView
+              aria-label="Versions Table"
+              width="90%">
+                <TableHeader columns={versionColumns}>
+                  {column => (
+                    <Column
+                      key={column.uid}
+                      allowsResizing>
+                      {column.name}
+                    </Column>
+                  )}
+                </TableHeader>
+                <TableBody items={cf.versions}>
+                  {item => (
+                    <Row>
+                      {columnKey => <Cell>{item[columnKey]}</Cell>}
+                    </Row>
+                  )}
+                </TableBody>
+              </TableView>
+              </>
+            ) : (
+              <Text>No published versions.</Text>
+            )}
+            <Heading level={4}>Fields</Heading>
+            {cf.fields?.length > 0 ? (
+              <>
+              <TableView
+              aria-label="Fields Table"
+              width="50%">
+                <TableHeader columns={fieldColumns}>
+                  {column => (
+                    <Column
+                      key={column.uid}>
+                      {column.name}
+                    </Column>
+                  )}
+                </TableHeader>
+                <TableBody items={cf.fields.map((item, index) => ({...item, id: index + 1}))}>
+                  {item => (
+                    <Row>
+                      {columnKey => <Cell>{item[columnKey]}</Cell>}
+                    </Row>
+                  )}
+                </TableBody>
+              </TableView>
+              </>
+            ) : (
+              <Text>No fields.</Text>
+            )}
+            </AccordionItem>
+        )}
+      </Accordion>
       </ErrorBoundary>
-      <Flex width="100%" justifyContent="end" alignItems="center" marginTop="size-400">
+      </View>
+      <Flex width="100%" justifyContent="end" marginTop="size-400">
         <ButtonGroup align="end">
           <Button variant="primary" onClick={onCloseHandler}>Close</Button>
         </ButtonGroup>
       </Flex>
-    </Content>
+    </Flex>
   )
 
   // error handler on UI rendering failure
@@ -167,7 +236,7 @@ export default function ClickMeModal () {
       return (
           <React.Fragment>
               <h1 style={{textAlign: "center", marginTop: "20px"}}>
-                  Phly, phly... Something went wrong :(
+                  Phly, phly... Something went wrong
               </h1>
               <pre>{componentStack + "\n" + error.message}</pre>
           </React.Fragment>
