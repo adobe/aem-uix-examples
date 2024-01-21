@@ -3,7 +3,7 @@
 */
 
 /* global fetch */
-
+import actions from './config.json'
 /**
  *
  * Invokes a web action
@@ -54,4 +54,31 @@ async function actionWebInvoke (actionUrl, headers = {}, params = {}, options = 
   return content
 }
 
-export default actionWebInvoke
+/**
+ * @param aemHost
+ * @param fragmentIds
+ * @param authConfig
+ */
+async function getContentFragmentsInfo(aemHost, fragmentIds, authConfig) {
+  try {
+    const fragmentsInfo = await actionWebInvoke(
+      actions['get-cf-info'],
+      {},
+      {
+        aemHost,
+        fragmentIds: fragmentIds,
+        authConfig
+      }
+    );
+    console.log('Response from "get-cf-info" action: ', JSON.stringify(fragmentsInfo));
+    return fragmentsInfo || [];
+  } catch(e) {
+    console.error(e);
+    return []
+  }
+}
+
+module.exports = {
+  actionWebInvoke,
+  getContentFragmentsInfo,
+}

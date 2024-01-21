@@ -129,14 +129,17 @@ function errorResponse (statusCode, message, logger) {
   }
 }
 
-function camelCaseToWords(s) {
-  const result = s.replace(/([A-Z])/g, ' $1');
-  return result.charAt(0).toUpperCase() + result.slice(1);
+/**
+ * @param params
+ */
+function isSupportedAuthScheme (params) {
+  return params.authConfig.authScheme === 'Bearer';
 }
 
 module.exports = {
   errorResponse,
   getBearerToken,
   stringParameters,
-  checkMissingRequestInputs
+  checkMissingRequestInputs,
+  isSupportedAuthScheme,
 }

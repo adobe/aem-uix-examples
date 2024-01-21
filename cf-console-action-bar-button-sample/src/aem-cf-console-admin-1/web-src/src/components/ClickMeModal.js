@@ -28,33 +28,11 @@ import {
 } from '@adobe/react-spectrum'
 import {Accordion, AccordionItem} from '@react/react-spectrum/Accordion';
 import Spinner from './Spinner';
-import CFTable from './CFTable';
 import { useParams } from "react-router-dom"
-
-import allActions from '../config.json'
-import actionWebInvoke from '../utils'
 
 import { extensionId } from "./Constants"
 
-async function getCFInfo(auth, fragmentIds, aemHost) {
-  console.log({fragmentIds, aemHost});
-  const endpoint = allActions['get-cf-info'] + '?' + new URLSearchParams({
-      aemHost,
-      fragmentIds,
-  });
-
-  return fetch(endpoint, {
-      method: 'GET',
-      headers: new Headers({
-          Authorization: `Bearer ${auth.imsToken}`,
-          'x-gw-ims-org-id': auth.imsOrg,
-      })
-  })
-      .then(response => response.json())
-      .then(response => {
-          return response;
-      });
-}
+import { getContentFragmentsInfo } from '../utils';
 
 const versionColumns = [
   {name: 'Version Number', uid: 'title'},
@@ -68,18 +46,18 @@ const fieldColumns = [
   {name: 'Type', uid: 'type'},
 ];
 
+const getCfInfoAction = 'get-cf-info';
+
 export default function ClickMeModal () {
   // Fields
   const [isContentLoading, setContentLoading] = useState(true);
   const [guestConnection, setGuestConnection] = useState();
   const [error, setError] = useState(null);
-  const [auth, setAuth] = useState();
   const [fragments, setFragments] = useState([]);
   const { selection } = useParams();
   const fragmentIds = selection?.split('|') || [];
 
   console.log('Selected Fragment Ids', fragmentIds);
-
   if (!fragmentIds || fragmentIds.length === 0) {
     console.error('No Content Fragments are selected.');
     return;
@@ -91,17 +69,16 @@ export default function ClickMeModal () {
         const guestConnection = await attach({ id: extensionId })
 
         setGuestConnection(guestConnection);
+        console.log(guestConnection);
 
         const auth = guestConnection.sharedContext.get('auth');
-        setAuth(auth);
-
         const aemHost = guestConnection.sharedContext.get('aemHost');
 
-        const fragments = await getCFInfo(auth, fragmentIds.join(','), aemHost);
+        const fragments = await getContentFragmentsInfo(aemHost, fragmentIds, auth);
         console.log(fragments);
         setFragments(fragments);
       } catch(e) {
-        setError(e.message);
+        setError('Unable to retrieve information about selected fragments.');
       } finally {
         setContentLoading(false);
       }
@@ -142,7 +119,7 @@ export default function ClickMeModal () {
       <Accordion aria-label="Default" 
                  ariaLevel={1} 
                  multiselectable={true}
-                 defaultSelectedIndex={[0]}
+                 defaultSelectedIndex={[Math.max(0, fragments.length - 1)]}
                  >
         {fragments.map((cf, index) => 
             <AccordionItem

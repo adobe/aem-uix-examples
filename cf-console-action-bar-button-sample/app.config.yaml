@@ -15,5 +15,5 @@ extensions:
               include:
                 - ["src/aem-cf-console-admin-1/configuration/aem-integration-data.json"]
               annotations:
-                require-adobe-auth: true
+                require-adobe-auth: false
                 final: true

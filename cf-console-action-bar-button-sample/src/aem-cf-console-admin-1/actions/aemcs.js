@@ -1,12 +1,25 @@
-const { context, getToken } = require('@adobe/aio-lib-ims');
 const { createFetch } = require('@adobe/aio-lib-core-networking');
-const fs = require('fs');
 
-const IMS_CONFIG_FILENAME = 'aem-integration-data.json';
+async function getContentFragmentsInfo(params) {
+  let fragmentsInfo = [];
+  try {
+    for (const id of params.fragmentIds) {
+      try {
+        const cf = await getContentFragment(params.aemHost, id, params.authConfig.imsToken);
+        const versions = await getVersionsForContentFragment(params.aemHost, id, params.authConfig.imsToken);
+        fragmentsInfo.push({versions, ...cf});
+      } catch(e) {
+        throw e; 
+      }
+    }
+    return fragmentsInfo;
+  } catch(e) {
+    throw e;
+  }
+}
 
-async function getContentFragment(aemBucket, fragmentId) {
-  const endpoint = `https://${aemBucket}.adobeaemcloud.com/adobe/sites/cf/fragments/${fragmentId}?references=direct`;
-  const token = await getAccessToken();
+async function getContentFragment(aemHost, fragmentId, token) {
+  const endpoint = `https://${aemHost}/adobe/sites/cf/fragments/${fragmentId}?references=direct`;
   const fetch = createFetch();
   const result = await fetch(
     endpoint,
@@ -26,9 +39,8 @@ async function getContentFragment(aemBucket, fragmentId) {
   return response;
 }
 
-async function getContentFragmentPublicationStatus(aemBucket, fragmentId) {
-  const endpoint = `https://${aemBucket}.adobeaemcloud.com/adobe/sites/cf/fragments/${fragmentId}/scheduledPublicationStatus`;
-  const token = await getAccessToken();
+async function getContentFragmentPublicationStatus(aemHost, fragmentId, token) {
+  const endpoint = `https://${aemHost}/adobe/sites/cf/fragments/${fragmentId}/scheduledPublicationStatus`;
   const fetch = createFetch();
   const result = await fetch(
     endpoint,
@@ -48,9 +60,8 @@ async function getContentFragmentPublicationStatus(aemBucket, fragmentId) {
   return response;
 }
 
-async function getVersionsForContentFragment(aemBucket, fragmentId, limit = 50) {
-  const endpoint = `https://${aemBucket}.adobeaemcloud.com/adobe/sites/cf/fragments/${fragmentId}/versions?limit=${limit}`;
-  const token = await getAccessToken();
+async function getVersionsForContentFragment(aemHost, fragmentId, token, limit = 50) {
+  const endpoint = `https://${aemHost}/adobe/sites/cf/fragments/${fragmentId}/versions?limit=${limit}`;
   const fetch = createFetch();
 
   const fetchData = async (apiUrl) => {
@@ -83,26 +94,9 @@ async function getVersionsForContentFragment(aemBucket, fragmentId, limit = 50) 
   return await fetchData(endpoint);
 }
 
-/**
- * @returns {Promise} Resolving to an access token (string)
- * @private
- */
-async function getAccessToken() {
-  const imsContextConfig = getImsConfig();
-  context.set('aemcs_jwt', imsContextConfig);
-  return await getToken('aemcs_jwt');
-}
-
-/**
- * @returns {object}
- * @private
- */
-function getImsConfig() {
-  return JSON.parse(fs.readFileSync(__dirname + '/' + IMS_CONFIG_FILENAME, 'utf8'));
-}
-
 module.exports = {
+  getContentFragmentsInfo,
   getContentFragment,
   getContentFragmentPublicationStatus,
-  getVersionsForContentFragment
+  getVersionsForContentFragment,
 }

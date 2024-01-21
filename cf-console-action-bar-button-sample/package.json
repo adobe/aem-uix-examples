@@ -1,11 +1,10 @@
 {
-  "name": "185BrownOrca",
+  "name": "cf-console-action-bar-button-sample",
   "version": "0.0.1",
   "private": true,
   "dependencies": {
-    "@adobe/aem-cf-admin-ui-ext-tpl": "^1.0.0-beta.23",
-    "@adobe/aio-lib-core-networking": "^5.0.0",
-    "@adobe/aio-lib-ims": "^7.0.0",
+    "@adobe/aem-cf-admin-ui-ext-tpl": "^1.0.0-beta.11",
+    "@adobe/aio-lib-core-networking": "^4.1.0",
     "@adobe/aio-sdk": "^3.0.0",
     "@adobe/exc-app": "^0.2.21",
     "@adobe/react-spectrum": "^3.4.0",
@@ -13,7 +12,6 @@
     "@react-spectrum/list": "^3.0.0-rc.0",
     "@react/react-spectrum": "^2.41.0",
     "@spectrum-icons/workflow": "^3.2.0",
-    "chalk": "^4",
     "core-js": "^3.6.4",
     "node-fetch": "^2.6.0",
     "node-html-parser": "^5.4.2-0",
@@ -35,5 +33,8 @@
     "test": "jest --passWithNoTests ./test",
     "e2e": "jest --collectCoverage=false --testRegex ./e2e"
   },
-  "description": "Adding a button to the action bar in AEM Content Fragment Console"
+  "description": "Adding a button to the action bar in AEM Content Fragment Console",
+  "engines": {
+    "node": "^14.18 || ^16.13 || >=18"
+  }
 }
