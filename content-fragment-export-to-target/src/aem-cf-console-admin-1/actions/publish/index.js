@@ -1,9 +1,14 @@
 /*
-* <license header>
-*/
-/*Original logic:*/
-// https://git.corp.adobe.com/CQ/dam-contentfragment/pull/1888/files#diff-6a1ef81fc0da02ed63bfa68d8a57e2ed94dc12b2659d03725d876638892c8b37
-
+ * Copyright 2024 Adobe. All rights reserved.
+ * This file is licensed to you under the Apache License, Version 2.0 (the "License")
+ * you may not use this file except in compliance with the License. You may obtain a copy
+ * of the License at http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed under
+ * the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+ * OF ANY KIND, either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
+ */
 const fetch = require('node-fetch')
 const { Core } = require('@adobe/aio-sdk')
 const { errorResponse, getBearerToken, stringParameters, checkMissingRequestInputs, getAemHeaders } = require('../utils');
@@ -17,8 +22,8 @@ function getReferencedModels(paths, assets) {
         const asset = assetsData[i];
         // if server returns a list containing at least one asset which is not yet published
         // and is not one of the selected nodes to publish
-        if ((!asset?.published || asset?.outdated) && paths.indexOf(asset.path) === -1 && (asset?.type === "contentfragmentmodel" || asset?.type === "asset")) {
-            referencedModels.push(asset?.path);
+        if ((!asset.published || asset.outdated) && paths.indexOf(asset.path) === -1 && (asset.type === "contentfragmentmodel" || asset.type === "asset")) {
+            referencedModels.push(asset.path);
         }
     }
     return referencedModels;
@@ -59,8 +64,6 @@ async function main (params) {
             throw new Error('request to get Assets' + params.aemHost + ' failed with status code ' + assetsResponse.status)
         }
         logger.info(`${assetsResponse.status}: successful assets request`);
-        /** @todo update logic to publish related assets as well*/
-        /** currently response is empty */
         const assets = await assetsResponse.json();
         logger.info(` Assets response  ${JSON.stringify(assets)}`);
         const referencedModels = getReferencedModels(params.paths, assets);

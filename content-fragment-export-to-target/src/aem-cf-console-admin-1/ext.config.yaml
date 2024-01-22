@@ -12,7 +12,7 @@ runtimeManifest:
         export:
           function: actions/export/index.js
           web: 'yes'
-          runtime: nodejs:16
+          runtime: nodejs:18
           inputs:
             LOG_LEVEL: debug
             API_ENDPOINT: $API_ENDPOINT
@@ -22,7 +22,7 @@ runtimeManifest:
         delete:
           function: actions/delete/index.js
           web: 'yes'
-          runtime: nodejs:16
+          runtime: nodejs:18
           inputs:
             LOG_LEVEL: debug
             API_ENDPOINT: $API_ENDPOINT
@@ -32,7 +32,7 @@ runtimeManifest:
         publish:
           function: actions/publish/index.js
           web: 'yes'
-          runtime: nodejs:16
+          runtime: nodejs:18
           inputs:
             LOG_LEVEL: debug
             API_ENDPOINT: $API_ENDPOINT
