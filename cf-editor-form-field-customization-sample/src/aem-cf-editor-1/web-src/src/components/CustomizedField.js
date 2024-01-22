@@ -9,7 +9,7 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback, useRef } from "react";
 import { attach } from "@adobe/uix-guest";
 import { extensionId } from "./Constants";
 import {
@@ -27,6 +27,10 @@ const countWords = (sentence) => {
   return words.length;
 };
 
+const wait = async (timeout) => new Promise(
+  (resolve) => setTimeout(() => resolve(true), timeout * 1000)
+);
+
 const CustomizedField = () => {
   const [guestConnection, setGuestConnection] = useState(null);
   const [fieldData, setFieldData] = useState({
@@ -35,6 +39,19 @@ const CustomizedField = () => {
   const [validationState, setValidationState] = useState("invalid");
   const [value, setValue] = useState("");
   const [wordCount, setWordCount] = useState(0);
+
+  // A workaround for fixing an issue with the right scroll bar.
+  const heightRef = useRef(0);
+  const containerRef = useCallback(async (node) => {
+    if (node !== null && guestConnection !== null) {
+      const height = Number((document.body.clientHeight).toFixed(0)) + 10; // we add extra 10px
+      if (heightRef.current !== height) {
+        heightRef.current = height;
+        await wait(1); // we need to wait for some time to ensure that setHeight() is available for use
+        await guestConnection.host.field.setHeight(height);
+      }
+    }
+  }, [guestConnection]);
 
   useEffect(() => {
     const init = async () => {
@@ -77,7 +94,9 @@ const CustomizedField = () => {
   return (
     <Provider theme={lightTheme} colorScheme="light">
       {fieldData.ready &&
-        <View>
+        <View
+          ref={containerRef}
+        >
           <TextField
             value={value}
             isRequired={fieldData.required}
@@ -90,7 +109,7 @@ const CustomizedField = () => {
             marginBottom="size-100"
           />
           <Flex alignItems="center" UNSAFE_className="info-block">
-            <Info aria-label="Info" size="S" marginEnd={5}/>
+            <Info aria-label="Info" size="S" marginEnd="size-65" />
             <Text>
               {wordCount === 0
                 ? "No words entered yet. Add some text!"
