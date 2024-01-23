@@ -57,7 +57,7 @@ export default function DisplayMetadataModal () {
   const fragmentIds = selection?.split('|') || [];
 
   console.log('Selected Fragment Ids', fragmentIds);
-  if (!fragmentIds || fragmentIds.length === 0) {
+  if (fragmentIds.length === 0) {
     console.error('No Content Fragments are selected.');
     return;
   }
