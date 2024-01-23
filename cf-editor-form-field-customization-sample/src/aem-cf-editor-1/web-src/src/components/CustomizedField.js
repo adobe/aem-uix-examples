@@ -47,7 +47,7 @@ const CustomizedField = () => {
       const height = Number((document.body.clientHeight).toFixed(0)) + 30; // we add extra 10px
       if (heightRef.current !== height) {
         heightRef.current = height;
-        // await wait(1); // we need to wait for some time to ensure that setHeight() is available for use
+        // await wait(2); // we need to wait for some time to ensure that setHeight() is available for use
         await guestConnection.host.field.setHeight(height);
       }
     }
