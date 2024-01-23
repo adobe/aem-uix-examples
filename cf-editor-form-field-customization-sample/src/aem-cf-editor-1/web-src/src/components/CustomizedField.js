@@ -44,7 +44,7 @@ const CustomizedField = () => {
   const heightRef = useRef(0);
   const containerRef = useCallback(async (node) => {
     if (node !== null && guestConnection !== null) {
-      const height = Number((document.body.clientHeight).toFixed(0)) + 10; // we add extra 10px
+      const height = Number((document.body.clientHeight).toFixed(0)) + 30; // we add extra 10px
       if (heightRef.current !== height) {
         heightRef.current = height;
         await wait(1); // we need to wait for some time to ensure that setHeight() is available for use
@@ -96,6 +96,7 @@ const CustomizedField = () => {
       {fieldData.ready &&
         <View
           ref={containerRef}
+          marginBottom="size-225"
         >
           <TextField
             value={value}
