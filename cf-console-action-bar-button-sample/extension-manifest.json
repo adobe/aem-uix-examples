@@ -5,9 +5,9 @@
   "version": "0.0.1",
   "actionBarButtons": [
     {
-      "label": "Click Me",
+      "label": "Display Metadata",
       "needsModal": true,
-      "id": "click-me"
+      "id": "display-metadata"
     }
   ]
 }
