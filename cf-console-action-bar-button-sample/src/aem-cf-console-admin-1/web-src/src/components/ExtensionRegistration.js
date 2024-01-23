@@ -42,7 +42,8 @@ function ExtensionRegistration() {
                   guestConnection.host.modal.showUrl({
                     title: "Action Bar Extension Demo",
                     url: modalURL,
-                    fullscreen: true,
+                    height: "800px",
+                    width: "1000px",
                   });
                 },
               },

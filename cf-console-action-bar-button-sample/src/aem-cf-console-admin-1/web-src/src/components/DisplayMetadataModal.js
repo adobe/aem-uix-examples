@@ -9,13 +9,14 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useCallback, useRef } from 'react'
 import ErrorBoundary from 'react-error-boundary'
 import { attach } from "@adobe/uix-guest"
 import {
   Grid,
   Flex,
   Text,
+  Content,
   ButtonGroup,
   Button,
   Heading,
@@ -62,6 +63,19 @@ export default function DisplayMetadataModal () {
     return;
   }
 
+  const heightRef = useRef(0);
+  const containerRef = useCallback(async (node) => {
+    if (node !== null && guestConnection !== null) {
+      const height = Number((document.body.clientHeight).toFixed(0));
+      if (heightRef.current !== height) {
+        heightRef.current = height;
+        await guestConnection.host.modal.set({
+          height
+        });
+      }
+    }
+  }, [guestConnection]);
+
   useEffect(() => {
     (async () => {
       try {
@@ -79,7 +93,7 @@ export default function DisplayMetadataModal () {
       } catch(e) {
         setError('Unable to retrieve information about selected fragments.');
       } finally {
-        setContentLoading(false);
+        setIsContentLoading(false);
       }
     })()
   }, [])
@@ -111,14 +125,14 @@ export default function DisplayMetadataModal () {
         </Flex>
     </Grid>
   ) : (
-      <Flex direction="column" width="100%" wrap="wrap">
+      <Content width="100%" height="95%" UNSAFE_style={{ overflowY: "hidden" }}>
+      <Flex direction="column" ref={containerRef} wrap="wrap">
       <Heading level={3}>This extension displays the metadata of the {fragmentIds.length} content fragments you selected.</Heading>
-      <View>
+      <View marginBottom="size-150">
       <ErrorBoundary onError={onError} FallbackComponent={fallbackComponent}>
       <Accordion aria-label="Default" 
                  ariaLevel={1} 
                  multiselectable={true}
-                 defaultSelectedIndex={[Math.max(0, fragments.length - 1)]}
                  >
         {fragments.map((cf, index) => 
             <AccordionItem
@@ -195,12 +209,13 @@ export default function DisplayMetadataModal () {
       </Accordion>
       </ErrorBoundary>
       </View>
-      <Flex width="100%" justifyContent="end" marginTop="size-400">
-        <ButtonGroup align="end">
-          <Button variant="primary" onClick={onCloseHandler}>Close</Button>
-        </ButtonGroup>
-      </Flex>
+      <View position="relative" width="100%" height="size-300" marginBottom="size-150">
+          <Button variant="primary" onPress={onCloseHandler} position="absolute" bottom="0" right="size-200">
+            Close
+          </Button>
+      </View>
     </Flex>
+    </Content>
   )
 
   // error handler on UI rendering failure
