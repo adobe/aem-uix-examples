@@ -1,6 +1,6 @@
 # Custom AEM Content Fragment Console Action Bar Button
 
-Welcome to my Adobe I/O Application!
+A sample extension showcasing adding a button to the Action Bar in AEM Content Fragment Console.
 
 ## Setup
 
