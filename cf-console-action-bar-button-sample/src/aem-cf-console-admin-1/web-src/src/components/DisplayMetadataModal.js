@@ -49,7 +49,7 @@ const fieldColumns = [
 
 export default function DisplayMetadataModal () {
   // Fields
-  const [isContentLoading, setContentLoading] = useState(true);
+  const [isContentLoading, setIsContentLoading] = useState(true);
   const [guestConnection, setGuestConnection] = useState();
   const [error, setError] = useState(null);
   const [fragments, setFragments] = useState([]);
