@@ -1,0 +1,41 @@
+operations:
+  view:
+    - type: web
+      impl: index.html
+actions: actions
+web: web-src
+runtimeManifest:
+  packages:
+    aem-cf-console-admin-1:
+      license: Apache-2.0
+      actions:
+        export:
+          function: actions/export/index.js
+          web: 'yes'
+          runtime: nodejs:18
+          inputs:
+            LOG_LEVEL: debug
+            API_ENDPOINT: $API_ENDPOINT
+          annotations:
+            require-adobe-auth: false
+            final: true
+        delete:
+          function: actions/delete/index.js
+          web: 'yes'
+          runtime: nodejs:18
+          inputs:
+            LOG_LEVEL: debug
+            API_ENDPOINT: $API_ENDPOINT
+          annotations:
+            require-adobe-auth: false
+            final: true
+        publish:
+          function: actions/publish/index.js
+          web: 'yes'
+          runtime: nodejs:18
+          inputs:
+            LOG_LEVEL: debug
+            API_ENDPOINT: $API_ENDPOINT
+          annotations:
+            require-adobe-auth: false
+            final: true
