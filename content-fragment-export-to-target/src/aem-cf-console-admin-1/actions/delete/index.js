@@ -1,19 +1,14 @@
 /*
-* <license header>
-*/
-
-/**
- * This is a sample action showcasing how to access an external API
+ * Copyright 2024 Adobe. All rights reserved.
+ * This file is licensed to you under the Apache License, Version 2.0 (the "License")
+ * you may not use this file except in compliance with the License. You may obtain a copy
+ * of the License at http://www.apache.org/licenses/LICENSE-2.0
  *
- * Note:
- * You might want to disable authentication and authorization checks against Adobe Identity Management System for a generic action. In that case:
- *   - Remove the require-adobe-auth annotation for this action in the manifest.yml of your application
- *   - Remove the Authorization header from the array passed in checkMissingRequestInputs
- *   - The two steps above imply that every client knowing the URL to this deployed action will be able to invoke it without any authentication and authorization checks against Adobe Identity Management System
- *   - Make sure to validate these changes against your security requirements before deploying the action
+ * Unless required by applicable law or agreed to in writing, software distributed under
+ * the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+ * OF ANY KIND, either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
  */
-
-
 const fetch = require('node-fetch')
 const { Core } = require('@adobe/aio-sdk')
 const { errorResponse, getBearerToken, stringParameters, checkMissingRequestInputs, getAemHeaders } = require('../utils')
@@ -43,7 +38,6 @@ async function main (params) {
     console.log(headers, params.aemHost + params.paths[0] + ".cfm.targetexport");
     const formData = new FormData();
     params.paths.map(el => formData.append("paths", el));
-    // formData.append("paths", paths[0]);
     formData.append("action", "delete");
     formData.append("_charset_", "UTF-8");
 
@@ -52,8 +46,9 @@ async function main (params) {
       method: "POST",
       body: formData
     });
+    logger.info(` Delete response status text ${deleteResponse.statusText}`)
     if (!deleteResponse.ok) {
-      throw new Error('request to ' + params.aemHost + ' failed with status code ' + exportResponse.status)
+      throw new Error('request to ' + params.aemHost + ' failed with status code ' + deleteResponse.status)
     }
 
     const response = {
@@ -62,7 +57,7 @@ async function main (params) {
     };
 
     // log the response status code
-    logger.info(`${deleteResponse.statusCode}: successful request`)
+    logger.info(`${deleteResponse.status}: successful request`)
     return response;
   } catch (error) {
     // log any server errors

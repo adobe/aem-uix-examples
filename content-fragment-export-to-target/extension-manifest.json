@@ -16,6 +16,9 @@
     },
     {
       "name": "delete"
+    },
+    {
+      "name": "publish"
     }
   ]
 }

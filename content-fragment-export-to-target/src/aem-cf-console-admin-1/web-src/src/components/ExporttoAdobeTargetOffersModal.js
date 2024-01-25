@@ -1,7 +1,14 @@
 /*
- * <license header>
+ * Copyright 2024 Adobe. All rights reserved.
+ * This file is licensed to you under the Apache License, Version 2.0 (the "License")
+ * you may not use this file except in compliance with the License. You may obtain a copy
+ * of the License at http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed under
+ * the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+ * OF ANY KIND, either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
  */
-
 import React, { useState, useEffect } from 'react'
 import { generatePath } from "react-router";
 import { attach } from "@adobe/uix-guest"
@@ -20,7 +27,7 @@ import {
   Divider
 } from '@adobe/react-spectrum'
 import { useParams } from "react-router-dom"
-import { triggerExportToAdobeTarget } from '../utils'
+import { triggerExportToAdobeTarget, triggerPublish } from '../utils'
 import { extensionId } from "./Constants"
 
 const CF_PUBLISH_PROMPT_MESSAGE =
@@ -100,7 +107,7 @@ export default function ExporttoAdobeTargetOffersModal () {
       await triggerExportToAdobeTarget(token, repo, imsOrg, paths);
       await guestConnection.host.toaster.display({
         variant: "positive",
-        message: "Content fragment(s) exported successfully",
+        message: "Selected content fragment(s) are successfully scheduled to sync with Adobe Target.",
       });
     } catch (e) {
       console.error('Export to target got an error', e);
@@ -112,11 +119,29 @@ export default function ExporttoAdobeTargetOffersModal () {
     await guestConnection.host.modal.close();
   }
 
-  const onPublishAndExportHandler = () => {
+  const onPublishAndExportHandler = async () => {
     setInprogress(true);
-    setTimeout(() => {
-      guestConnection.host.modal.close()
-    }, 5000)
+    try {
+      const auth = await guestConnection.sharedContext.get("auth");
+      const token = auth.imsToken;
+      const imsOrg = auth.imsOrg;
+      const repo = await guestConnection.sharedContext.get("aemHost");
+      const paths = selectedContentFragments.map(el => el.id);
+      console.log(`Path: ${paths}`);
+      await triggerPublish(token, repo, imsOrg, paths);
+      await triggerExportToAdobeTarget(token, repo, imsOrg, paths);
+      await guestConnection.host.toaster.display({
+        variant: "positive",
+        message: "Selected content fragment(s) are successfully scheduled to be published and synced with Adobe Target.",
+      });
+    } catch (e) {
+      console.error('Export to target got an error', e);
+      await guestConnection.host.toaster.display({
+        variant: "negative",
+        message: "There was an error while publishing and exporting Content Fragment(s)",
+      });
+    }
+    await guestConnection.host.modal.close();
   }
 
   const onTaskCompleted = () => {
