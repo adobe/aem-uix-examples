@@ -1,17 +1,16 @@
-/* 
+/*
 * <license header>
 */
 
 import 'core-js/stable'
 import 'regenerator-runtime/runtime'
-
-window.React = require('react')
 import ReactDOM from 'react-dom'
 
 import Runtime, { init } from '@adobe/exc-app'
 
 import App from './components/App'
-import './index.css'
+
+window.React = require('react')
 /* Here you can bootstrap your application and configure the integration with the Adobe Experience Cloud Shell */
 try {
   // attempt to load the Experience Cloud Runtime
