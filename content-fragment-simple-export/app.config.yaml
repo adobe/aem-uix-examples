@@ -1,0 +1,18 @@
+extensions:
+  aem/cf-console-admin/1:
+    $include: src/aem-cf-console-admin-1/ext.config.yaml
+    runtimeManifest:
+      packages:
+        content-fragment-simple-export:
+          license: Apache-2.0
+          actions:
+            export-content-fragments:
+              function: >-
+                src/aem-cf-console-admin-1/actions/export-content-fragments/index.js
+              web: 'yes'
+              runtime: nodejs:16
+              inputs:
+                LOG_LEVEL: debug
+              annotations:
+                require-adobe-auth: false
+                final: true

@@ -1,6 +1,6 @@
-# Slack Import/Export Extension Demo
+# CFSimpleExport
 
-Demo Extension to showcase import/export functionality using custom buttons within AEM Content Fragment Admin Console
+Welcome to my Adobe I/O Application!
 
 ## Setup
 

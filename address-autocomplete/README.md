@@ -1,6 +1,6 @@
-# Slack Import/Export Extension Demo
+# AddressAutocomplete
 
-Demo Extension to showcase import/export functionality using custom buttons within AEM Content Fragment Admin Console
+Welcome to my Adobe I/O Application!
 
 ## Setup
 
@@ -36,6 +36,9 @@ You can generate this file using the command `aio app use`.
 ## please provide your Adobe I/O Runtime credentials
 # AIO_RUNTIME_AUTH=
 # AIO_RUNTIME_NAMESPACE=
+
+# GOOGLE_PLACES_API_KEY=
+# ADDRESS_AUTOCOMPLETE_FIELD_NAME=
 ```
 
 ### `app.config.yaml`

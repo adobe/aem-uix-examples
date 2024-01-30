@@ -1,6 +1,6 @@
-# Slack Import/Export Extension Demo
+# Custom AEM Content Fragment Editor RTE Toolbar Button
 
-Demo Extension to showcase import/export functionality using custom buttons within AEM Content Fragment Admin Console
+A sample extension demonstrating the addition of a custom button to the Rich Text Editor (RTE) toolbar in the AEM Content Fragment Editor.
 
 ## Setup
 
@@ -28,7 +28,7 @@ local serverless stack and also run your actions locally use the `aio app run --
 
 ### `.env`
 
-You can generate this file using the command `aio app use`. 
+You can generate this file using the command `aio app use`.
 
 ```bash
 # This file must **not** be committed to source control
@@ -40,9 +40,9 @@ You can generate this file using the command `aio app use`.
 
 ### `app.config.yaml`
 
-- Main configuration file that defines an application's implementation. 
-- More information on this file, application configuration, and extension configuration 
-  can be found [here](https://developer.adobe.com/app-builder/docs/guides/appbuilder-configuration/#appconfigyaml)
+- Main configuration file that defines an application's implementation.
+- More information on this file, application configuration, and extension configuration
+  can be found [here](https://developer.adobe.com/app-builder/docs/guides/configuration/#appconfigyaml)
 
 #### Action Dependencies
 
@@ -70,12 +70,12 @@ Alternatively, there are also debug configs for only UI and each separate action
 
 ## Typescript support for UI
 
-To use typescript use `.tsx` extension for react components and add a `tsconfig.json` 
+To use typescript use `.tsx` extension for react components and add a `tsconfig.json`
 and make sure you have the below config added
 ```
  {
   "compilerOptions": {
       "jsx": "react"
     }
-  } 
+  }
 ```
