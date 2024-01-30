@@ -3,13 +3,15 @@
   "version": "0.0.1",
   "private": true,
   "dependencies": {
-    "@adobe/aio-sdk": "^5.0.0",
+    "@adobe/aem-cf-admin-ui-ext-tpl": "^1.0.0-beta.23",
+    "@adobe/aio-sdk": "^3.0.0",
     "@adobe/exc-app": "^0.2.21",
     "@adobe/react-spectrum": "^3.4.0",
     "@adobe/uix-guest": "^0.8.4",
     "@react-spectrum/list": "^3.0.0-rc.0",
     "@spectrum-icons/workflow": "^3.2.0",
     "core-js": "^3.6.4",
+    "node-fetch": "^2.6.0",
     "node-html-parser": "^5.4.2-0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
@@ -32,7 +34,8 @@
     "eslint-plugin-promise": "^6.1.1",
     "eslint-plugin-react": "^7.33.2",
     "identity-obj-proxy": "^3.0.0",
-    "jest": "^27.2.4"
+    "jest": "^29.7.0",
+    "jest-environment-jsdom": "^29.7.0"
   },
   "scripts": {
     "test": "jest --passWithNoTests ./test",

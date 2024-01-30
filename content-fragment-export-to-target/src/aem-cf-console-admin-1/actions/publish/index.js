@@ -11,7 +11,7 @@
  */
 const fetch = require('node-fetch')
 const { Core } = require('@adobe/aio-sdk')
-const { errorResponse, getBearerToken, stringParameters, checkMissingRequestInputs, getAemHeaders } = require('../utils')
+const { errorResponse, stringParameters, checkMissingRequestInputs, getAemHeaders } = require('../utils')
 const ACTION_ACTIVATE = 'Activate'
 
 function getReferencedModels (paths, assets) {
