@@ -30,11 +30,11 @@ const wait = async (timeout) => new Promise(
 const plugins = [
   "advlist autolink lists link image charmap preview anchor",
   "searchreplace visualblocks code",
-  "insertdatetime media table paste code fullscreen",
+  "insertdatetime media table code fullscreen",
 ].join(" ");
 
 const toolbar = [
-  "undo redo paste pastetext copy",
+  "undo redo pastetext copy",
   "formatselect table",
   "bold italic underline backcolor subscript superscript",
   "alignleft aligncenter alignright alignjustify",
