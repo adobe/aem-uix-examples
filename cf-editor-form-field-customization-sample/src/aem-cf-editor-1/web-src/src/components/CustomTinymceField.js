@@ -69,7 +69,6 @@ const CustomTinymceField = () => {
     ready: false,
   });
   const [validationState, setValidationState] = useState("invalid");
-  const [value, setValue] = useState("");
   const editorRef = useRef(null);
 
   const logEditorContent = () => {
@@ -93,7 +92,6 @@ const CustomTinymceField = () => {
       const required = fieldModel.required ?? false;
       const fieldLabel = fieldModel.fieldLabel ?? "";
       const name = fieldModel.name;
-      setValue(value);
       setFieldData({
         value,
         required,
@@ -107,7 +105,6 @@ const CustomTinymceField = () => {
   }, []);
 
   const onEditorChangeHandler = (newValue, editor) => {
-    setValue(newValue);
     guestConnection.host.field.onChange(newValue);
   };
 
@@ -121,7 +118,7 @@ const CustomTinymceField = () => {
           <Editor
             tinymceScriptSrc="/tinymce.min.js"
             init={defaultConfig}
-            initialValue={value}
+            initialValue={fieldData.value}
             onInit={(evt, editor) => editorRef.current = editor}
             onEditorChange={onEditorChangeHandler}
           />
