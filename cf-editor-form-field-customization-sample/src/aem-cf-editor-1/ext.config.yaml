@@ -4,4 +4,5 @@ operations:
       impl: index.html
 web: web-src
 hooks:
+  build-static: ./hooks/build-static.js
   post-app-deploy: ./hooks/post-deploy.js

@@ -24,6 +24,10 @@ function ExtensionRegistration() {
               fieldTypeExp: "^text-single$",
               url: "/#/customized-field",
             },
+            {
+              fieldTypeExp: "^text-multi$",
+              url: "/#/custom-tinymce",
+            },
           ]),
         }
       }
