@@ -19,6 +19,11 @@ module.exports = async (config) => {
     await fs.promises.cp("./node_modules/tinymce/tinymce.min.js", dist + "/tinymce.min.js");
   }
 
+  if (!(await exists(dist + "/models"))) {
+    await fs.promises.mkdir(dist + "/models");
+    await fs.promises.cp("./node_modules/tinymce/models", dist + "/models", { recursive: true });
+  }
+
   if (!(await exists(dist + "/plugins"))) {
     await fs.promises.mkdir(dist + "/plugins");
     await fs.promises.cp("./node_modules/tinymce/plugins", dist + "/plugins", { recursive: true });
