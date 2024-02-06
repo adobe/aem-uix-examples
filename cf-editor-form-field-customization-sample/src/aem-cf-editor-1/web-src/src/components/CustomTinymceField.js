@@ -23,10 +23,6 @@ import { Label } from "@react-spectrum/label";
 import { Editor } from "@tinymce/tinymce-react";
 import "./CustomizedField.css";
 
-const wait = async (timeout) => new Promise(
-  (resolve) => setTimeout(() => resolve(true), timeout * 1000)
-);
-
 const plugins = [
   "advlist autolink lists link image charmap preview anchor",
   "searchreplace visualblocks code",

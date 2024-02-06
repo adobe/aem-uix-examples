@@ -27,6 +27,10 @@ module.exports = async (config) => {
   if (!(await exists(dist + "/plugins"))) {
     await fs.promises.mkdir(dist + "/plugins");
     await fs.promises.cp("./node_modules/tinymce/plugins", dist + "/plugins", { recursive: true });
+
+    // replace the original ./node_modules/tinymce/plugins/link/plugin.js plugin with our modified version
+    await fs.promises.rm(dist + "/plugins/link/plugin.min.js");
+    await fs.promises.cp("./patches/tinymce/plugins/link/plugin.js", dist + "/plugins/link/plugin.min.js");
   }
 
   if (!(await exists(dist + "/themes"))) {
