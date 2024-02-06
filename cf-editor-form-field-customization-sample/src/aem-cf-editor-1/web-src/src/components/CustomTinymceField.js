@@ -21,7 +21,6 @@ import {
 } from "@adobe/react-spectrum";
 import { Label } from "@react-spectrum/label";
 import { Editor } from "@tinymce/tinymce-react";
-import "./CustomizedField.css";
 
 const plugins = [
   "advlist autolink lists link image charmap preview anchor",
