@@ -25,7 +25,7 @@ import { Editor } from "@tinymce/tinymce-react";
 const plugins = [
   "advlist autolink lists link image charmap preview anchor",
   "searchreplace visualblocks code",
-  "insertdatetime media table code fullscreen",
+  "insertdatetime media table fullscreen",
 ].join(" ");
 
 const toolbar = [
