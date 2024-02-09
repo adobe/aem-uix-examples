@@ -79,7 +79,7 @@ const plugins = [
 
 const toolbar = [
   "undo redo pastetext copy",
-  "formatselect table",
+  "blocks table",
   "bold italic underline backcolor subscript superscript",
   "alignleft aligncenter alignright alignjustify",
   "bullist numlist outdent indent",
