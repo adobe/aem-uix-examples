@@ -85,7 +85,6 @@ const toolbar = [
   "bullist numlist outdent indent",
   "removeformat",
   "link unlink",
-  "assetpicker",
   "charmap",
   "fullscreen",
 ].join(" | ");
