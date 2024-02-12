@@ -86,7 +86,7 @@ const toolbar = [
   "removeformat",
   "link unlink",
   "charmap",
-  "fullscreen",
+  // "fullscreen",
 ].join(" | ");
 
 const EDITOR_HEIGHT = 500;
