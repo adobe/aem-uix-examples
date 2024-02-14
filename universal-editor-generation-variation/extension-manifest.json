@@ -1,0 +1,13 @@
+{
+  "name": "Variation Generation",
+  "id": "variation-generation",
+  "description": "Extends Universal Editor Adding the Variation Generation",
+  "version": "0.0.1",
+  "headerMenuButtons": [
+    {
+      "label": "Variation Generation",
+      "needsModal": false,
+      "id": "variation-generation"
+    }
+  ]
+}
