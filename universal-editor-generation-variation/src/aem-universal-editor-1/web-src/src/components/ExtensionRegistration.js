@@ -6,6 +6,8 @@ import { Text } from "@adobe/react-spectrum";
 import { register } from "@adobe/uix-guest";
 import { extensionId } from "./Constants";
 
+const generationVariationURL = 'https://experience.adobe.com/#/aem/generate-variations/';
+
 function ExtensionRegistration() {
   const init = async () => {
     const guestConnection = await register({
@@ -20,7 +22,7 @@ function ExtensionRegistration() {
                 label: 'Variation Generation',
                 icon: 'OpenIn',
                 onClick() {
-                  console.log("Button 'variation-generation' has been pressed.");
+                  window.open(generationVariationURL, '_blank')
                 },
               },
             ];
