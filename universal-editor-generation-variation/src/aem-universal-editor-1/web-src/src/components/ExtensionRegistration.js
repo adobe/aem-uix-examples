@@ -18,8 +18,8 @@ function ExtensionRegistration() {
             return [
               // @todo YOUR HEADER BUTTONS DECLARATION SHOULD BE HERE
               {
-                id: 'variation-generation',
-                label: 'Variation Generation',
+                id: 'generate-variations',
+                label: 'Generate Variations',
                 icon: 'OpenIn',
                 onClick() {
                   window.open(generationVariationURL, '_blank')
