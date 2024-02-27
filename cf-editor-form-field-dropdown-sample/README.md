@@ -1,6 +1,6 @@
-# cf-editor-form-field-dropdown-sample
+# AEM Content Fragment Editor Form Field Dropdown Example
 
-Welcome to my Adobe I/O Application!
+A sample extension demonstrating the customization of a form field in the AEM Content Fragment Editor.
 
 ## Setup
 
@@ -28,7 +28,7 @@ local serverless stack and also run your actions locally use the `aio app run --
 
 ### `.env`
 
-You can generate this file using the command `aio app use`. 
+You can generate this file using the command `aio app use`.
 
 ```bash
 # This file must **not** be committed to source control
@@ -40,27 +40,27 @@ You can generate this file using the command `aio app use`.
 
 ### `app.config.yaml`
 
-- Main configuration file that defines an application's implementation. 
-- More information on this file, application configuration, and extension configuration 
-  can be found [here](https://developer.adobe.com/app-builder/docs/guides/appbuilder-configuration/#appconfigyaml)
+- Main configuration file that defines an application's implementation.
+- More information on this file, application configuration, and extension configuration
+  can be found [here](https://developer.adobe.com/app-builder/docs/guides/configuration/#appconfigyaml)
 
 #### Action Dependencies
 
 - You have two options to resolve your actions' dependencies:
 
-  1. **Packaged action file**: Add your action's dependencies to the root
-   `package.json` and install them using `npm install`. Then set the `function`
-   field in `app.config.yaml` to point to the **entry file** of your action
-   folder. We will use `webpack` to package your code and dependencies into a
-   single minified js file. The action will then be deployed as a single file.
-   Use this method if you want to reduce the size of your actions.
+    1. **Packaged action file**: Add your action's dependencies to the root
+       `package.json` and install them using `npm install`. Then set the `function`
+       field in `app.config.yaml` to point to the **entry file** of your action
+       folder. We will use `webpack` to package your code and dependencies into a
+       single minified js file. The action will then be deployed as a single file.
+       Use this method if you want to reduce the size of your actions.
 
-  2. **Zipped action folder**: In the folder containing the action code add a
-     `package.json` with the action's dependencies. Then set the `function`
-     field in `app.config.yaml` to point to the **folder** of that action. We will
-     install the required dependencies within that directory and zip the folder
-     before deploying it as a zipped action. Use this method if you want to keep
-     your action's dependencies separated.
+    2. **Zipped action folder**: In the folder containing the action code add a
+       `package.json` with the action's dependencies. Then set the `function`
+       field in `app.config.yaml` to point to the **folder** of that action. We will
+       install the required dependencies within that directory and zip the folder
+       before deploying it as a zipped action. Use this method if you want to keep
+       your action's dependencies separated.
 
 ## Debugging in VS Code
 
@@ -70,12 +70,12 @@ Alternatively, there are also debug configs for only UI and each separate action
 
 ## Typescript support for UI
 
-To use typescript use `.tsx` extension for react components and add a `tsconfig.json` 
+To use typescript use `.tsx` extension for react components and add a `tsconfig.json`
 and make sure you have the below config added
 ```
  {
   "compilerOptions": {
       "jsx": "react"
     }
-  } 
+  }
 ```
