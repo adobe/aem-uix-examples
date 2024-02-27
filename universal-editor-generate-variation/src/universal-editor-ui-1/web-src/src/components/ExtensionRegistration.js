@@ -20,7 +20,8 @@ function ExtensionRegistration() {
               {
                 id: 'generate-variations',
                 label: 'Generate Variations',
-                icon: 'OpenIn',
+                icon: 'SenseiGenAI',
+                variant: 'action',
                 onClick() {
                   window.open(generationVariationURL, '_blank')
                 },
