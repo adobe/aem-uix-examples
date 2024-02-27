@@ -1,0 +1,14 @@
+.dropdown-field-wrapper {
+    background: #fff;
+    z-index: 99;
+}
+
+.dropdown-field {
+    width:100%;
+    overflow: hidden;
+}
+
+.spectrum-InputGroup-popover {
+    left: 0 !important;
+}
+
