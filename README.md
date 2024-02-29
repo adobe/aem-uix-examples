@@ -21,6 +21,7 @@ Here is the list of examples:
 - [Slack Content Fragment management](./slack-content-fragment-admin/)
 - [Custom AEM Content Fragment Editor RTE Toolbar Button](./cf-editor-rte-toolbar-button-sample/)
 - [Customized AEM Content Fragment Editor Form Field](./cf-editor-form-field-customization-sample/)
+- [Customized AEM Content Fragment Editor Dropdown Field](./cf-editor-form-field-dropdown-sample/)
 - [AEM Content Fragments Console Header Menu Button](./cf-console-header-menu-button-sample/)
 
 ## Contributing
