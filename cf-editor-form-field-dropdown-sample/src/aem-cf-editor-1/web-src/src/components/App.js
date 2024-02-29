@@ -26,7 +26,6 @@ function App() {
             exact path="index.html"
             element={<ExtensionRegistration />}
           />
-          // YOUR CUSTOM ROUTES SHOULD BE HERE
         </Routes>
       </ErrorBoundary>
     </Router>
