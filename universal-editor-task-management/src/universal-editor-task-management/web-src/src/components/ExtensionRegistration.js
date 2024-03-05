@@ -27,7 +27,7 @@ function ExtensionRegistration() {
                 {
                   id: "taskManagement",
                   header: "Task Management",
-                  url: process.env.PROD_URL,
+                  url: "https://experience.adobe.com/solutions/aem-sites-reverie-sites-workfront-integration/static-assets/resources/embed.html?route=TaskManagementWidget",
                   hotkey: "w",
                   icon: "TaskList",
                 },
