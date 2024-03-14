@@ -1,3 +1,17 @@
 extensions:
   aem/cf-editor/1:
     $include: src/aem-cf-editor-1/ext.config.yaml
+    runtimeManifest:
+      packages:
+        cf-editor-form-field-dropdown-sample:
+          license: Apache-2.0
+          actions:
+            dropdown-data:
+              function: src/aem-cf-editor-1/actions/dropdown-data/index.js
+              web: 'yes'
+              runtime: nodejs:18
+              inputs:
+                LOG_LEVEL: debug
+              annotations:
+                require-adobe-auth: false
+                final: true

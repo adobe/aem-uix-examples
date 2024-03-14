@@ -1,32 +1,29 @@
 import { attach } from "@adobe/uix-guest"
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { extensionId } from "./Constants"
-import {ComboBox, Item, Provider, defaultTheme} from '@adobe/react-spectrum'
+import { ComboBox, Item, Provider, defaultTheme } from '@adobe/react-spectrum'
+import { getDropdownData } from '../utils'
 import "./Dropdown.css";
 
 export function  Dropdown() {
   const defaultHeight = 76;
-  let connection;
-  let items = [
-    {name: "one"},
-    {name: "two"},
-    {name: "three"},
-    {name: "four"},
-    {name: "five"}
-  ];
+  const [items, setItems] = useState([]);
+  const [connection, setConnection] = useState(null);
 
   useEffect(() => {
     (async () => {
-      connection = await attach({ id: extensionId })
-
-      //const auth = connection.sharedContext.get("auth");
-
-      //Example of auth data
-      // apiKey: "aem-headless-cf-editor"
-      // authScheme: "Bearer"
-      // imsOrg: "<orgID>"
-      // imsOrgName: "<orgName>"
-      // imsToken:"<token"
+      const connection = await attach({ id: extensionId })
+      setConnection(connection)
+      const auth = await connection.sharedContext.get("auth");
+      const token = auth.imsToken;
+      const imsOrg = auth.imsOrg;
+      const repo = await connection.sharedContext.get("aemHost");
+      try {
+        const data = await getDropdownData(token, repo, imsOrg);
+        setItems(data)
+      } catch (e) {
+        console.log(`Error fetching data for dropdown`)
+      }
     })()
   }, [])
 
