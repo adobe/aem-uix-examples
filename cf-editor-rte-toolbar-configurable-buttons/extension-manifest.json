@@ -1,0 +1,21 @@
+{
+  "name": "rte-conditional-buttons",
+  "id": "rte-conditional-buttons",
+  "description": "Extension to configure available toolbar buttons per content model",
+  "version": "0.0.1",
+  "rte": {
+    "toolbarButtons": [
+      {
+        "id": "bold",
+        "tooltip": "n"
+      }
+    ]
+  },
+  "headerMenuButtons": [
+    {
+      "label": "test",
+      "needsModal": true,
+      "id": "test"
+    }
+  ]
+}
