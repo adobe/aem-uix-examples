@@ -18,8 +18,12 @@ export function  Dropdown() {
       const token = auth.imsToken;
       const imsOrg = auth.imsOrg;
       const repo = await connection.sharedContext.get("aemHost");
+      const url = "bin/releasenotes/customcfdropdown"
+      const params = {
+        ddType: "content-change-type"
+      }
       try {
-        const data = await getDropdownData(token, repo, imsOrg);
+        const { data } = await getDropdownData(token, repo, imsOrg, url, params);
         setItems(data)
       } catch (e) {
         console.log(`Error fetching data for dropdown`)
