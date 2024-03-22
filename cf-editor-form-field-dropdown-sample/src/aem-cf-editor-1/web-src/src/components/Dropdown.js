@@ -9,24 +9,41 @@ export function  Dropdown() {
   const defaultHeight = 76;
   const [items, setItems] = useState([]);
   const [connection, setConnection] = useState(null);
+  const [model, setModel] = useState({});
+  const [value, setValue] = useState('');
+  const [dataApi, setDataApi] = useState(null)
 
   useEffect(() => {
     (async () => {
       const connection = await attach({ id: extensionId })
-      setConnection(connection)
-      const auth = await connection.sharedContext.get("auth");
-      const token = auth.imsToken;
-      const imsOrg = auth.imsOrg;
-      const repo = await connection.sharedContext.get("aemHost");
-      const url = "bin/releasenotes/customcfdropdown"
-      const params = {
-        ddType: "content-change-type"
-      }
+        .catch((e) => console.error("Failed to establish connection with host", e))
+      setConnection(connection);
+      const [auth, repo, dataApi, model, defaultValue] = await Promise.all([
+        connection.sharedContext.get("auth"),
+        connection.sharedContext.get("aemHost"),
+        connection.host.dataApi.get(),
+        connection.host.field.getModel(),
+        connection.host.field.getDefaultValue(),
+      ]).catch((e) => {
+        console.error("Failed retrieving data from host", e)
+      });
+      setDataApi(dataApi)
+      setModel(model);
+      setValue(defaultValue.value)
+
       try {
-        const { data } = await getDropdownData(token, repo, imsOrg, url, params);
+        const { data } = await getDropdownData(
+          auth.imsToken,
+          repo,
+          auth.imsOrg,
+          "bin/releasenotes/customcfdropdown",
+          {
+            ddType: "content-change-type"
+          }
+        );
         setItems(data)
       } catch (e) {
-        console.log(`Error fetching data for dropdown`)
+        console.error(`Error fetching data for dropdown`)
       }
     })()
   }, [])
@@ -36,11 +53,17 @@ export function  Dropdown() {
     <Provider theme={defaultTheme}>
       <div className={'dropdown-field-wrapper'}>
         <ComboBox
-          label="Favorite Animal"
+          label={model.fieldLabel}
           maxWidth="100%"
           minWidth={"auto"}
           UNSAFE_className={"dropdown-field"}
           defaultItems={items}
+          isRequired={model.required}
+          inputValue={value}
+          onSelectionChange={(v) => {
+            setValue(v)
+            dataApi.setValue(model.name, v);
+          }}
           onOpenChange={(isOpen, menuTrigger) => {
               if (isOpen) {
                 connection.host.field.setHeight(defaultHeight + (items.length * 20))
