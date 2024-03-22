@@ -1,0 +1,13 @@
+{
+  "name": "asset-button",
+  "id": "asset-button",
+  "description": "Adds button to navigate to aem asset",
+  "version": "0.0.1",
+  "headerMenuButtons": [
+    {
+      "label": "Open in Assets",
+      "needsModal": false,
+      "id": "open-in-assets"
+    }
+  ]
+}
