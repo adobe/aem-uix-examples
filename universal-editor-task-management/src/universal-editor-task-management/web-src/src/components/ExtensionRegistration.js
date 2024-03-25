@@ -27,7 +27,7 @@ function ExtensionRegistration() {
                 {
                   id: "taskManagement",
                   header: "Task Management",
-                  url: "https://experience.adobe.com/solutions/aem-sites-reverie-sites-workfront-integration/static-assets/resources/embed.html?route=TaskManagementWidget",
+                  url: `https://experience.adobe.com/solutions/aem-sites-reverie-sites-workfront-integration/static-assets/resources/embed.html?route=TaskManagementWidget${mfeURLwithConfigParams}`,
                   hotkey: "w",
                   icon: "TaskList",
                 },
@@ -36,7 +36,13 @@ function ExtensionRegistration() {
           },
         },
       };
-      await register(registrationConfig);
+      const guestConnection = await register(registrationConfig);
+
+      const { WORKFRONT_INSTANCE_URL, IMS_ENV } = guestConnection.configuration;
+      let mfeURLwithConfigParams = `&workfrontInstanceUrl=${WORKFRONT_INSTANCE_URL}`;
+      if (IMS_ENV) {
+        mfeURLwithConfigParams += `&imsEnv=${IMS_ENV}`;
+      }
     };
     init().catch(console.error);
   }, []);
