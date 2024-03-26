@@ -1,5 +1,5 @@
 {
-  "name": "CFtoAdobeTarget",
+  "name": "cf-to-adobe-target-ui-extension",
   "id": "cftoadobetarget",
   "description": "Export AEM Content Fragments to Adobe Target",
   "version": "0.0.1",

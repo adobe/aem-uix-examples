@@ -136,29 +136,29 @@ function errorResponse (statusCode, message, logger) {
   }
 }
 
-async function getAemHeaders(params) {
-  const aemHost = params.aemHost;
-  const headers = new Headers();
-  const imsToken = getBearerToken(params);
+async function getAemHeaders (params) {
+  const aemHost = params.aemHost
+  const headers = new Headers()
+  const imsToken = getBearerToken(params)
 
   const csrfResponse = await fetch(`${aemHost}/libs/granite/csrf/token.json`, {
-      'headers': {
-          'accept': '*/*',
-          "authorization": "Bearer " + imsToken,
-          'X-Api-Key': 'exc_app',
-          'X-Gw-Ims-Org-Id': params.imsOrg
-      },
-      'method': 'GET',
-    });
-  const csrf = await csrfResponse.json();
+    headers: {
+      accept: '*/*',
+      authorization: 'Bearer ' + imsToken,
+      'X-Api-Key': 'exc_app',
+      'X-Gw-Ims-Org-Id': params.imsOrg
+    },
+    method: 'GET'
+  })
+  const csrf = await csrfResponse.json()
 
-  headers.set("x-gw-ims-org-id", params.imsOrg);
-  headers.set("x-api-key", 'aem-headless-cf-admin');
-  headers.set("CSRF-Token", csrf.token);
-  headers.set("x-aem-affinity-type", "api");
-  headers.append("Authorization", "Bearer " + imsToken);
+  headers.set('x-gw-ims-org-id', params.imsOrg)
+  headers.set('x-api-key', 'aem-headless-cf-admin')
+  headers.set('CSRF-Token', csrf.token)
+  headers.set('x-aem-affinity-type', 'api')
+  headers.append('Authorization', 'Bearer ' + imsToken)
 
-  return headers;
+  return headers
 }
 
 module.exports = {

@@ -20,7 +20,7 @@ import allActions from './config.json'
 async function actionWebInvoke (actionUrl, authToken, params = {}, options = { method: 'POST' }) {
   const actionHeaders = {
     'Content-Type': 'application/json',
-    'authorization': `Bearer ${authToken}`,
+    authorization: `Bearer ${authToken}`
   }
 
   const fetchConfig = {
@@ -40,42 +40,42 @@ async function actionWebInvoke (actionUrl, authToken, params = {}, options = { m
     fetchConfig.body = JSON.stringify(params)
   }
 
-  const resp = await fetch(actionUrl, fetchConfig);
+  const resp = await fetch(actionUrl, fetchConfig)
   if (!resp.ok) {
     throw new Error(
       'Request to ' + actionUrl + ' failed with status code ' + resp.status
-    );
+    )
   }
 
-  const data = await resp.json();
-  return data;
+  const data = await resp.json()
+  return data
 }
 
 const getActionUrl = (action) => {
-  return allActions[action];
+  return allActions[action]
 }
 
 export const triggerExportToAdobeTarget = async (authToken, aemHost, imsOrg, paths = [], publish = false) => {
-  return await actionWebInvoke(getActionUrl("export"), authToken, {
-    aemHost: "https://" + aemHost,
+  return await actionWebInvoke(getActionUrl('export'), authToken, {
+    aemHost: 'https://' + aemHost,
     imsOrg,
     paths
-  });
+  })
 }
 
 export const triggerDeleteFromAdobeTarget = async (authToken, aemHost, imsOrg, paths = []) => {
-  return await actionWebInvoke(getActionUrl("delete"), authToken, {
-    aemHost: "https://" + aemHost,
+  return await actionWebInvoke(getActionUrl('delete'), authToken, {
+    aemHost: 'https://' + aemHost,
     imsOrg,
     paths
-  });
+  })
 }
 
 export const triggerPublish = async (authToken, aemHost, imsOrg, paths = []) => {
-  /** @todo  check if we can use API here and update column text*/
-  return await actionWebInvoke(getActionUrl("publish"), authToken, {
-    aemHost: "https://" + aemHost,
+  /** @todo  check if we can use API here and update column text */
+  return await actionWebInvoke(getActionUrl('publish'), authToken, {
+    aemHost: 'https://' + aemHost,
     imsOrg,
     paths
-  });
+  })
 }

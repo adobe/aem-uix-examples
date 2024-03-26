@@ -11,7 +11,7 @@
  */
 const fetch = require('node-fetch')
 const { Core } = require('@adobe/aio-sdk')
-const { errorResponse, getBearerToken, stringParameters, checkMissingRequestInputs, getAemHeaders } = require('../utils')
+const { errorResponse, stringParameters, checkMissingRequestInputs, getAemHeaders } = require('../utils')
 
 // main function that will be executed by Adobe I/O Runtime
 async function main (params) {
@@ -34,17 +34,17 @@ async function main (params) {
       return errorResponse(400, errorMessage, logger)
     }
 
-    const headers = await getAemHeaders(params);
-    const formData = new FormData();
-    params.paths.map(el => formData.append("paths", el));
-    formData.append("action", "export");
-    formData.append("_charset_", "UTF-8");
+    const headers = await getAemHeaders(params)
+    const formData = new FormData()
+    params.paths.map(el => formData.append('paths', el))
+    formData.append('action', 'export')
+    formData.append('_charset_', 'UTF-8')
 
-    const exportResponse = await fetch(params.aemHost + params.paths[0] + ".cfm.targetexport", {
-      headers: headers,
-      method: "POST",
+    const exportResponse = await fetch(params.aemHost + params.paths[0] + '.cfm.targetexport', {
+      headers,
+      method: 'POST',
       body: formData
-    });
+    })
 
     logger.info(` Export response status text ${exportResponse.statusText}`)
     if (!exportResponse.ok) {
@@ -54,9 +54,8 @@ async function main (params) {
     logger.info(`${exportResponse.status}: successful export request`)
     return {
       statusCode: 200,
-      body: "{}"
-    };
-
+      body: '{}'
+    }
   } catch (error) {
     // log any server errors
     logger.error(error)
