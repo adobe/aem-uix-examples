@@ -1,0 +1,31 @@
+340a341,345
+>     const createCheckbox = (name, label) => () => ({
+>       name,
+>       type: 'checkbox',
+>       label
+>     });
+447c452,453
+<         'target'
+---
+>         'target',
+>         'data-ispdf'
+451c457,461
+<           acc[key] = value.length > 0 ? value : null;
+---
+>           if (key === 'data-ispdf') {
+>             acc[key] = value ? 'true' : null;
+>           } else {
+>             acc[key] = value.length > 0 ? value : null;
+>           }
+825a836
+>       const isPdf = anchor.bind(anchorElm => Optional.from(dom.getAttrib(anchorElm, 'data-ispdf') === 'true' ? true : false));
+833a845
+>         'data-ispdf': isPdf,
+843a856
+>           isPdf: new Optional('data-ispdf', false),
+866a880
+>         'data-ispdf': getChangedValue('data-ispdf'),
+897a912
+>         'data-ispdf': anchor['data-ispdf'].getOr(false),
+932a948
+>             catalogs.isPdf.map(createCheckbox('data-ispdf', 'Is PDF?')),

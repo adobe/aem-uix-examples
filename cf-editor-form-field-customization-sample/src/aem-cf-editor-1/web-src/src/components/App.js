@@ -14,6 +14,7 @@ import ErrorBoundary from "react-error-boundary";
 import { HashRouter as Router, Routes, Route } from "react-router-dom";
 import ExtensionRegistration from "./ExtensionRegistration";
 import CustomizedField from "./CustomizedField";
+import CustomTinymceField from "./CustomTinymceField";
 
 function App() {
   return (
@@ -28,6 +29,10 @@ function App() {
           <Route
            exact path="customized-field"
            element={<CustomizedField />}
+          />
+          <Route
+           exact path="custom-tinymce"
+           element={<CustomTinymceField />}
           />
           {/* @todo YOUR CUSTOM ROUTES SHOULD BE HERE */}
         </Routes>
