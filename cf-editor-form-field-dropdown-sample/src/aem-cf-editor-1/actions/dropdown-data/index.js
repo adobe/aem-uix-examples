@@ -47,7 +47,9 @@ async function main (params) {
     }
 
     const headers = await getAemHeaders(params);
-    const response = await fetch(`${params.aemHost}/<url>`, {
+    const url = new URL(`${params.aemHost}/${params.path}`)
+    Object.keys(params.searchParams).forEach(key => url.searchParams.append(key, params.searchParams[key]))
+    const response = await fetch(url, {
       headers: headers,
       method: "GET",
     });
@@ -64,7 +66,7 @@ async function main (params) {
     // log any server errors
     logger.error(error)
     // return with 500
-    return errorResponse(500, 'server error', logger)
+    return errorResponse(500, error.toString(), logger)
   }
 }
 

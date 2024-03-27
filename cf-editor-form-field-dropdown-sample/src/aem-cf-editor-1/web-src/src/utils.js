@@ -61,9 +61,11 @@ const getActionUrl = (action) => {
   return allActions[action];
 }
 
-export const getDropdownData = async (authToken, aemHost, imsOrg) => {
+export const getDropdownData = async (authToken, aemHost, imsOrg, path, searchParams) => {
   return await actionWebInvoke(getActionUrl("dropdown-data"), authToken, {
-    aemHost: "https://" + aemHost,
+    aemHost: `https://${aemHost}`,
+    path,
     imsOrg,
+    searchParams
   });
 }

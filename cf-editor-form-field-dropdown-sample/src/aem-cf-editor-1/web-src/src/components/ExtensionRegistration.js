@@ -21,7 +21,8 @@ function ExtensionRegistration() {
         field: {
           getDefinitions: () => ([
             {
-              fieldNameExp: '^fieldNameRegExp',
+              modelPathExp: 'change-log',
+              fieldNameExp: '^description',
               url: "/#/dropdown-route",
               overlay: true,
             },
@@ -29,9 +30,9 @@ function ExtensionRegistration() {
           getProperties: async () => {
             return [
               {
-                fieldNameExp: '^fieldNameRegExp',
+                fieldNameExp: '^title',
                 disabled: true
-              }
+              },
             ];
           },
         },
