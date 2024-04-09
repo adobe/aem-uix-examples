@@ -10,46 +10,40 @@
  * governing permissions and limitations under the License.
  */
 import React, { useState, useEffect } from 'react'
-import { generatePath } from "react-router";
-import { attach } from "@adobe/uix-guest"
+import { attach } from '@adobe/uix-guest'
 import {
   Flex,
-  Form,
-  ProgressCircle,
   Provider,
   Content,
   defaultTheme,
-  TextField,
   ButtonGroup,
   Button,
-  Heading,
-  View,
-  Divider
+  View
 } from '@adobe/react-spectrum'
-import { useParams } from "react-router-dom"
+import { useParams } from 'react-router-dom'
 import { triggerDeleteFromAdobeTarget } from '../utils'
-import { extensionId } from "./Constants"
+import { extensionId } from './Constants'
 
-function deleteWarning() {
-  return {__html: "Do you want to delete JSON Offer(s) in Adobe Target? This may affect any existing campaigns using these offers."};
+function deleteWarning () {
+  return { __html: 'Do you want to delete JSON Offer(s) in Adobe Target? This may affect any existing campaigns using these offers.' }
 }
 
 export default function DeletefromAdobeTargetOffersModal () {
   // Fields
   const [guestConnection, setGuestConnection] = useState()
   const [selectedContentFragments, setSelectedContentFragments] = useState([])
-  const [inProgress, setInprogress] = useState(false);
+  const [inProgress, setInprogress] = useState(false)
 
   const { batchId } = useParams()
 
   useEffect(() => {
     if (!batchId) {
-      console.error("batchId parameter is missing")
+      console.error('batchId parameter is missing')
       return
     }
     const batchData = sessionStorage.getItem(batchId)
     if (!batchData) {
-      console.error("Invalid batch specified for exporting")
+      console.error('Invalid batch specified for exporting')
       return
     }
     try {
@@ -58,9 +52,8 @@ export default function DeletefromAdobeTargetOffersModal () {
       setSelectedContentFragments(cfs)
     } catch (e) {
       console.error(`Invalid batch data: ${e}`)
-      return
     }
-  }, [batchId]);
+  }, [batchId])
 
   useEffect(() => {
     (async () => {
@@ -74,27 +67,27 @@ export default function DeletefromAdobeTargetOffersModal () {
   }
 
   const onDeleteHandler = async () => {
-    setInprogress(true);
+    setInprogress(true)
 
     try {
-      const auth = await guestConnection.sharedContext.get("auth");
-      const token = auth.imsToken;
-      const imsOrg = auth.imsOrg;
-      const repo = await guestConnection.sharedContext.get("aemHost");
-      const paths = selectedContentFragments.map(el => el.id);
-      await triggerDeleteFromAdobeTarget(token, repo, imsOrg, paths);
+      const auth = await guestConnection.sharedContext.get('auth')
+      const token = auth.imsToken
+      const imsOrg = auth.imsOrg
+      const repo = await guestConnection.sharedContext.get('aemHost')
+      const paths = selectedContentFragments.map(el => el.id)
+      await triggerDeleteFromAdobeTarget(token, repo, imsOrg, paths)
       await guestConnection.host.toaster.display({
-        variant: "positive",
-        message: "Content fragment(s) deleted successfully",
-      });
+        variant: 'positive',
+        message: 'Content fragment(s) deleted successfully'
+      })
     } catch (e) {
-      console.error('Delete from target got an error', e);
+      console.error('Delete from target got an error', e)
       await guestConnection.host.toaster.display({
-        variant: "negative",
-        message: "There was an error while deleting Content Fragment(s)",
-      });
+        variant: 'negative',
+        message: 'There was an error while deleting Content Fragment(s)'
+      })
     }
-    await guestConnection.host.modal.close();
+    await guestConnection.host.modal.close()
   }
 
   if (inProgress) {
@@ -117,8 +110,8 @@ export default function DeletefromAdobeTargetOffersModal () {
         </View>
         <Flex width="100%" justifyContent="end" alignItems="center" marginTop="size-400">
           <ButtonGroup align="end">
-            <Button variant="primary" onClick={onCloseHandler}>Cancel</Button>
-            <Button variant="negative" onClick={onDeleteHandler}>Delete</Button>
+            <Button variant="primary" onPress={onCloseHandler}>Cancel</Button>
+            <Button variant="negative" onPress={onDeleteHandler}>Delete</Button>
           </ButtonGroup>
         </Flex>
       </Content>

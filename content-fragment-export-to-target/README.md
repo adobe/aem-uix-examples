@@ -1,15 +1,22 @@
 # CFtoAdobeTarget
 
-Welcome to my Adobe I/O Application!
+This sample extension uses [UI Extension SDK](https://developer.adobe.com/uix/docs/) to create a custom UI for Content Fragment Core Component.
+It allows the user to select a content fragment and export it to Adobe Target.
 
-## Setup
-
-- Populate the `.env` file in the project root and fill it as shown [below](#env)
-
+## Pre-requisites
+1. [Set up](https://github.com/adobe/aem-uix-examples/wiki/Exporting-Content-Fragments-to-Adobe-Target#aem-instance-setup) your AEM instance.
+2. Make sure that you have [installed aio cli tool](https://developer.adobe.com/uix/docs/guides/local-environment/#manage-aio-cli-tool)
+3.  [Create a project](https://developer.adobe.com/uix/docs/guides/creating-project-in-dev-console/) in Adobe Developer Console or use existing one.
 ## Local Dev
 
-- `aio app run` to start your local Dev server
-- App will run on `localhost:9080` by default
+1. Sign in to **aio cli** using `aio login` command.
+2. Run `aio app use` command to generate `.env` file.
+3. `aio app run` to start your local Dev server
+4. App will run on `localhost:9080` by default
+
+Now you can preview your app in the browser: `https://experience.adobe.com/?repo=<CURTOMER_AEM_HOST>#/@<CUSTOMER_IMS_ORG>/aem/cf/admin/`
+See this [doc](https://developer.adobe.com/uix/docs/guides/preview-extension-locally/) for step by step instructions.
+
 
 By default the UI will be served locally but actions will be deployed and served from Adobe I/O Runtime. To start a
 local serverless stack and also run your actions locally use the `aio app run --local` option.
@@ -24,43 +31,13 @@ local serverless stack and also run your actions locally use the `aio app run --
 - `aio app deploy` to build and deploy all actions on Runtime and static files to CDN
 - `aio app undeploy` to undeploy the app
 
-## Config
-
-### `.env`
-
-You can generate this file using the command `aio app use`. 
-
-```bash
-# This file must **not** be committed to source control
-
-## please provide your Adobe I/O Runtime credentials
-# AIO_RUNTIME_AUTH=
-# AIO_RUNTIME_NAMESPACE=
-```
 
 ### `app.config.yaml`
 
-- Main configuration file that defines an application's implementation. 
-- More information on this file, application configuration, and extension configuration 
+- Main configuration file that defines an application's implementation.
+- More information on this file, application configuration, and extension configuration
   can be found [here](https://developer.adobe.com/app-builder/docs/guides/appbuilder-configuration/#appconfigyaml)
 
-#### Action Dependencies
-
-- You have two options to resolve your actions' dependencies:
-
-  1. **Packaged action file**: Add your action's dependencies to the root
-   `package.json` and install them using `npm install`. Then set the `function`
-   field in `app.config.yaml` to point to the **entry file** of your action
-   folder. We will use `webpack` to package your code and dependencies into a
-   single minified js file. The action will then be deployed as a single file.
-   Use this method if you want to reduce the size of your actions.
-
-  2. **Zipped action folder**: In the folder containing the action code add a
-     `package.json` with the action's dependencies. Then set the `function`
-     field in `app.config.yaml` to point to the **folder** of that action. We will
-     install the required dependencies within that directory and zip the folder
-     before deploying it as a zipped action. Use this method if you want to keep
-     your action's dependencies separated.
 
 ## Debugging in VS Code
 
@@ -68,14 +45,6 @@ While running your local server (`aio app run`), both UI and actions can be debu
 and select the debugging configuration called `WebAndActions`.
 Alternatively, there are also debug configs for only UI and each separate action.
 
-## Typescript support for UI
+## User Guide
 
-To use typescript use `.tsx` extension for react components and add a `tsconfig.json` 
-and make sure you have the below config added
-```
- {
-  "compilerOptions": {
-      "jsx": "react"
-    }
-  } 
-```
+https://github.com/adobe/aem-uix-examples/wiki/Exporting-Content-Fragments-to-Adobe-Target 
