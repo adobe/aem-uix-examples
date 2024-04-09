@@ -63,6 +63,7 @@ export function  Dropdown() {
           label={model.fieldLabel}
           errorMessage={error}
           loadingState={loading}
+          isReadOnly={!!loading || !items.length || !!error}
           maxWidth="100%"
           minWidth={"auto"}
           validationState={error ? "invalid" : "valid"}
