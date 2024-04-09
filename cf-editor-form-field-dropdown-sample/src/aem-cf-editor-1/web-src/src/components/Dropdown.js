@@ -45,6 +45,7 @@ export function  Dropdown() {
             ddType: "content-change-type"
           }
         );
+        setLoading('')
         setItems(data)
       } catch (e) {
         setError(`Error fetching data for dropdown`);
