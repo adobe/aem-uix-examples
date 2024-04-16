@@ -1,0 +1,13 @@
+{
+  "name": "generate-variations-cf-connector",
+  "id": "generate-variations-cf-connector",
+  "description": "Is it used anywhere?",
+  "version": "1.0.0",
+  "headerMenuButtons": [
+    {
+      "label": "Is it used anywhere?",
+      "needsModal": false,
+      "id": "Is it used anywhere?"
+    }
+  ]
+}
