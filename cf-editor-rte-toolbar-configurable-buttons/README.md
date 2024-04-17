@@ -1,6 +1,10 @@
 # Configurable Buttons for Rich Text Editor
 
-Welcome to my Adobe I/O Application!
+This project is a sample project that demonstrates how to configure the Rich Text Editor in the Content Fragment Editor.
+The toolbar is configurable and can be customized to include or exclude buttons as needed. This extension contains a single
+action that returns the configuration for the toolbar.Currently button configuration is hardcode in the action and be applied
+for Content Fragment created on the model `CF_MODEL_TITLE = test_model_title` and remove 'bold' buttons
+(or other button from the `ALLOWED_BUTTONS`list by updating value of `BUTTON_TO_REMOVE` constant) from the toolbar.
 
 ## Setup
 

@@ -24,7 +24,7 @@ const {errorResponse, getBearerToken, stringParameters, checkMissingRequestInput
 
 const ALLOWED_BUTTONS = "aligncenter | alignjustify | alignleft | alignnone | alignright | blockquote | backcolor | bold | copy | cut | fontselect | fontsizeselect | forecolor | formatselect | h1 | h2 | h3 | h4 | h5 | h6 | indent | italic | language | lineheight | newdocument | outdent | paste | redo | remove | removeformat | selectall | strikethrough | styleselect | subscript | superscript | underline | undo | visualaid | pastetext | link | openlink | unlink | table | tablecellprops | tablecopyrow | tablecutrow | tabledelete | tabledeletecol | tabledeleterow | tableinsertdialog | tableinsertcolafter | tableinsertcolbefore | tableinsertrowafter | tableinsertrowbefore | tablemergecells | tablepasterowafter | tablepasterowbefore | tableprops | tablerowprops | tablesplitcells | tableclass | tablecellclass | tablecellvalign | tablecellborderwidth | tablecellborderstyle | tablecaption | tablecellbackgroundcolor | tablecellbordercolor | tablerowheader | tablecolheader | code | fullscreen | bullist | numlist | charmap | preview | searchreplace | visualblocks | insertdatetime | media | anchor";
 /** update these constants to apply extension to your cf model */
-const CF_MODEL_TITLE = "audi_test_model";
+const CF_MODEL_TITLE = "test_model_title";
 const BUTTON_TO_REMOVE = "bold";
 
 const prepareConfig = () => {

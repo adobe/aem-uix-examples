@@ -15,5 +15,3 @@ extensions:
               annotations:
                 require-adobe-auth: true
                 final: true
-#  dx/excshell/1:
-#    $include: src/dx-excshell-1/ext.config.yaml
