@@ -1,6 +1,7 @@
 {
-  "name": "aem-generate-variations-cf-connector",
-  "version": "0.0.1",
+  "name": "cf-editor-generate-variations",
+  "description": "CF Editor Generate Variations",
+  "version": "1.0.0",
   "private": true,
   "dependencies": {
     "@adobe/aem-cf-admin-ui-ext-tpl": "1.0.0-beta.24",
@@ -41,7 +42,6 @@
     "lint": "eslint --quiet 'src/**/*.js'",
     "fix": "eslint --fix --quiet 'src/**/*.js'"
   },
-  "description": "generate-variations-cf-connector",
   "aio-app-builder-templates": [
     "@adobe/aem-cf-admin-ui-ext-tpl"
   ]

@@ -1,6 +1,6 @@
-# 448CoffeeFlamingo
+# Generate Variations Of Content Fragment
 
-Welcome to my Adobe I/O Application!
+The extension adds a button to the AEM Content Fragment Editor toolbar that allows users to generate variations of the content fragment.
 
 ## Setup
 
@@ -11,7 +11,7 @@ Welcome to my Adobe I/O Application!
 - `aio app run` to start your local Dev server
 - App will run on `localhost:9080` by default
 
-By default the UI will be served locally but actions will be deployed and served from Adobe I/O Runtime. To start a
+By default, the UI will be served locally but actions will be deployed and served from Adobe I/O Runtime. To start a
 local serverless stack and also run your actions locally use the `aio app run --local` option.
 
 ## Test & Coverage

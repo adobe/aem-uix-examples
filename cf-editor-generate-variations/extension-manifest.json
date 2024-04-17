@@ -1,13 +1,13 @@
 {
-  "name": "generate-variations-cf-connector",
-  "id": "generate-variations-cf-connector",
-  "description": "Is it used anywhere?",
+  "name": "CF Editor Generate Variations",
+  "id": "cf-editor-generate-variations",
+  "description": "CF Editor Generate Variations",
   "version": "1.0.0",
   "headerMenuButtons": [
     {
-      "label": "Is it used anywhere?",
-      "needsModal": false,
-      "id": "Is it used anywhere?"
+      "id": "generate-variations",
+      "label": "Generate Variations",
+      "needsModal": false
     }
   ]
 }
