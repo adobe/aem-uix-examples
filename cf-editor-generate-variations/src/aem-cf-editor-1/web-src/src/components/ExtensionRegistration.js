@@ -14,6 +14,12 @@ import { Text } from '@adobe/react-spectrum';
 import { register } from '@adobe/uix-guest';
 import { extensionId } from './Constants.js';
 
+const DEFAULT_URL = 'https://experience.adobe.com/#/aem/generate-variations/';
+
+function isValidApplicationUrl(url) {
+  return url.host.match(/experience-\w+\.adobe\.com/) && url.hash === '#/aem/generate-variations/';
+}
+
 function ExtensionRegistration() {
   const init = async () => {
     const guestConnection = await register({
@@ -27,28 +33,38 @@ function ExtensionRegistration() {
                 label: 'Generate Variations',
                 icon: 'OpenIn',
                 async onClick() {
-                  console.log('Generate Variations button clicked...');
+                  console.debug('Generate Variations button clicked...');
 
                   const context = guestConnection.sharedContext;
-                  console.log(`context: ${JSON.stringify(context)}`);
+                  console.debug(`context: ${JSON.stringify(context)}`);
 
-                  const { env } = guestConnection.configuration ?? { env: 'qa' };
-                  console.log(`env: ${env}`);
+                  console.debug('Default URL: ', DEFAULT_URL);
+
+                  const { APPLICATION_URL } = guestConnection.configuration ?? { APPLICATION_URL: DEFAULT_URL };
+                  console.debug(`Application URL: ${APPLICATION_URL}`);
+
+                  const applicationUrl = new URL(APPLICATION_URL);
+
+                  if (!isValidApplicationUrl(applicationUrl)) {
+                    console.error('Invalid Application URL');
+                    return;
+                  }
 
                   const aemHost = context.get('aemHost');
-                  console.log(`aemHost: ${aemHost}`);
+                  console.debug(`aemHost: ${aemHost}`);
 
                   const contentFragment = await guestConnection.host.contentFragment.getContentFragment();
-                  console.log(`contentFragment: ${JSON.stringify(contentFragment)}`);
+                  console.debug(`contentFragment: ${JSON.stringify(contentFragment)}`);
 
                   const { fragmentId } = contentFragment;
-                  console.log(`fragmentId: ${fragmentId}`);
+                  console.debug(`fragmentId: ${fragmentId}`);
 
-                  if (env === 'qa') {
-                    window.open(`https://experience-qa.adobe.com/?shell_source=local&devMode=true&shell_ims=prod&aemHost=${aemHost}&fragmentId=${fragmentId}#/@sitesinternal/aem/generate-variations/`, '_blank');
-                  } else {
-                    window.open(`https://experience-stage.adobe.com/?shell_ims=prod&aemHost=${aemHost}&fragmentId=${fragmentId}#/@sitesinternal/aem/generate-variations/`, '_blank');
-                  }
+                  applicationUrl.searchParams.append('aemHost', aemHost);
+                  applicationUrl.searchParams.append('fragmentId', fragmentId);
+
+                  console.debug(`Opening application URL: ${applicationUrl.toString()}...`);
+
+                  window.open(applicationUrl.toString(), '_blank');
                 },
               },
             ];
