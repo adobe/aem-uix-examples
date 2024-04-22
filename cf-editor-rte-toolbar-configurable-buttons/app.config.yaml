@@ -1,0 +1,17 @@
+extensions:
+  aem/cf-editor/1:
+    $include: src/aem-cf-editor-1/ext.config.yaml
+    runtimeManifest:
+      packages:
+        cf-editor-rte-toolbar-configurable-buttons:
+          license: Apache-2.0
+          actions:
+            getCFModelConfig:
+              function: src/aem-cf-editor-1/actions/getCFModelConfig/index.js
+              web: 'yes'
+              runtime: nodejs:18
+              inputs:
+                LOG_LEVEL: debug
+              annotations:
+                require-adobe-auth: true
+                final: true
