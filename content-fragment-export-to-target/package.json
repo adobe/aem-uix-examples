@@ -2,7 +2,6 @@
   "name": "cf-to-adobe-target-ui-extension",
   "version": "0.0.1",
   "dependencies": {
-    "@adobe/aem-cf-admin-ui-ext-tpl": "^2.1.0",
     "@adobe/aio-sdk": "^3.0.0",
     "@adobe/exc-app": "^0.2.21",
     "@adobe/react-spectrum": "^3.4.0",
@@ -59,8 +58,5 @@
   "engines": {
     "node": ">=18"
   },
-  "description": "Export AEM Content Fragments to Adobe Target",
-  "aio-app-builder-templates": [
-    "@adobe/aem-cf-admin-ui-ext-tpl"
-  ]
+  "description": "Export AEM Content Fragments to Adobe Target"
 }

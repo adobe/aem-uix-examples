@@ -2,7 +2,6 @@
   "name": "uixgenaidemo",
   "version": "0.0.1",
   "dependencies": {
-    "@adobe/aem-cf-admin-ui-ext-tpl": "^2.1.0",
     "@adobe/aem-upload": "^2.0.0",
     "@adobe/aio-sdk": "^3.0.0",
     "@adobe/exc-app": "^0.2.21",

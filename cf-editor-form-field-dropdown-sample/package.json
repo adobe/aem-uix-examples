@@ -2,7 +2,6 @@
   "name": "cf-editor-form-field-dropdown-sample",
   "version": "0.0.1",
   "dependencies": {
-    "@adobe/aem-cf-editor-ui-ext-tpl": "^1.0.0-beta.11",
     "@adobe/aio-sdk": "^3.0.0",
     "@adobe/exc-app": "^0.2.21",
     "@adobe/react-spectrum": "^3.4.0",
