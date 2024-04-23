@@ -21,11 +21,14 @@ jobs:
         node-version: ${{ matrix.node-version }}
     - name: Install dependencies in sub-folders
       run: |
-        for dir in $(find . -maxdepth 1 -type d); do
-          if [ -f "$dir/package.json" ]; then
-            echo "Installing dependencies in $dir"
-            cd $dir
-            npm install
+        # Get a list of all folders in the root
+        folders=$(find . -maxdepth 1 -mindepth 1 -type d)
+        for folder in $folders; do
+          (
+            cd "$folder" || exit
+            if [ -f package.json ]; then
+              npm install
+            fi
             cd ..
-          fi
+          )
         done
