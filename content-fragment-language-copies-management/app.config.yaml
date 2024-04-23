@@ -1,6 +1,8 @@
 application:
   actions: src/actions
   web: src/web-src
+  hooks:
+    post-app-deploy: ./hooks/post-deploy.js
   runtimeManifest:
     packages:
       cf-translations:

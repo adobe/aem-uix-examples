@@ -14,36 +14,33 @@ import ErrorBoundary from "react-error-boundary";
 import { HashRouter as Router, Routes, Route } from "react-router-dom";
 import ExtensionRegistration from "./ExtensionRegistration";
 import DisplayMetadataModal from "./DisplayMetadataModal";
-import {Provider as ProviderV3, defaultTheme} from '@adobe/react-spectrum';
-import Provider from '@react/react-spectrum/Provider';
+import { Provider as ProviderV3, defaultTheme } from '@adobe/react-spectrum';
 
 function App() {
   return (
     <ProviderV3 theme={defaultTheme} colorScheme={`light`}>
-      <Provider toastPlacement="bottom center" theme="light">
-        <Router>
-          <ErrorBoundary onError={onError} FallbackComponent={fallbackComponent}>
-            <Routes>
-              <Route index element={<ExtensionRegistration />} />
-              <Route
-                exact path="index.html"
-                element={<ExtensionRegistration />} 
-              />
-              <Route
-                exact path="content-fragment/:selection/display-metadata-modal"
-                element={<DisplayMetadataModal />}
-              />
-            </Routes>
-          </ErrorBoundary>
-        </Router>
-      </Provider>
+      <Router>
+        <ErrorBoundary onError={onError} FallbackComponent={fallbackComponent}>
+          <Routes>
+            <Route index element={<ExtensionRegistration />} />
+            <Route
+              exact path="index.html"
+              element={<ExtensionRegistration />}
+            />
+            <Route
+              exact path="content-fragment/:selection/display-metadata-modal"
+              element={<DisplayMetadataModal />}
+            />
+          </Routes>
+        </ErrorBoundary>
+      </Router>
     </ProviderV3>
   )
 
   // Methods
 
   // error handler on UI rendering failure
-  function onError(e, componentStack) {}
+  function onError(e, componentStack) { }
 
   // component to show if UI fails rendering
   function fallbackComponent({ componentStack, error }) {
