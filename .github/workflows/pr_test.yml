@@ -27,7 +27,7 @@ jobs:
           (
             cd "$folder" || exit
             if [ -f package.json ]; then
-              echo "Installing dependencies in $folder""
+              echo "Installing dependencies in $folder"
               npm install
             fi
             cd ..
