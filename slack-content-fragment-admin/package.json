@@ -1,9 +1,7 @@
 {
-  "name": "336GreenEgret",
+  "name": "import-cf-to-slack",
   "version": "1.0.0",
-  "private": true,
   "dependencies": {
-    "@adobe/aem-cf-admin-ui-ext-tpl": "^1.0.0-beta.23",
     "node-fetch": "^2.6.0",
     "@adobe/aio-sdk": "^3.0.0",
     "@adobe/exc-app": "^0.2.21",
@@ -25,17 +23,15 @@
     "@babel/core": "^7.8.7",
     "@babel/plugin-transform-react-jsx": "^7.8.3",
     "@babel/polyfill": "^7.8.7",
-    "@babel/preset-env": "^7.8.7"
+    "@babel/preset-env": "^7.8.7",
+    "js-yaml": "^4.1.0"
   },
   "scripts": {
     "test": "jest --passWithNoTests ./test",
     "e2e": "jest --collectCoverage=false --testRegex ./e2e"
   },
   "engines": {
-    "node": "^14.18 || ^16.13 || >=18"
+    "node": ">=18"
   },
-  "description": "Demo Extension to showcase import/export functionality using custom buttons within AEM Content Fragment Console",
-  "aio-app-builder-templates": [
-    "@adobe/aem-cf-admin-ui-ext-tpl"
-  ]
+  "description": "Demo Extension to showcase import/export functionality using custom buttons within AEM Content Fragment Console"
 }

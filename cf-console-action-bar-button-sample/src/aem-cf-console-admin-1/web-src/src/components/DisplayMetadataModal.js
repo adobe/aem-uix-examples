@@ -16,8 +16,6 @@ import {
   Grid,
   Flex,
   Text,
-  Content,
-  ButtonGroup,
   Button,
   Heading,
   TableView,
@@ -28,7 +26,6 @@ import {
   Column,
   View
 } from '@adobe/react-spectrum'
-import {Accordion, AccordionItem} from '@react/react-spectrum/Accordion';
 import Spinner from './Spinner';
 import { useParams } from "react-router-dom"
 
@@ -116,16 +113,8 @@ export default function DisplayMetadataModal () {
       <Heading level={3}>This extension displays the metadata of the {fragmentIds.length} content fragments you selected.</Heading>
       <View marginBottom="size-150">
       <ErrorBoundary onError={onError} FallbackComponent={fallbackComponent}>
-      <Accordion aria-label="Default" 
-                 ariaLevel={1} 
-                 multiselectable={true}
-                 >
         {fragments.map((cf, index) => 
-            <AccordionItem
-                key={index}
-                disabled={false}
-                header={cf.title}
-            >
+            <div>
             <Heading level={4}>Fragment ID</Heading>
             {cf.id}
             <Heading level={4}>Created on</Heading>
@@ -190,9 +179,8 @@ export default function DisplayMetadataModal () {
             ) : (
               <Text>No fields.</Text>
             )}
-            </AccordionItem>
+            </div>
         )}
-      </Accordion>
       </ErrorBoundary>
       </View>
       <View position="relative" width="100%" height="size-300" marginBottom="size-150">

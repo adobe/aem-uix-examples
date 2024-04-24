@@ -1,0 +1,35 @@
+name: Node.js CI
+
+on:
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [18.x]
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v2
+      with:
+        node-version: ${{ matrix.node-version }}
+    - name: Install dependencies in sub-folders
+      run: |
+        # Get a list of all folders in the root
+        folders=$(find . -maxdepth 1 -mindepth 1 -type d)
+        for folder in $folders; do
+          (
+            cd "$folder" || exit
+            if [ -f package.json ]; then
+              echo "Installing dependencies in $folder"
+              npm install
+            fi
+            cd ..
+          )
+        done

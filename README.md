@@ -2,22 +2,20 @@
 
 This repository contains a working example of the usage of UI Extensibility in AEM.
 
-## Goals
+## Goal
 
 Through examples, we aim to demonstrate the potential of UI Extensibility and foster creativity.
 
 ## Installation
 
-Each folder contains a fully working UI Extension integrated with AEM. Simply navigate to one and follow its README.md file.
+Each folder contains a fully working UI Extension integrated with AEM.
 
-To try them out run:
-```sh
-aio app init --repo adobe/aem-uix-examples/{example-folder}
-```
-Example:
-```sh
-aio app init --repo adobe/aem-uix-examples/cf-console-action-bar-button-sample
-```
+In addition to git clone and/or forking this repo, you can generate an app from the [@adobe/aio-cli](https://github.com/adobe/aio-cli)
+
+_Example to generate the a button for CF Console:_
+
+`aio app init --repo adobe/aem-uix-examples/cf-console-header-menu-button-sample`
+
 
 ## Examples
 
@@ -29,7 +27,7 @@ Here is the list of examples:
 - [AEM Content Fragment Editor Form Field Dropdown](./cf-editor-form-field-dropdown-sample/)
 - [Custom AEM Content Fragment Editor RTE Toolbar Button](./cf-editor-rte-toolbar-button-sample/)
 - [Export Content Fragment to Adobe Target](./content-fragment-export-to-target/)
-- Content Fragment Language Copies Management](./content-fragment-language-copies-management/)
+- [Content Fragment Language Copies Management](./content-fragment-language-copies-management/)
 - [Image genaration through 3rd party GenAI](./openai-dalle-content-fragment-admin/)
 - [Slack Integration for Content Fragment management](./slack-content-fragment-admin/)
 - [Workfront Task Management for Universal Editor](./universal-editor-task-management/)
