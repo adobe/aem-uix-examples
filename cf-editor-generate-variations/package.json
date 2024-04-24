@@ -2,13 +2,11 @@
   "name": "cf-editor-generate-variations",
   "description": "CF Editor Generate Variations",
   "version": "1.0.0",
-  "private": true,
   "dependencies": {
-    "@adobe/aem-cf-admin-ui-ext-tpl": "1.0.0-beta.24",
     "@adobe/aio-sdk": "3.0.0",
     "@adobe/exc-app": "0.2.21",
     "@adobe/react-spectrum": "3.4.0",
-    "@adobe/uix-guest": "0.8.0",
+    "@adobe/uix-guest": "^0.10.0",
     "@react-spectrum/list": "3.0.0-rc.0",
     "@spectrum-icons/workflow": "3.2.0",
     "chalk": "4",
@@ -33,7 +31,8 @@
     "eslint-plugin-react": "7.33.2",
     "eslint-plugin-react-hooks": "4.6.0",
     "eslint-plugin-unused-imports": "3.0.0",
-    "jest": "27.2.4"
+    "jest": "27.2.4",
+    "js-yaml": "^4.1.0"
   },
   "scripts": {
     "deploy": "aio app deploy --force-publish",
@@ -42,7 +41,7 @@
     "lint": "eslint --quiet 'src/**/*.js'",
     "fix": "eslint --fix --quiet 'src/**/*.js'"
   },
-  "aio-app-builder-templates": [
-    "@adobe/aem-cf-admin-ui-ext-tpl"
-  ]
+  "engines": {
+    "node": " >=18"
+  }
 }
