@@ -36,7 +36,7 @@
     "jest": "27.2.4"
   },
   "scripts": {
-    "deploy": "aio app deploy",
+    "deploy": "aio app deploy --force-publish",
     "test": "jest --passWithNoTests ./test",
     "e2e": "jest --collectCoverage=false --testRegex ./e2e",
     "lint": "eslint --quiet 'src/**/*.js'",

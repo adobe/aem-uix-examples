@@ -17,7 +17,7 @@ import { extensionId } from './Constants.js';
 const DEFAULT_URL = 'https://experience.adobe.com/#/aem/generate-variations/';
 
 function isValidApplicationUrl(url) {
-  return url.host.match(/experience-\w+\.adobe\.com/) && url.hash === '#/aem/generate-variations/';
+  return /experience(-\w+)?\.adobe\.com/.test(url.host) && (url.hash === '#/aem/generate-variations/');
 }
 
 function ExtensionRegistration() {
@@ -40,10 +40,13 @@ function ExtensionRegistration() {
 
                   console.debug('Default URL: ', DEFAULT_URL);
 
-                  const { APPLICATION_URL } = guestConnection.configuration ?? { APPLICATION_URL: DEFAULT_URL };
-                  console.debug(`Application URL: ${APPLICATION_URL}`);
+                  const { APPLICATION_URL } = guestConnection.configuration;
+                  console.debug(`APPLICATION_URL: ${APPLICATION_URL}`);
 
-                  const applicationUrl = new URL(APPLICATION_URL);
+                  const resolvedUrl = APPLICATION_URL ?? DEFAULT_URL;
+                  console.debug(`Application URL: ${resolvedUrl}`);
+
+                  const applicationUrl = new URL(resolvedUrl);
 
                   if (!isValidApplicationUrl(applicationUrl)) {
                     console.error('Invalid Application URL');

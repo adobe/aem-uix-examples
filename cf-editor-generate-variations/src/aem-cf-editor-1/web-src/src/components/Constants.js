@@ -10,5 +10,5 @@
  * governing permissions and limitations under the License.
  */
 module.exports = {
-  extensionId: 'generate-variations-cf-connector-admin',
+  extensionId: 'cf-editor-generate-variations',
 };
