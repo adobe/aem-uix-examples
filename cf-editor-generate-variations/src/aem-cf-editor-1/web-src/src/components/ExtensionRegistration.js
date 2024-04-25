@@ -13,12 +13,9 @@ import React from 'react';
 import { Text } from '@adobe/react-spectrum';
 import { register } from '@adobe/uix-guest';
 import { extensionId } from './Constants.js';
+import { isValidApplicationUrl } from './Utils.js';
 
 const DEFAULT_URL = 'https://experience.adobe.com/#/aem/generate-variations/';
-
-function isValidApplicationUrl(url) {
-  return /experience(-\w+)?\.adobe\.com/.test(url.host) && (url.hash === '#/aem/generate-variations/');
-}
 
 function ExtensionRegistration() {
   const init = async () => {
@@ -36,38 +33,29 @@ function ExtensionRegistration() {
                   console.debug('Generate Variations button clicked...');
 
                   const context = guestConnection.sharedContext;
-                  console.debug(`context: ${JSON.stringify(context)}`);
 
-                  console.debug('Default URL: ', DEFAULT_URL);
+                  const { APPLICATION_URL: urlAsString = DEFAULT_URL } = guestConnection.configuration ?? {};
 
-                  const { APPLICATION_URL } = guestConnection.configuration;
-                  console.debug(`APPLICATION_URL: ${APPLICATION_URL}`);
+                  const url = new URL(urlAsString);
 
-                  const resolvedUrl = APPLICATION_URL ?? DEFAULT_URL;
-                  console.debug(`Application URL: ${resolvedUrl}`);
-
-                  const applicationUrl = new URL(resolvedUrl);
-
-                  if (!isValidApplicationUrl(applicationUrl)) {
-                    console.error('Invalid Application URL');
+                  if (!isValidApplicationUrl(url)) {
+                    console.error(`Invalid application URL: ${url.toString()}`);
                     return;
                   }
 
                   const aemHost = context.get('aemHost');
-                  console.debug(`aemHost: ${aemHost}`);
+                  console.debug(`Resolved AEM Host: ${aemHost}`);
 
                   const contentFragment = await guestConnection.host.contentFragment.getContentFragment();
-                  console.debug(`contentFragment: ${JSON.stringify(contentFragment)}`);
-
                   const { fragmentId } = contentFragment;
-                  console.debug(`fragmentId: ${fragmentId}`);
+                  console.debug(`Resolved Fragment ID: ${fragmentId}`);
 
-                  applicationUrl.searchParams.append('aemHost', aemHost);
-                  applicationUrl.searchParams.append('fragmentId', fragmentId);
+                  url.searchParams.append('aemHost', aemHost);
+                  url.searchParams.append('fragmentId', fragmentId);
 
-                  console.debug(`Opening application URL: ${applicationUrl.toString()}...`);
+                  console.debug(`Opening URL: ${url.toString()}...`);
 
-                  window.open(applicationUrl.toString(), '_blank');
+                  window.open(url.toString(), '_blank');
                 },
               },
             ];

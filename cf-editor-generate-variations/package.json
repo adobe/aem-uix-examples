@@ -6,7 +6,7 @@
     "@adobe/aio-sdk": "3.0.0",
     "@adobe/exc-app": "0.2.21",
     "@adobe/react-spectrum": "3.4.0",
-    "@adobe/uix-guest": "^0.10.0",
+    "@adobe/uix-guest": "0.10.0",
     "@react-spectrum/list": "3.0.0-rc.0",
     "@spectrum-icons/workflow": "3.2.0",
     "chalk": "4",
@@ -32,11 +32,12 @@
     "eslint-plugin-react-hooks": "4.6.0",
     "eslint-plugin-unused-imports": "3.0.0",
     "jest": "27.2.4",
-    "js-yaml": "^4.1.0"
+    "js-yaml": "4.1.0"
   },
   "scripts": {
+    "predeploy": "npm test && npm run lint",
     "deploy": "aio app deploy --force-publish",
-    "test": "jest --passWithNoTests ./test",
+    "test": "jest --passWithNoTests --testRegex ./web-src/.*\\.test\\.js$",
     "e2e": "jest --collectCoverage=false --testRegex ./e2e",
     "lint": "eslint --quiet 'src/**/*.js'",
     "fix": "eslint --fix --quiet 'src/**/*.js'"
