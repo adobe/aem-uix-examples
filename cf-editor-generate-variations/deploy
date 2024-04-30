@@ -1,0 +1,9 @@
+#!/bin/bash
+
+npx aio logout -f
+npx aio login
+npx aio console org select
+npx aio console project select
+npx aio console ws select
+npx aio app use -m -g
+npm run deploy
