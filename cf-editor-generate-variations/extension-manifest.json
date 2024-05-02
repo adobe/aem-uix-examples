@@ -1,0 +1,13 @@
+{
+  "name": "CF Editor Generate Variations",
+  "id": "cf-editor-generate-variations",
+  "description": "CF Editor Generate Variations",
+  "version": "1.0.0",
+  "headerMenuButtons": [
+    {
+      "id": "generate-variations",
+      "label": "Generate Variations",
+      "needsModal": false
+    }
+  ]
+}
