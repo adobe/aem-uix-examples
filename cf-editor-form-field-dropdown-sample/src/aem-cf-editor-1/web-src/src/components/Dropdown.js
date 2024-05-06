@@ -1,7 +1,7 @@
 import { attach } from "@adobe/uix-guest"
 import { useEffect, useState, useRef } from 'react'
 import { extensionId } from "./Constants"
-import { ComboBox, Item, Provider, defaultTheme } from '@adobe/react-spectrum'
+import { ComboBox, Item, Provider, lightTheme } from '@adobe/react-spectrum'
 import { getDropdownData } from '../utils'
 import "./Dropdown.css";
 
@@ -57,7 +57,7 @@ export function  Dropdown() {
 
   //see https://react-spectrum.adobe.com/react-spectrum/ComboBox.html
   return (
-    <Provider theme={defaultTheme}>
+    <Provider theme={lightTheme} colorScheme={"light"}>
       <div className={'dropdown-field-wrapper'}>
         <ComboBox
           label={model.fieldLabel}
@@ -73,15 +73,38 @@ export function  Dropdown() {
           isRequired={model.required}
           inputValue={value}
           direction={"bottom"}
+          onInputChange={(v) => {
+            dataApi.setValue(model.name, v);
+          }}
           onSelectionChange={(v) => {
             setValue(v)
             dataApi.setValue(model.name, v);
           }}
-          onOpenChange={(isOpen, menuTrigger) => {
+          onOpenChange={async (isOpen, menuTrigger) => {
               if (isOpen) {
-                connection.host.field.setHeight(textInputRef.current.UNSAFE_getDOMNode().clientHeight + (items.length * 40))
+                const position = await connection.host.field.getBoundingClientRect()
+                let height;
+                const spaceToBottomWithPadding = position.viewportHeight - position.bottom - 10;
+                if (items.length > 5 && spaceToBottomWithPadding < textInputRef.current.UNSAFE_getDOMNode().clientHeight + 200) {
+                  height = textInputRef.current.UNSAFE_getDOMNode().clientHeight + 200
+                } else if (spaceToBottomWithPadding < textInputRef.current.UNSAFE_getDOMNode().clientHeight + (items.length * 40)) {
+                  height = spaceToBottomWithPadding
+                } else {
+                  height = textInputRef.current.UNSAFE_getDOMNode().clientHeight + (items.length * 40)
+                }
+                connection.host.field.setStyles({
+                  current: {
+                    height: height,
+                    zIndex: 10
+                  }
+                });
               } else {
-                connection.host.field.setHeight(textInputRef.current.UNSAFE_getDOMNode().clientHeight)
+                connection.host.field.setStyles({
+                  current: {
+                    height: textInputRef.current.UNSAFE_getDOMNode().clientHeight,
+                    zIndex: 1
+                  }
+                });
               }
             }
           }

@@ -12,6 +12,8 @@ governing permissions and limitations under the License.
 import { Text } from "@adobe/react-spectrum";
 import { register } from "@adobe/uix-guest";
 import { extensionId } from "./Constants";
+import { generatePath } from "react-router";
+
 
 function ExtensionRegistration() {
   const init = async () => {
@@ -21,16 +23,40 @@ function ExtensionRegistration() {
         field: {
           getDefinitions: () => ([
             {
-              modelPathExp: 'change-log',
-              fieldNameExp: '^description',
+              fieldNameExp: '^author',
               url: "/#/dropdown-route",
-              overlay: true,
+              overlay: true
+            },
+            {
+              fieldNameExp: 'dateX',
+              url: "/#/dropdown-route",
+              overlay: true
+            },
+            {
+              fieldNameExp: 'number',
+              url: "/#/dropdown-route",
+              overlay: true
+            },
+            {
+              fieldNameExp: 'numberMulti',
+              url: "/#/dropdown-route",
+              overlay: true
+            },
+            {
+              fieldNameExp: '^boolean',
+              url: "/#/dropdown-route",
+              overlay: true
+            },
+            {
+              fieldNameExp: '^dateTime',
+              url: "/#/dropdown-route",
+              overlay: true
             },
           ]),
           getProperties: async () => {
             return [
               {
-                fieldNameExp: '^title',
+                fieldNameExp: '^dateX',
                 disabled: true
               },
             ];
