@@ -28,8 +28,8 @@ function ExtensionRegistration() {
               {
                 id: 'generate-variations-header-menu-button',
                 label: 'Generate Variations',
-                icon: 'OpenIn',
-                variant: 'secondary',
+                icon: 'SenseiGenAI',
+                variant: 'action',
                 async onClick() {
                   console.debug('Generate Variations button clicked...');
 
