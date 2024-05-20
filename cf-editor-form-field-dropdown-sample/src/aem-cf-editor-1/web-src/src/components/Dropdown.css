@@ -1,6 +1,6 @@
 .dropdown-field-wrapper {
     background: #fff;
-    z-index: 99;
+    z-index: 1;
 }
 
 .dropdown-field {
@@ -10,5 +10,9 @@
 
 .spectrum-InputGroup-popover {
     left: 0 !important;
+}
+
+body {
+    overflow: hidden;
 }
 
