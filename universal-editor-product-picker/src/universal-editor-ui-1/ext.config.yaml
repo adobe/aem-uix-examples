@@ -1,0 +1,21 @@
+operations:
+  view:
+    - type: web
+      impl: index.html
+web: web-src
+runtimeManifest:
+  packages:
+    productpicker:
+      license: Apache-2.0
+      actions:
+        graphql-proxy:
+          function: actions/graphql-proxy/index.js
+          web: 'yes'
+          runtime: 'nodejs:18'
+          inputs:
+            LOG_LEVEL: debug
+          annotations:
+            require-adobe-auth: false
+            final: true
+hooks:
+  post-app-deploy: ./hooks/post-deploy.js
