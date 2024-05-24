@@ -101,16 +101,6 @@ const Picker = props => {
     return pathString.split('/').map(p => categories[p]).filter(p => p);
   }
 
-
-
-  const renderErrorState = () => (
-    <IllustratedMessage>
-      <Error />
-      <Heading>Something went wrong</Heading>
-      <Content>{state.error}</Content>
-    </IllustratedMessage>
-  );
-
   const onLoadMore = async () => {
     if (!state.pageInfo || state.pageInfo.current_page >= state.pageInfo.total_pages || state.loadingState === 'loadingMore') {
       return;
@@ -226,8 +216,6 @@ const Picker = props => {
     })();
   }, [state.folder, state.searchText]);
 
-  const currentBlock = blocks[state.block] || {};
-
   const items = (state.searchText === "")
       ? [...getCategoriesToDisplay(state.categories), ...Object.values(state.items)]
       : Object.values(state.items);
@@ -236,7 +224,11 @@ const Picker = props => {
     return <Provider theme={defaultTheme} height="100%">
       <Flex direction="column" height="100%">
         <View padding="size-500">
-          {renderErrorState()}
+          <IllustratedMessage>
+            <Error />
+            <Heading>Something went wrong</Heading>
+            <Content>{state.error}</Content>
+          </IllustratedMessage>
         </View>
       </Flex>
     </Provider>;
@@ -250,7 +242,7 @@ const Picker = props => {
               columns={["2fr", "1fr"]}
           >
             {state.searchText === "" && (
-                <Breadcrumbs gridArea="breadcrumbs" onAction={selectFolder} isDisabled={currentBlock.selection === 'multiple'}>
+                <Breadcrumbs gridArea="breadcrumbs" onAction={selectFolder}>
                   {state.path.map(c => <Item key={c.key}>{c.name}</Item>)}
                 </Breadcrumbs>
             )}
@@ -273,6 +265,7 @@ const Picker = props => {
                 clickListItem={clickListItem}
                 selectItem={selectItem}
                 onLoadMore={onLoadMore}
+                onSortChange={() => {}}
             />
           </View>
           <ButtonGroup marginTop={30} marginStart="auto">

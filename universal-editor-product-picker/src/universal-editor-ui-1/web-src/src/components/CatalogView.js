@@ -1,10 +1,16 @@
 import React from 'react';
 
 import {
-    Item,
     Text,
-    Flex,
-    Image, ListView, IllustratedMessage, Heading,
+    Image,
+    IllustratedMessage,
+    Heading,
+    Cell,
+    Column,
+    Row,
+    TableView,
+    TableBody,
+    TableHeader
 } from '@adobe/react-spectrum';
 import Folder from '@spectrum-icons/illustrations/Folder';
 import ImageIcon from "@spectrum-icons/workflow/Image";
@@ -18,50 +24,68 @@ const renderEmptyState = () => (
 );
 
 const CatalogView = props => {
-    const { items, loadingState, selectedItems, disabledKeys, clickListItem, selectItem, onLoadMore } = props;
+    const {
+        items,
+        loadingState,
+        selectedItems,
+        disabledKeys,
+        clickListItem,
+        selectItem,
+        onLoadMore,
+        onSortChange
+    } = props;
 
     return (
-        <ListView aria-label="List of Items"
-                  selectionMode="single"
-                  selectionStyle="highlight"
-                  items={items}
-                  loadingState={loadingState}
-                  width="100%"
-                  height="100%"
-                  density="spacious"
-                  onAction={clickListItem}
-                  selectedKeys={selectedItems}
-                  onSelectionChange={selectItem}
-                  disabledKeys={disabledKeys}
-                  renderEmptyState={renderEmptyState}
-                  onLoadMore={onLoadMore}
+        <TableView
+            aria-label="List of Items"
+            selectionMode="single"
+            selectionStyle="highlight"
+            width="100%"
+            height="100%"
+            density="spacious"
+            renderEmptyState={renderEmptyState}
+            selectedKeys={selectedItems}
+            disabledKeys={disabledKeys}
+            onAction={clickListItem}
+            onSelectionChange={selectItem}
+            onSortChange={onSortChange}
         >
-            {item => {
-                if (item.isFolder) {
-                    return (
-                      <Item key={item.key} textValue={item.name}>
-                        <Folder />
-                        <Text>{item.name}</Text>
-                      </Item>
-                    );
-                }
-
-                return (
-                  <Item key={item.key} textValue={item.name}>
-                    <Flex direction="row">
-                      <Flex width="size-550">
-                        {item.images && item.images.length > 0 ? (<Image src={item.images[0].url} alt={item.name} objectFit="contain" />) : (<ImageIcon size="L" />) }
-                      </Flex>
-                      <Flex direction="column">
-                        <Text><span dangerouslySetInnerHTML={{ __html: item.name }} /></Text>
-                        <Text UNSAFE_style={{ fontSize: "var(--spectrum-global-dimension-static-font-size-50)" }}>(SKU: <span dangerouslySetInnerHTML={{ __html: item.sku }} />)</Text>
-                       </Flex>
-                    </Flex>
-                  </Item>
-                );
-            }}
-        </ListView>
+            <TableHeader>
+                <Column key="image" width={50}></Column>
+                <Column key="name" defaultWidth="30%" allowsSorting={true} allowsResizing={true}>Name</Column>
+                <Column key="sku" allowsSorting={true}>SKU</Column>
+            </TableHeader>
+            <TableBody
+                loadingState={loadingState}
+                items={items}
+                onLoadMore={onLoadMore}
+            >
+                {item => (
+                    <Row key={item.key}>
+                        <Cell>
+                            {item.isFolder ? (
+                                <Folder />
+                            ) : (
+                                item.images && item.images.length > 0 ? (
+                                    <Image src={item.images[0].url} alt={item.name} objectFit="contain" />
+                                ) : (
+                                    <ImageIcon size="L" />
+                                )
+                            )}
+                        </Cell>
+                        <Cell>
+                            <Text><span dangerouslySetInnerHTML={{ __html: item.name }} /></Text>
+                        </Cell>
+                        <Cell>
+                            {!item.isFolder && item.sku}
+                        </Cell>
+                    </Row>
+                )}
+            </TableBody>
+        </TableView>
     );
 };
 
 export { CatalogView };
+
+// sort: {attribute: "name", direction: ASC}
