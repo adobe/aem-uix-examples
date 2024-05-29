@@ -265,7 +265,6 @@ const Picker = props => {
                 clickListItem={clickListItem}
                 selectItem={selectItem}
                 onLoadMore={onLoadMore}
-                onSortChange={() => {}}
             />
           </View>
           <ButtonGroup marginTop={30} marginStart="auto">

@@ -10,7 +10,9 @@ import {
     Row,
     TableView,
     TableBody,
-    TableHeader
+    TableHeader,
+    Flex,
+    View
 } from '@adobe/react-spectrum';
 import Folder from '@spectrum-icons/illustrations/Folder';
 import ImageIcon from "@spectrum-icons/workflow/Image";
@@ -51,9 +53,7 @@ const CatalogView = props => {
             onSortChange={onSortChange}
         >
             <TableHeader>
-                <Column key="image" width={50}></Column>
-                <Column key="name" defaultWidth="30%" allowsSorting={true} allowsResizing={true}>Name</Column>
-                <Column key="sku" allowsSorting={true}>SKU</Column>
+                <Column/>
             </TableHeader>
             <TableBody
                 loadingState={loadingState}
@@ -64,20 +64,23 @@ const CatalogView = props => {
                     <Row key={item.key}>
                         <Cell>
                             {item.isFolder ? (
-                                <Folder />
+                                <Flex direction="row">
+                                    <Folder />
+                                    <View alignSelf={"center"} marginStart={10}>
+                                        <Text><span dangerouslySetInnerHTML={{ __html: item.name }} /></Text>
+                                    </View>
+                                </Flex>
                             ) : (
-                                item.images && item.images.length > 0 ? (
-                                    <Image src={item.images[0].url} alt={item.name} objectFit="contain" />
-                                ) : (
-                                    <ImageIcon size="L" />
-                                )
+                                <Flex direction="row">
+                                    <Flex width="size-550">
+                                        {item.images && item.images.length > 0 ? (<Image src={item.images[0].url} alt={item.name} objectFit="contain" />) : (<ImageIcon size="L" />) }
+                                    </Flex>
+                                    <Flex direction="column" marginStart={15}>
+                                        <Text><span dangerouslySetInnerHTML={{ __html: item.name }} /></Text>
+                                        <Text UNSAFE_style={{ fontSize: "var(--spectrum-global-dimension-static-font-size-50)" }}>(SKU: {item.sku})</Text>
+                                    </Flex>
+                                </Flex>
                             )}
-                        </Cell>
-                        <Cell>
-                            <Text><span dangerouslySetInnerHTML={{ __html: item.name }} /></Text>
-                        </Cell>
-                        <Cell>
-                            {!item.isFolder && item.sku}
                         </Cell>
                     </Row>
                 )}
@@ -87,5 +90,3 @@ const CatalogView = props => {
 };
 
 export { CatalogView };
-
-// sort: {attribute: "name", direction: ASC}
