@@ -2,7 +2,7 @@
  * <license header>
  */
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { attach } from "@adobe/uix-guest";
 import {
   Provider,
@@ -18,52 +18,39 @@ import {
 import { extensionId } from "./Constants";
 import Box from '@spectrum-icons/workflow/Box';
 
-export default function () {
+const CifField = function () {
   const [guestConnection, setGuestConnection] = useState();
-  const [model, setModel] = useState({});
   const [value, setValue] = useState('');
-
-  const handleStorageChange = (event) => {
-    // console.log("========= guestConnection ==========");
-    // console.log(guestConnection);
-    // if (!guestConnection) {
-    //   return;
-    // }
-    if (event.key === 'selectedProduct') {
-      setValue(event.newValue);
-      // guestConnection.host.field.onChange(event.newValue);
-    }
-  };
-
-  const init = async () => {
-    const connection = await attach({
-      id: extensionId,
-    });
-    setGuestConnection(connection);
-  };
+  const fieldRef = useRef();
 
   useEffect(() => {
+    const handleStorageChange = (event) => {
+      if (event.key === 'selectedProduct' && fieldRef.current) {
+        setValue(event.newValue);
+        fieldRef.current.onChange(event.newValue);
+      }
+    };
+
+    const init = async () => {
+      const connection = await attach({
+        id: extensionId,
+      });
+
+      setGuestConnection(connection);
+      setValue(await connection.host.field.getValue());
+
+      fieldRef.current = connection.host.field;
+      window.addEventListener('storage', handleStorageChange);
+    };
+
     init().catch((e) =>
       console.log("Extension got the error during initialization:", e)
     );
-    window.addEventListener('storage', handleStorageChange);
 
     return () => {
       window.removeEventListener('storage', handleStorageChange);
     };
   }, []);
-
-  // Get basic state from guestConnection
-  useEffect(() => {
-    if (!guestConnection) {
-      return;
-    }
-    const getState = async () => {
-      setModel(await guestConnection.host.field.getModel());
-      setValue(await guestConnection.host.field.getValue());
-    };
-    getState().catch((e) => console.error("Extension error:", e));
-  }, [guestConnection]);
 
   const showModal = () => {
     guestConnection.host.modal.showUrl({
@@ -97,3 +84,5 @@ export default function () {
     </Provider>
   );
 }
+
+export default CifField;

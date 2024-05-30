@@ -73,9 +73,9 @@ const CatalogView = props => {
                             ) : (
                                 <Flex direction="row">
                                     <Flex width="size-550">
-                                        {item.images && item.images.length > 0 ? (<Image src={item.images[0].url} alt={item.name} objectFit="contain" />) : (<ImageIcon size="L" />) }
+                                        {item.images && item.images.length > 0 ? (<Image src={item.images[0].url} alt={item.name} />) : (<ImageIcon size="L" />) }
                                     </Flex>
-                                    <Flex direction="column" marginStart={15}>
+                                    <Flex direction="column" marginStart={10}>
                                         <Text><span dangerouslySetInnerHTML={{ __html: item.name }} /></Text>
                                         <Text UNSAFE_style={{ fontSize: "var(--spectrum-global-dimension-static-font-size-50)" }}>(SKU: {item.sku})</Text>
                                     </Flex>
