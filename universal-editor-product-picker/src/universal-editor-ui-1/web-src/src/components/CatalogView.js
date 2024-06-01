@@ -30,7 +30,7 @@ const CatalogView = props => {
     items,
     loadingState,
     selectedKeys,
-    clickListItem,
+    onClickItemList,
     onSelectionChange,
     onLoadMore,
   } = props;
@@ -38,14 +38,14 @@ const CatalogView = props => {
   return (
     <TableView
       aria-label="List of Items"
-      selectionMode="multiple"
+      selectionMode="single"
       selectionStyle="highlight"
       width="100%"
       height="100%"
       density="spacious"
       renderEmptyState={renderEmptyState}
       selectedKeys={selectedKeys}
-      onAction={clickListItem}
+      onAction={onClickItemList}
       onSelectionChange={onSelectionChange}
     >
       <TableHeader>
