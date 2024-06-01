@@ -1,5 +1,8 @@
-import React, { useEffect, useState } from 'react';
+/*
+ * <license header>
+ */
 
+import React, { useEffect, useState } from 'react';
 import {
   defaultTheme,
   Provider,
@@ -13,19 +16,19 @@ import {
   Button,
   ButtonGroup,
   Grid,
+  SearchField,
 } from '@adobe/react-spectrum';
 import Error from '@spectrum-icons/illustrations/Error';
-import { SearchField } from '@adobe/react-spectrum';
 import { CatalogView }  from './CatalogView';
 
 export default  (props) => {
-  const { catalogServiceConfig, getCategories, getProducts, onConfirm, onCancel, selectedProducts } = props;
+  const { config, getCategories, getProducts, onConfirm, onCancel, selectedProducts } = props;
 
   const [state, setState] = useState({
     error: null,
     loadingState: 'loading',
     categories: [],
-    currentCategory: catalogServiceConfig['commerce-root-category-id'],
+    currentCategory: config['commerce-root-category-id'],
     items: [],
     breadcrumbs: [],
     pageInfo: {
@@ -34,7 +37,6 @@ export default  (props) => {
       total_pages: 0,
     },
     searchText: "",
-
     selectedProducts: selectedProducts || [],
   });
 
@@ -43,7 +45,7 @@ export default  (props) => {
     (async () => {
       let categories = {};
       try {
-        categories = await getCategories(catalogServiceConfig['commerce-root-category-id']);
+        categories = await getCategories(config['commerce-root-category-id']);
       } catch (err) {
         setState(state => ({
           ...state,
@@ -52,6 +54,7 @@ export default  (props) => {
         return;
       }
 
+      // to distinguish between products and categories in view items
       Object.values(categories).forEach(c => {
         c.key = `category:${c.id}`;
         c.isFolder = true;
@@ -69,14 +72,13 @@ export default  (props) => {
   // breadcrumbs
   useEffect(() => {
     (async () => {
-      if (state.categories.length === 0) {
-        return [];
+      let breadcrumbs = [];
+      if (state.categories.length !== 0 && state.searchText.length === 0) {
+        breadcrumbs = state.categories[state.currentCategory]
+          .path.split('/')
+          .map(p => state.categories[p])
+          .filter(p => p);
       }
-
-      const breadcrumbs = state.categories[state.currentCategory]
-        .path.split('/')
-        .map(p => state.categories[p])
-        .filter(p => p);
 
       setState(state => {
         return {
@@ -85,7 +87,7 @@ export default  (props) => {
         };
       });
     })();
-  }, [state.categories, state.currentCategory]);
+  }, [state.categories, state.currentCategory, state.searchText]);
 
   // items: categories + 1st page of products
   useEffect(() => {
@@ -97,8 +99,11 @@ export default  (props) => {
     });
 
     (async () => {
-      const categories = Object.values(state.categories)
-        .filter(category => category.parentId === state.currentCategory);
+      let categories = [];
+      if (state.categories.length !== 0 && state.searchText.length === 0) {
+        categories = Object.values(state.categories)
+          .filter(category => category.parentId === state.currentCategory);
+      }
 
       let products = {};
       let pageInfo = {};
@@ -111,7 +116,6 @@ export default  (props) => {
         }));
         return;
       }
-
       Object.values(products).forEach(i => {
         i.key = i.sku;
       });
@@ -127,7 +131,7 @@ export default  (props) => {
         };
       });
     })();
-  }, [state.categories, state.currentCategory]);
+  }, [state.categories, state.currentCategory, state.searchText]);
 
   // only for products, categories are always displayed as a complete list
   const onLoadMore = async () => {
@@ -172,17 +176,40 @@ export default  (props) => {
   };
 
   const onSelectionChange = (keys) => {
-    const key = keys.anchorKey;
-    if (!key) {
+    if (keys.size === 0) {
       return;
     }
-    if (key.startsWith('category:')) {
-      onClickItemList(key);
+    console.log(keys);
+    console.log(keys.size);
+
+    if (keys.anchorKey && keys.anchorKey.startsWith('category:')) {
+      onClickItemList(keys.anchorKey);
     } else {
+      console.log(keys);
+
       setState(state => ({
         ...state,
+        selectedItems: keys,
       }));
     }
+  };
+
+  const onSearchSubmit = (searchText) => {
+    setState(state => {
+      return {
+        ...state,
+        searchText,
+      };
+    });
+  };
+
+  const onSearchClear = () => {
+    setState(state => {
+      return {
+        ...state,
+        searchText: "",
+      };
+    });
   };
 
   if (state.error) {
@@ -210,9 +237,18 @@ export default  (props) => {
         <Breadcrumbs gridArea="breadcrumbs" onAction={onClickItemList}>
           {state.breadcrumbs.map(c => <Item key={c.key}>{c.name}</Item>)}
         </Breadcrumbs>
+        <SearchField
+          gridArea="search"
+          label="Products search:"
+          labelPosition="side"
+          defaultValue={state.searchText}
+          onSubmit={onSearchSubmit}
+          onClear={onSearchClear}
+        />
       </Grid>
       <View height="70vh">
         <CatalogView
+          config={config}
           items={state.items}
           loadingState={state.loadingState}
           onClickItemList={onClickItemList}
@@ -220,9 +256,11 @@ export default  (props) => {
           onLoadMore={onLoadMore}
         />
       </View>
-
       <ButtonGroup marginTop={30} marginStart="auto">
         <Button variant="secondary" onPress={onCancel}>Cancel</Button>
+        {state.selectedProducts.length > 0 && (
+          <Button variant="accent" onPress={onConfirm}>Confirm</Button>
+        )}
       </ButtonGroup>
     </Flex>
   </Provider>;

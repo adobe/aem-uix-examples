@@ -11,7 +11,7 @@ import { getCategories, getProducts } from "../commerce";
 
 export default function () {
   const [guestConnection, setGuestConnection] = useState();
-  const catalogServiceConfig = {'commerce-root-category-id': "2"};
+  const config = {'commerce-root-category-id': "2", "selectionMode": "multiple"};
 
   const onConfirm = (products) => {
     localStorage.setItem(localStorageKeySelectedProducts, products);
@@ -23,14 +23,12 @@ export default function () {
   };
 
   useEffect(() => {
-    const init = async () => {
+    (async () => {
       const connection = await attach({
         id: extensionId,
       });
       setGuestConnection(connection);
-    };
-
-    init().catch((e) =>
+    })().catch((e) =>
       console.log("Extension got the error during initialization:", e)
     );
   }, []);
@@ -39,7 +37,7 @@ export default function () {
     <Provider theme={defaultTheme} colorScheme='light'>
       <Content>
         <ProductPicker
-          catalogServiceConfig={catalogServiceConfig}
+          config={config}
           getCategories={getCategories}
           getProducts={getProducts}
           onConfirm={onConfirm}

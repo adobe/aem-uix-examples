@@ -33,12 +33,13 @@ const CatalogView = props => {
     onClickItemList,
     onSelectionChange,
     onLoadMore,
+    config,
   } = props;
 
   return (
     <TableView
       aria-label="List of Items"
-      selectionMode="single"
+      selectionMode={config.selectionMode}
       selectionStyle="highlight"
       width="100%"
       height="100%"
