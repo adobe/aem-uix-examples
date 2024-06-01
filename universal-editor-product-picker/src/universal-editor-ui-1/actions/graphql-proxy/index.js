@@ -30,9 +30,9 @@ async function main (params) {
     const requiredParams = ['query'];
     const requiredHeaders = ['graphqlapi'];
     const errorMessage = checkMissingRequestInputs(
-        params,
-        requiredParams,
-        requiredHeaders
+      params,
+      requiredParams,
+      requiredHeaders
     );
     if (errorMessage) {
       // return and log client errors

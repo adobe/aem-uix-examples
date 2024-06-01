@@ -221,78 +221,78 @@ export default  (props) => {
 
   // @todo use memo
   const items = (state.searchText === "")
-      ? [
-          ...Object.values(state.categories || {}).filter(c => c.parentId === state.folder),
-          ...Object.values(state.items),
-      ]
-      : Object.values(state.items);
+    ? [
+      ...Object.values(state.categories || {}).filter(c => c.parentId === state.folder),
+      ...Object.values(state.items),
+    ]
+    : Object.values(state.items);
 
   if (state.error) {
     return (
-        <Provider theme={defaultTheme} height="100%">
-          <Flex direction="column" height="100%">
-            <View padding="size-500">
-              <IllustratedMessage>
-                <Error />
-                <Heading>Something went wrong</Heading>
-                <Content>{state.error}</Content>
-              </IllustratedMessage>
-            </View>
-          </Flex>
-        </Provider>
+      <Provider theme={defaultTheme} height="100%">
+        <Flex direction="column" height="100%">
+          <View padding="size-500">
+            <IllustratedMessage>
+              <Error />
+              <Heading>Something went wrong</Heading>
+              <Content>{state.error}</Content>
+            </IllustratedMessage>
+          </View>
+        </Flex>
+      </Provider>
     );
   }
 
   return <Provider theme={defaultTheme} height="100%">
     {state.loadingState != 'loading' ? (
-        <Flex direction="column" height="100%" gap="size-200" marginY="size-200">
-          <Grid
-              areas={["breadcrumbs search"]}
-              columns={["2fr", "1fr"]}
-          >
-            {state.searchText === "" && (
-                <Breadcrumbs gridArea="breadcrumbs" onAction={selectFolder}>
-                  {state.path.map(c => <Item key={c.key}>{c.name}</Item>)}
-                </Breadcrumbs>
-            )}
+      <Flex direction="column" height="100%" gap="size-200" marginY="size-200">
+        <Grid
+          areas={["breadcrumbs search"]}
+          columns={["2fr", "1fr"]}
+        >
+          {state.searchText === "" && (
+            <Breadcrumbs gridArea="breadcrumbs" onAction={selectFolder}>
+              {state.path.map(c => <Item key={c.key}>{c.name}</Item>)}
+            </Breadcrumbs>
+          )}
 
-            <SearchField
-                gridArea="search"
-                label="Products search:"
-                labelPosition="side"
-                defaultValue={state.searchText}
-                onSubmit={onSearchSubmit}
-                onClear={onSearchClear}
-            />
+          <SearchField
+            gridArea="search"
+            label="Products search:"
+            labelPosition="side"
+            defaultValue={state.searchText}
+            onSubmit={onSearchSubmit}
+            onClear={onSearchClear}
+          />
 
-          </Grid>
-          <View height="70vh" marginTop="size-150">
-            <CatalogView
-                items={items}
-                loadingState={state.loadingState}
-                selectedKeys={state.selectedProducts}
-                clickListItem={clickListItem}
-                onSelectionChange={onSelectionChange}
-                onLoadMore={onLoadMore}
-            />
-          </View>
-
-          <ButtonGroup marginTop={30} marginStart="auto">
-            <Button variant="secondary" onPress={onCancel}>Cancel</Button>
-            {items.length > 0 && (
-                <Button variant="accent" onPress={() => {
-                  if (state.selectedProducts.size === 0) {
-                    return;
-                  }
-                  onConfirm(state.selectedProducts);
-            }}>Confirm</Button>
-           )}
-          </ButtonGroup>
-        </Flex>
-    ) : (
-        <View width="97%" height="100%">
-          <Spinner />
+        </Grid>
+        <View height="70vh" marginTop="size-150">
+          <CatalogView
+            items={items}
+            loadingState={state.loadingState}
+            selectedKeys={state.selectedProducts}
+            clickListItem={clickListItem}
+            onSelectionChange={onSelectionChange}
+            onLoadMore={onLoadMore}
+          />
         </View>
+
+        <ButtonGroup marginTop={30} marginStart="auto">
+          <Button variant="secondary" onPress={onCancel}>Cancel</Button>
+          {items.length > 0 && (
+            <Button variant="accent" onPress={() => {
+              if (state.selectedProducts.size === 0) {
+                return;
+              }
+              onConfirm(state.selectedProducts);
+            }}>Confirm</Button>
+          )}
+        </ButtonGroup>
+      </Flex>
+    ) : (
+      <View width="97%" height="100%">
+        <Spinner />
+      </View>
     )}
   </Provider>;
 };

@@ -38,8 +38,8 @@ async function makeRequest(apiEndpoint, fetchSettings) {
   }
 
   const content = fetchSettings?.headers?.["Content-Type"] === "application/json"
-      ? await res.json()
-      : await res.text();
+    ? await res.json()
+    : await res.text();
 
   return content;
 }
