@@ -29,28 +29,24 @@ const CatalogView = props => {
     const {
         items,
         loadingState,
-        selectedItems,
-        disabledKeys,
+        selectedKeys,
         clickListItem,
-        selectItem,
-        onLoadMore,
-        onSortChange
+        onSelectionChange,
+        onLoadMore
     } = props;
 
     return (
         <TableView
             aria-label="List of Items"
-            selectionMode="single"
+            selectionMode="multiple"
             selectionStyle="highlight"
             width="100%"
             height="100%"
             density="spacious"
             renderEmptyState={renderEmptyState}
-            selectedKeys={selectedItems}
-            disabledKeys={disabledKeys}
+            selectedKeys={selectedKeys}
             onAction={clickListItem}
-            onSelectionChange={selectItem}
-            onSortChange={onSortChange}
+            onSelectionChange={onSelectionChange}
         >
             <TableHeader>
                 <Column/>
@@ -68,6 +64,7 @@ const CatalogView = props => {
                                     <Folder />
                                     <View alignSelf={"center"} marginStart={10}>
                                         <Text><span dangerouslySetInnerHTML={{ __html: item.name }} /></Text>
+                                        {item.childCount > 0 && <Text slot="description">{item.childCount} item(s)</Text>}
                                     </View>
                                 </Flex>
                             ) : (

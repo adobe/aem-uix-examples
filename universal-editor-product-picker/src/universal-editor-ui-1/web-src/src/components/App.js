@@ -19,7 +19,6 @@ function App() {
             exact path="index.html"
             element={<ExtensionRegistration />}
           />
-          {/* @todo YOUR CUSTOM ROUTES SHOULD BE HERE */}
           <Route
             exact path="cif-field"
             element={<CifField />}
@@ -32,8 +31,6 @@ function App() {
       </ErrorBoundary>
     </Router>
   )
-
-  // Methods
 
   // error handler on UI rendering failure
   function onError(e, componentStack) {}
