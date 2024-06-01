@@ -22,23 +22,23 @@ export default  (props) => {
   const { catalogServiceConfig, getCategories, getProducts, onConfirm, onCancel, selectedProducts } = props;
 
   const [state, setState] = useState({
+    error: null,
     loadingState: 'loading',
     categories: [],
     currentCategory: catalogServiceConfig['commerce-root-category-id'],
     items: [],
     breadcrumbs: [],
-    error: null,
-
-    selectedProducts: selectedProducts || [],
     pageInfo: {
       current_page: 1,
       page_size: 0,
       total_pages: 0,
     },
     searchText: "",
+
+    selectedProducts: selectedProducts || [],
   });
 
-  // initial list of categories
+  // initial list of categories, categories are loaded as a complete list
   useEffect(() => {
     (async () => {
       let categories = {};
@@ -81,13 +81,13 @@ export default  (props) => {
       setState(state => {
         return {
           ...state,
-          breadcrumbs: breadcrumbs,
+          breadcrumbs,
         };
       });
     })();
   }, [state.categories, state.currentCategory]);
 
-  // items: categories + products
+  // items: categories + 1st page of products
   useEffect(() => {
     setState(state => {
       return {
@@ -122,11 +122,43 @@ export default  (props) => {
         return {
           ...state,
           loadingState: 'idle',
-          items: items,
+          items,
+          pageInfo,
         };
       });
     })();
   }, [state.categories, state.currentCategory]);
+
+  // only for products, categories are always displayed as a complete list
+  const onLoadMore = async () => {
+    if (state.pageInfo.current_page >= state.pageInfo.total_pages || state.loadingState === 'loadingMore') {
+      return;
+    }
+
+    setState(state => ({
+      ...state,
+      loadingState: 'loadingMore',
+    }));
+
+    const [products, pageInfo] = await getProducts(
+      state.currentCategory, 
+      state.pageInfo.current_page + 1, 
+      state.searchText
+    );
+    Object.values(products).forEach(i => {
+      i.key = i.sku;
+    });
+    const newItems = [ ...state.items, ...Object.values(products) ];
+
+    setState(state => {
+      return {
+        ...state,
+        items: newItems,
+        pageInfo,
+        loadingState: 'idle',
+      };
+    });
+  };
 
   const onClickItemList = (key) => {
     if (!key.startsWith('category:')) {
@@ -185,6 +217,7 @@ export default  (props) => {
           loadingState={state.loadingState}
           onClickItemList={onClickItemList}
           onSelectionChange={onSelectionChange}
+          onLoadMore={onLoadMore}
         />
       </View>
 
