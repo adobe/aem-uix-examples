@@ -83,6 +83,6 @@ const CifField = function () {
       </Content>
     </Provider>
   );
-}
+};
 
 export default CifField;

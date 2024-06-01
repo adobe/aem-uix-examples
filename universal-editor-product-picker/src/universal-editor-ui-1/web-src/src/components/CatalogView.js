@@ -12,7 +12,7 @@ import {
     TableBody,
     TableHeader,
     Flex,
-    View
+    View,
 } from '@adobe/react-spectrum';
 import Folder from '@spectrum-icons/illustrations/Folder';
 import ImageIcon from "@spectrum-icons/workflow/Image";
@@ -32,7 +32,7 @@ const CatalogView = props => {
         selectedKeys,
         clickListItem,
         onSelectionChange,
-        onLoadMore
+        onLoadMore,
     } = props;
 
     return (

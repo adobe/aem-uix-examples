@@ -14,7 +14,6 @@ function ExtensionRegistration() {
         canvas: {
           getRenderers() {
             return [
-              // @todo YOUR CUSTOM DATA FIELD RENDERERS DECLARATION SHOULD BE HERE
               {
                 extension: 'cif-field',
                 dataType: 'text',
@@ -24,7 +23,7 @@ function ExtensionRegistration() {
             ];
           },
         },
-      }
+      },
     });
   };
   init().catch(console.error);

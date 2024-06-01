@@ -30,7 +30,7 @@ function App() {
         </Routes>
       </ErrorBoundary>
     </Router>
-  )
+  );
 
   // error handler on UI rendering failure
   function onError(e, componentStack) {}

@@ -46,5 +46,5 @@ async function makeRequest(apiEndpoint, fetchSettings) {
 
 module.exports = {
   getConfig,
-  makeGraphqlRequest
+  makeGraphqlRequest,
 };
