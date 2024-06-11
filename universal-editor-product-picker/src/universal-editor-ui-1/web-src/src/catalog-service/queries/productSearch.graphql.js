@@ -1,5 +1,5 @@
-const query = `query getProductsInCategory($phrase: String = "", $id: String!, $currentPage: Int = 1) {
-  productSearch(phrase: $phrase, filter: { attribute: "categoryIds", eq: $id }, current_page: $currentPage, page_size: 20) {
+const query = `query getProductsInCategory($phrase: String = "", $currentPage: Int = 1) {
+  productSearch(phrase: $phrase, current_page: $currentPage, page_size: 20) {
       items {
           productView {
               sku
@@ -19,4 +19,4 @@ const query = `query getProductsInCategory($phrase: String = "", $id: String!, $
   }
 }`;
 
-export default query.replaceAll(/(?:\r\n|\r|\n|\t|[\s]{4})/g, ' ');
+export default query;

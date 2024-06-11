@@ -15,10 +15,10 @@ import {
   Tooltip,
   TooltipTrigger,
 } from "@adobe/react-spectrum";
-import { extensionId, localStorageKeySelectedProducts } from "./Constants";
+import { extensionId, localStorageKeySelectedProducts } from "./constants";
 import Box from '@spectrum-icons/workflow/Box';
 
-const CifField = function () {
+export default function () {
   const [guestConnection, setGuestConnection] = useState();
   const [productFieldValue, setProductFieldValue] = useState('');
   const fieldRef = useRef();
@@ -28,7 +28,6 @@ const CifField = function () {
       if (event.key === localStorageKeySelectedProducts && fieldRef.current) {
         setProductFieldValue(event.newValue);
         fieldRef.current.onChange(event.newValue);
-        localStorage.removeItem(localStorageKeySelectedProducts);
       }
     };
 
@@ -85,5 +84,3 @@ const CifField = function () {
     </Provider>
   );
 };
-
-export default CifField;

@@ -14,4 +14,4 @@ const query = `query getCategoriesInCategory($id: String!) {
   }
 }`;
 
-export default query.replaceAll(/(?:\r\n|\r|\n|\t|[\s]{4})/g, ' ');
+export default query;

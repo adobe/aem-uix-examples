@@ -6,7 +6,7 @@ import React from "react";
 import ErrorBoundary from "react-error-boundary";
 import { HashRouter as Router, Routes, Route } from "react-router-dom";
 import ExtensionRegistration from "./ExtensionRegistration";
-import CifField from "./CifField";
+import ProductField from "./ProductField";
 import ProductPickerModal from "./ProductPickerModal";
 
 function App() {
@@ -20,8 +20,8 @@ function App() {
             element={<ExtensionRegistration />}
           />
           <Route
-            exact path="cif-field"
-            element={<CifField />}
+            exact path="product-field"
+            element={<ProductField />}
           />
           <Route
             exact path="product-picker-modal"

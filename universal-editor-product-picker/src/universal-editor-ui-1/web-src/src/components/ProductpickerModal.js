@@ -4,23 +4,19 @@
 
 import React, { useState, useEffect } from "react";
 import { attach } from "@adobe/uix-guest";
-import { Provider, Content, defaultTheme } from "@adobe/react-spectrum";
-import { extensionId, localStorageKeySelectedProducts } from "./Constants";
+import { Provider, Content, defaultTheme, View } from "@adobe/react-spectrum";
+import { extensionId, localStorageKeySelectedProducts } from "./constants";
 import ProductPicker from "./ProductPicker";
-import { getCategories, getProducts } from "../commerce";
+import { getCategories, getProducts } from "../catalog-service/catalog-service";
+import useConfig from "./useConfig";
+import Spinner from "./Spinner";
+import ExtensionError from "./ExtensionError";
 
 export default function () {
   const [guestConnection, setGuestConnection] = useState();
-  const config = {'commerce-root-category-id': "2", "selectionMode": "multiple"};
-
-  const onConfirm = (products) => {
-    localStorage.setItem(localStorageKeySelectedProducts, products);
-    onCancel();
-  };
-
-  const onCancel = () => {
-    guestConnection.host.modal.close();
-  };
+  const [selectedProducts, setSelectedProducts] = useState([]);
+  const [error, setError] = useState(null);
+  const config = useConfig(guestConnection, setError);
 
   useEffect(() => {
     (async () => {
@@ -28,22 +24,52 @@ export default function () {
         id: extensionId,
       });
       setGuestConnection(connection);
-    })().catch((e) =>
-      console.log("Extension got the error during initialization:", e)
-    );
+    })().catch((e) => {
+      console.log("Extension got the error during initialization:", e);
+      setError("Extension got the error during initialization");
+    });
   }, []);
+
+  useEffect(() => {
+    const productFieldValue = localStorage.getItem(localStorageKeySelectedProducts);
+    const selectedProducts = productFieldValue?.split(',').map((item) => item);
+    if (selectedProducts) {
+      setSelectedProducts(selectedProducts);
+    }
+  }, []);
+
+  const onConfirm = (products) => {
+    localStorage.setItem(localStorageKeySelectedProducts, products.join(","));
+    onCancel();
+  };
+
+  const onCancel = () => {
+    guestConnection.host.modal.close();
+  };
+
+  if (error) {
+    return (
+      <ExtensionError error={error} />
+    );
+  }
 
   return (
     <Provider theme={defaultTheme} colorScheme='light'>
       <Content>
-        <ProductPicker
-          config={config}
-          getCategories={getCategories}
-          getProducts={getProducts}
-          onConfirm={onConfirm}
-          onCancel={onCancel}
-          selectedProducts={[]}
-        />
+        {guestConnection && config ? (
+          <ProductPicker
+            config={config}
+            getCategories={getCategories}
+            getProducts={getProducts}
+            onConfirm={onConfirm}
+            onCancel={onCancel}
+            selectedProducts={selectedProducts}
+          />
+        ) : (
+          <View width="97%" height="100%">
+            <Spinner />
+          </View>
+        )}     
       </Content>
     </Provider>
   );

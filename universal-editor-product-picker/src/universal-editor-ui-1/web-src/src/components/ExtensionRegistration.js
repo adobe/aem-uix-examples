@@ -8,16 +8,16 @@ import { extensionId } from "./Constants";
 
 function ExtensionRegistration() {
   const init = async () => {
-    const guestConnection = await register({
+    await register({
       id: extensionId,
       methods: {
         canvas: {
           getRenderers() {
             return [
               {
-                extension: 'cif-field',
+                extension: 'uix-product-picker',
                 dataType: 'text',
-                url: '/index.html#/cif-field',
+                url: '/index.html#/product-field',
                 icon: 'OpenIn',
               },
             ];

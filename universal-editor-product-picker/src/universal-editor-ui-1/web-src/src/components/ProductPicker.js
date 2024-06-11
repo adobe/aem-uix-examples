@@ -7,22 +7,19 @@ import {
   defaultTheme,
   Provider,
   Item,
-  Heading,
-  Content,
   Breadcrumbs,
   Flex,
   View,
-  IllustratedMessage,
   Button,
   ButtonGroup,
   Grid,
   SearchField,
 } from '@adobe/react-spectrum';
-import Error from '@spectrum-icons/illustrations/Error';
 import { CatalogView }  from './CatalogView';
 import { TagList } from './TagList';
+import ExtensionError from './ExtensionError';
 
-export default  (props) => {
+export default (props) => {
   const { config, getCategories, getProducts, onConfirm, onCancel, selectedProducts } = props;
 
   const [state, setState] = useState({
@@ -46,7 +43,7 @@ export default  (props) => {
     (async () => {
       let categories = {};
       try {
-        categories = await getCategories(config['commerce-root-category-id']);
+        categories = await getCategories(config['commerce-endpoint'], config['commerce-root-category-id']);
       } catch (err) {
         setState(state => ({
           ...state,
@@ -109,7 +106,11 @@ export default  (props) => {
       let products = {};
       let pageInfo = {};
       try {
-        [products, pageInfo] = await getProducts(state.currentCategory, 1, state.searchText);
+        [products, pageInfo] = await getProducts(
+          config['commerce-endpoint'], 
+          state.currentCategory, 1, 
+          state.searchText
+        );
       } catch (err) {
         setState(state => ({
           ...state,
@@ -134,7 +135,7 @@ export default  (props) => {
     })();
   }, [state.categories, state.currentCategory, state.searchText]);
 
-  // preselected products
+  // selected products
   useEffect(() => {
     setState(state => ({
       ...state,
@@ -154,6 +155,7 @@ export default  (props) => {
     }));
 
     const [products, pageInfo] = await getProducts(
+      config['commerce-endpoint'],
       state.currentCategory, 
       state.pageInfo.current_page + 1, 
       state.searchText
@@ -235,22 +237,9 @@ export default  (props) => {
 
   if (state.error) {
     return (
-      <Provider theme={defaultTheme} height="100%">
-        <Flex direction="column" height="100%">
-          <View padding="size-500">
-            <IllustratedMessage>
-              <Error />
-              <Heading>Something went wrong</Heading>
-              <Content>{state.error}</Content>
-            </IllustratedMessage>
-          </View>
-        </Flex>
-      </Provider>
+      <ExtensionError error={state.error} />
     );
   }
-
-  console.log("props.selectedProducts ===========", selectedProducts);
-  console.log("state.selectedProducts ===========", state.selectedProducts);
 
   return <Provider theme={defaultTheme} height="100%">
     <Flex direction="column" height="100%">
