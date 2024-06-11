@@ -17,10 +17,12 @@ import {
 } from "@adobe/react-spectrum";
 import { extensionId, localStorageKeySelectedProducts } from "./constants";
 import Box from '@spectrum-icons/workflow/Box';
+import { TagList } from './TagList';
 
 export default function () {
   const [guestConnection, setGuestConnection] = useState();
   const [productFieldValue, setProductFieldValue] = useState('');
+  const [selections, setSelections] = useState([]);
   const fieldRef = useRef();
 
   useEffect(() => {
@@ -28,6 +30,9 @@ export default function () {
       if (event.key === localStorageKeySelectedProducts && fieldRef.current) {
         setProductFieldValue(event.newValue);
         fieldRef.current.onChange(event.newValue);
+
+        // @todo poc
+        setSelections(event.newValue?.split(',') || []);
       }
     };
 
@@ -40,6 +45,9 @@ export default function () {
       const productFieldValue = await connection.host.field.getValue();
       setProductFieldValue(productFieldValue);
       localStorage.setItem(localStorageKeySelectedProducts, productFieldValue);
+
+      // @todo poc
+      setSelections(productFieldValue?.split(',').map((item) => item) || []);
 
       fieldRef.current = connection.host.field;
       window.addEventListener('storage', handleStorageChange);
@@ -61,6 +69,10 @@ export default function () {
     });
   };
 
+  const setTagSelections = () => {
+
+  };
+
   return (
     <Provider theme={defaultTheme} colorScheme='light'>
       <Content>
@@ -79,6 +91,7 @@ export default function () {
               <Tooltip>Select asset</Tooltip>
             </TooltipTrigger>
           </Flex>
+          <TagList setSelections={setTagSelections} selections={selections} />
         </Flex>
       </Content>
     </Provider>

@@ -7,7 +7,7 @@ import React, { useState, useEffect } from "react";
 const defaultConfig = {
   "commerce-endpoint": "",
   "commerce-root-category-id": "2",
-  "selectionMode": "single",
+  "selectionMode": "multiple",
 };
 
 export default function (guestConnection, setError) {

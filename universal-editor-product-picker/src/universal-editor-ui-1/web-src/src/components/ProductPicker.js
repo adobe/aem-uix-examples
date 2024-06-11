@@ -187,22 +187,27 @@ export default (props) => {
   };
 
   const onSelectionChange = (keys) => {
-    // if (keys.size === 0) {
-    //   return;
-    // }
-    console.log("keys");
-    console.log(keys);
+    if (keys.size === 0) {
+      return;
+    }
 
     const key = keys.anchorKey;
     if (key.startsWith('category:')) {
       onClickItemList(key);
     } else {
-      const selectedProductsSet = new Set(state.selectedProducts);
-      if (selectedProductsSet.has(key)) {
-        selectedProductsSet.delete(key);
+      let selectedProductsSet;
+
+      if (config['selectionMode'] === 'multiple') {
+        selectedProductsSet = new Set(state.selectedProducts);
+        if (selectedProductsSet.has(key)) {
+          selectedProductsSet.delete(key);
+        } else {
+          selectedProductsSet.add(key);
+        }
       } else {
-        selectedProductsSet.add(key);
+        selectedProductsSet = keys;
       }
+
       setState(state => ({
         ...state,
         selectedProducts: Array.from(selectedProductsSet),
@@ -259,7 +264,7 @@ export default (props) => {
           onClear={onSearchClear}
         />
       </Grid>
-      <View height="70vh">
+      <View height="75vh" minHeight="75vh">
         <CatalogView
           config={config}
           items={state.items}
@@ -269,18 +274,28 @@ export default (props) => {
           onLoadMore={onLoadMore}
           selectedKeys={state.selectedProducts}
         />
-        <Flex direction="row" marginTop="size-200">
-          <TagList setSelections={setTagSelections} selections={state.selectedProducts} />
-        </Flex>
       </View>
-      <ButtonGroup marginTop={30} marginStart="auto">
-        <Button variant="secondary" onPress={onCancel}>Cancel</Button>
-        {state.selectedProducts.length > 0 && (
-          <Button variant="accent" onPress={() => {
-            onConfirm(state.selectedProducts);
-          }}>Confirm</Button>
-        )}
-      </ButtonGroup>
+      <Grid
+        areas={["selectedProducts actions"]}
+        columns={["2fr", "1fr"]}
+      >
+        <Flex direction="row" marginTop="size-200">
+          <TagList
+            gridArea="selectedProducts"
+            marginTop="size-200"
+            setSelections={setTagSelections}
+            selections={state.selectedProducts}
+          />
+        </Flex>
+        <ButtonGroup gridArea="actions" marginTop={30} marginStart="auto">
+          <Button variant="secondary" onPress={onCancel}>Cancel</Button>
+          {state.selectedProducts.length > 0 && (
+            <Button variant="accent" onPress={() => {
+              onConfirm(state.selectedProducts);
+            }}>Confirm</Button>
+          )}
+        </ButtonGroup>
+      </Grid>
     </Flex>
   </Provider>;
 };

@@ -24,16 +24,21 @@ const TagList = ({ selections, setSelections }) => {
   );
 
   return (
-    <TagGroup
-      items={tags}
-      aria-label='Products'
-      onRemove={onRemove}
-      renderEmptyState={() => {}}
-    >
-      {(item) => (
-        <TagItem key={item.value}>{item.name}</TagItem>
+    <>
+      {tags.length > 0 && (
+        <TagGroup
+          items={tags}
+          label="Selected products:"
+          aria-label="Selected products:"
+          onRemove={onRemove}
+          renderEmptyState={() => {}}
+        >
+          {(item) => (
+            <TagItem key={item.value}>{item.name}</TagItem>
+          )}
+        </TagGroup>
       )}
-    </TagGroup>
+    </>
   );
 };
 
