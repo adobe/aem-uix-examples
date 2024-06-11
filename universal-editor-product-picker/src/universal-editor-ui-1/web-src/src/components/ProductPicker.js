@@ -20,6 +20,7 @@ import {
 } from '@adobe/react-spectrum';
 import Error from '@spectrum-icons/illustrations/Error';
 import { CatalogView }  from './CatalogView';
+import { TagList } from './TagList';
 
 export default  (props) => {
   const { config, getCategories, getProducts, onConfirm, onCancel, selectedProducts } = props;
@@ -133,6 +134,14 @@ export default  (props) => {
     })();
   }, [state.categories, state.currentCategory, state.searchText]);
 
+  // preselected products
+  useEffect(() => {
+    setState(state => ({
+      ...state,
+      selectedProducts: selectedProducts || [],
+    }));
+  }, [selectedProducts]);
+
   // only for products, categories are always displayed as a complete list
   const onLoadMore = async () => {
     if (state.pageInfo.current_page >= state.pageInfo.total_pages || state.loadingState === 'loadingMore') {
@@ -176,20 +185,25 @@ export default  (props) => {
   };
 
   const onSelectionChange = (keys) => {
-    if (keys.size === 0) {
-      return;
-    }
+    // if (keys.size === 0) {
+    //   return;
+    // }
+    console.log("keys");
     console.log(keys);
-    console.log(keys.size);
 
-    if (keys.anchorKey && keys.anchorKey.startsWith('category:')) {
-      onClickItemList(keys.anchorKey);
+    const key = keys.anchorKey;
+    if (key.startsWith('category:')) {
+      onClickItemList(key);
     } else {
-      console.log(keys);
-
+      const selectedProductsSet = new Set(state.selectedProducts);
+      if (selectedProductsSet.has(key)) {
+        selectedProductsSet.delete(key);
+      } else {
+        selectedProductsSet.add(key);
+      }
       setState(state => ({
         ...state,
-        selectedItems: keys,
+        selectedProducts: Array.from(selectedProductsSet),
       }));
     }
   };
@@ -212,6 +226,13 @@ export default  (props) => {
     });
   };
 
+  const setTagSelections = (selections) => {
+    setState(state => ({
+      ...state,
+      selectedProducts: selections,
+    }));
+  };
+
   if (state.error) {
     return (
       <Provider theme={defaultTheme} height="100%">
@@ -227,6 +248,9 @@ export default  (props) => {
       </Provider>
     );
   }
+
+  console.log("props.selectedProducts ===========", selectedProducts);
+  console.log("state.selectedProducts ===========", state.selectedProducts);
 
   return <Provider theme={defaultTheme} height="100%">
     <Flex direction="column" height="100%">
@@ -254,12 +278,18 @@ export default  (props) => {
           onClickItemList={onClickItemList}
           onSelectionChange={onSelectionChange}
           onLoadMore={onLoadMore}
+          selectedKeys={state.selectedProducts}
         />
+        <Flex direction="row" marginTop="size-200">
+          <TagList setSelections={setTagSelections} selections={state.selectedProducts} />
+        </Flex>
       </View>
       <ButtonGroup marginTop={30} marginStart="auto">
         <Button variant="secondary" onPress={onCancel}>Cancel</Button>
         {state.selectedProducts.length > 0 && (
-          <Button variant="accent" onPress={onConfirm}>Confirm</Button>
+          <Button variant="accent" onPress={() => {
+            onConfirm(state.selectedProducts);
+          }}>Confirm</Button>
         )}
       </ButtonGroup>
     </Flex>

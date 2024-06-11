@@ -27,13 +27,13 @@ const renderEmptyState = () => (
 
 const CatalogView = props => {
   const {
+    config,
     items,
     loadingState,
-    selectedKeys,
     onClickItemList,
     onSelectionChange,
     onLoadMore,
-    config,
+    selectedKeys,
   } = props;
 
   return (

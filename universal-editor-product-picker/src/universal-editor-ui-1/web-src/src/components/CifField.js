@@ -15,35 +15,36 @@ import {
   Tooltip,
   TooltipTrigger,
 } from "@adobe/react-spectrum";
-import { extensionId } from "./Constants";
+import { extensionId, localStorageKeySelectedProducts } from "./Constants";
 import Box from '@spectrum-icons/workflow/Box';
 
 const CifField = function () {
   const [guestConnection, setGuestConnection] = useState();
-  const [value, setValue] = useState('');
+  const [productFieldValue, setProductFieldValue] = useState('');
   const fieldRef = useRef();
 
   useEffect(() => {
     const handleStorageChange = (event) => {
-      if (event.key === 'selectedProduct' && fieldRef.current) {
-        setValue(event.newValue);
+      if (event.key === localStorageKeySelectedProducts && fieldRef.current) {
+        setProductFieldValue(event.newValue);
         fieldRef.current.onChange(event.newValue);
+        localStorage.removeItem(localStorageKeySelectedProducts);
       }
     };
 
-    const init = async () => {
+    (async () => {
       const connection = await attach({
         id: extensionId,
       });
-
       setGuestConnection(connection);
-      setValue(await connection.host.field.getValue());
+
+      const productFieldValue = await connection.host.field.getValue();
+      setProductFieldValue(productFieldValue);
+      localStorage.setItem(localStorageKeySelectedProducts, productFieldValue);
 
       fieldRef.current = connection.host.field;
       window.addEventListener('storage', handleStorageChange);
-    };
-
-    init().catch((e) =>
+    })().catch((e) =>
       console.log("Extension got the error during initialization:", e)
     );
 
@@ -67,7 +68,7 @@ const CifField = function () {
         <Flex direction='column'>
           <LabeledValue label="SKU" value='' />
           <Flex direction='row'>
-            <TextField value={value} flexGrow={1} isReadOnly />
+            <TextField value={productFieldValue} flexGrow={1} isReadOnly />
             <TooltipTrigger crossOffset={25} placement="end bottom">
               <ActionButton
                 aria-label="Select asset"
