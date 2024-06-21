@@ -24,6 +24,16 @@ The `universal-editor-richtext-draft` extension provides a rich text editor with
 
 Please refer to the `src/universal-editor-ui-1/web-src/src/components` file for the implementation details.
 
+### How to use
+
+- Start by clicking on the text you want to change. After making the changes, click on the add button to create a draft.</li>
+- If you don't want to add the draft, click the revert button to cancel the change.</li>
+- You can select a draft from the list to persist or delete it.</li>
+- You can not edit a draft, only save or delete it. For that, delete the draft and create a new one</li>
+
+The drafts are persisted on the browser. If you clear the cache, you will lose them.
+The minimum length of a draft is `50` characters.
+
 ## Setup
 
 - Populate the `.env` file in the project root and fill it as shown [below](#env)

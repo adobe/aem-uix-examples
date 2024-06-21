@@ -16,7 +16,7 @@ import {
     ProgressCircle,
     Provider, TextArea,
     View,
-    Text
+    Text, ContextualHelp, TooltipTrigger, Tooltip
 } from "@adobe/react-spectrum";
 import {attach} from "@adobe/uix-guest";
 import {useEffect, useState} from "react";
@@ -27,6 +27,7 @@ import Delete from "@spectrum-icons/workflow/Delete";
 import {extensionId, saveDraftAction, STORAGE_KEY_DRAFT_LIST, TYPE_REACH_TEXT, DRAFT_MIN_LENGTH} from "./Constants";
 import actionWebInvoke from "../utils";
 import allActions from '../config.json';
+import SaveToLight from "@spectrum-icons/workflow/SaveToLight";
 
 function saveDraftsInStorage(itemsDraftList) {
     localStorage.setItem(STORAGE_KEY_DRAFT_LIST, JSON.stringify(Array.from(itemsDraftList.entries())));
@@ -41,6 +42,7 @@ export default function RichTextDraftsRail() {
     const [draftText, setDraftText] = useState('');
     const [selectedDraft, setSelectedDraft] = useState(null);
     const [validationState, setValidationState] = useState({});
+    const [saveDraftError, setSaveDraftError] = useState(false);
     const [isLoading, setIsLoading] = useState(false)
     const [itemsDraftList, setItemsDraftList] = useState(new Map(JSON.parse(localStorage.getItem(STORAGE_KEY_DRAFT_LIST))));
 
@@ -64,7 +66,6 @@ export default function RichTextDraftsRail() {
                     ...editable,
                     resource: editable.resource.length > 0 ? editable.resource : editableMap.get(editable.parentid).resource
                 }));
-            setReachTexts(texts)
 
             // Create a map of drafts by each reach text element
             texts.forEach(text => {
@@ -72,6 +73,8 @@ export default function RichTextDraftsRail() {
                     itemsDraftList.set(text.id, []);
                 }
             });
+
+            setReachTexts(texts)
             setItemsDraftList(itemsDraftList)
         })()
     }, []);
@@ -136,18 +139,21 @@ export default function RichTextDraftsRail() {
             // Call the Adobe I/O Runtime action to save the draft
             const response = await actionWebInvoke(allActions[saveDraftAction], headers, payload);
 
-            // Handle the response from the Adobe I/O Runtime action
-            if (response?.success) {
-                reachTextItem.content = value
-                itemsDraftList.delete(reachTextItem.id)
-                setItemsDraftList(itemsDraftList)
-                saveDraftsInStorage(itemsDraftList)
-
-                // Reload the page to see the change
-                const url = editorState.location.split('?')[0]
-                await connection.host.remoteApp.triggerEvent('extension:reloadPage', 'main', url);
+            if (!response?.success) {
+                throw new Error('Error saving draft: ${response?.error}');
             }
+
+            // Handle the response from the Adobe I/O Runtime action
+            reachTextItem.content = value
+            itemsDraftList.delete(reachTextItem.id)
+            setItemsDraftList(itemsDraftList)
+            saveDraftsInStorage(itemsDraftList)
+
+            // Reload the page to see the change
+            const url = editorState.location.split('?')[0]
+            await connection.host.remoteApp.triggerEvent('extension:reloadPage', 'main', url);
         } catch (e) {
+            setSaveDraftError(true)
             // Log and store any errors
             console.error(e);
         } finally {
@@ -171,18 +177,38 @@ export default function RichTextDraftsRail() {
         } else {
             setSelectedDraft(id)
         }
+        setSaveDraftError(false)
     }
 
     function selectItem(reachTextItem) {
         setSelectedItem(reachTextItem)
         setDraftText(reachTextItem.content)
+        setSaveDraftError(false)
     }
 
     return (
         <Provider theme={defaultTheme} colorScheme='light' height='100vh'>
             <Content height='100%'>
                 <View padding='size-200'>
-                    <Heading marginBottom='size-100' level='3'>Rich Texts draft manager</Heading>
+                    <Flex direction='row'>
+                        <Heading marginBottom='size-100' level='3'>Rich Texts draft manager</Heading>
+                        <ContextualHelp variant="help">
+                            <Heading>Need help?</Heading>
+                            <Content>
+                                <Text>
+                                    This extension allows you to manage drafts for rich text elements.
+                                    <ul>
+                                        <li>Start by clicking on the text you want to change. After making the changes, click on the add button to create a draft.</li>
+                                        <li>If you don't want to add the draft, click the revert button to cancel the change.</li>
+                                        <li>You can select a draft from the list to persist or delete it.</li>
+                                        <li>You can not edit a draft, only save or delete it. For that, delete the draft and create a new one</li>
+                                    </ul>
+                                    The drafts are persisted on the browser. If you clear the cache, you will lose them.
+                                    The minimum length of a draft is <strong>50 characters</strong>.
+                                </Text>
+                            </Content>
+                        </ContextualHelp>
+                    </Flex>
                     <Divider size='S' marginBottom='size-100'/>
                     <View>
                         {reachTexts?.map((reachTextItem, i) => {
@@ -199,14 +225,20 @@ export default function RichTextDraftsRail() {
                                                 validationState={validationState?.draftText}
                                             />
                                             <Flex direction='row'>
-                                                <ActionButton aria-label="Icon only" margin='5px'
-                                                              onPress={() => revertItemChange()}>
-                                                    <Revert/>
-                                                </ActionButton>
-                                                <ActionButton aria-label="Icon only" margin='5px'
-                                                              onPress={() => addNewDraft()}>
-                                                    <Add/>
-                                                </ActionButton>
+                                                <TooltipTrigger>
+                                                    <ActionButton aria-label="Icon only" margin='5px'
+                                                                  onPress={() => revertItemChange()}>
+                                                        <Revert/>
+                                                    </ActionButton>
+                                                    <Tooltip>Cancel the modification</Tooltip>
+                                                </TooltipTrigger>
+                                                <TooltipTrigger>
+                                                    <ActionButton aria-label="Icon only" margin='5px'
+                                                                  onPress={() => addNewDraft()}>
+                                                        <Add/>
+                                                    </ActionButton>
+                                                    <Tooltip>Add a new draft</Tooltip>
+                                                </TooltipTrigger>
                                             </Flex>
                                         </Flex>
 
@@ -228,6 +260,7 @@ export default function RichTextDraftsRail() {
                                                 </View>
                                             </ActionButton>
                                         </View>
+                                        <Heading marginBottom='size-50' marginTop='size-50' level='4' isHidden={itemsDraftList.get(reachTextItem.id)?.length === 0}>Drafts list:</Heading>
 
                                         {(itemsDraftList.has(reachTextItem.id)) && itemsDraftList.get(reachTextItem.id).map((itemDraft, i) => {
                                             return (
@@ -248,32 +281,45 @@ export default function RichTextDraftsRail() {
                                                                       isQuiet width='100%' height='100%'>
                                                             <View key={itemDraft.id}
                                                                   backgroundColor='static-white'
-                                                                  padding='size-100' borderColor='gray-500'
+                                                                  padding='size-100'
+                                                                  borderColor={saveDraftError ? 'red-500' : 'gray-500'}
                                                                   borderWidth='thin'>
-                                                                <Flex direction='column' alignItems='center'
+                                                                <Flex isHidden={!isLoading} direction='column'
+                                                                      alignItems='center'
                                                                       justifyContent='center' height='20%'
-                                                                      gap={"size-200"} isHidden={!isLoading}>
+                                                                      gap={"size-200"}>
                                                                     <ProgressCircle size='s' aria-label='Saving...'
                                                                                     isIndeterminate/>
                                                                 </Flex>
                                                                 <Text isHidden={isLoading}>
                                                                     {itemDraft.text}
                                                                 </Text>
+
                                                             </View>
+
                                                         </ActionButton>
+                                                        <Text isHidden={!saveDraftError} UNSAFE_style={{color: 'red'}}>
+                                                            There was an error saving the draft
+                                                        </Text>
                                                         <Flex direction='row' justifyContent='end'>
-                                                            <ActionButton
-                                                                margin='size-50'
-                                                                onPress={() => saveDraft(reachTextItem, itemDraft)}
-                                                                isDisabled={isLoading}>
-                                                                <Select/>
-                                                            </ActionButton>
-                                                            <ActionButton
-                                                                margin='size-50'
-                                                                onPress={() => deleteDraft(itemDraft)}
-                                                                isDisabled={isLoading}>
-                                                                <Delete/>
-                                                            </ActionButton>
+                                                            <TooltipTrigger>
+                                                                <ActionButton
+                                                                    margin='size-50'
+                                                                    onPress={() => saveDraft(reachTextItem, itemDraft)}
+                                                                    isDisabled={isLoading}>
+                                                                    <SaveToLight/>
+                                                                </ActionButton>
+                                                                <Tooltip>Save this draft</Tooltip>
+                                                            </TooltipTrigger>
+                                                            <TooltipTrigger>
+                                                                <ActionButton
+                                                                    margin='size-50'
+                                                                    onPress={() => deleteDraft(itemDraft)}
+                                                                    isDisabled={isLoading}>
+                                                                    <Delete/>
+                                                                </ActionButton>
+                                                                <Tooltip>Delete this draft</Tooltip>
+                                                            </TooltipTrigger>
                                                         </Flex>
                                                     </Flex>
                                                 </Flex>
