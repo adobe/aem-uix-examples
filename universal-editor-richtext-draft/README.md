@@ -12,6 +12,8 @@ To get more information about the universal editor extension points, please refe
 
 The `universal-editor-richtext-draft` extension provides a rich text editor with draft management capabilities. This allows users to create, edit, and manage multiple drafts of their content of type `reachtext` directly within the editor.
 
+![Draft Extension](./docs/draft-extension.png)
+
 ### Features
 
 - **Rich Text Editing**: The extension provides a rich text editor where users can input and format their text.
@@ -25,6 +27,9 @@ The `universal-editor-richtext-draft` extension provides a rich text editor with
 Please refer to the `src/universal-editor-ui-1/web-src/src/components` file for the implementation details.
 
 ### How to use
+After enabling the extension in the Universal Editor, you should see the extension in the rail panel as the follow:
+
+![Draft Extension](./docs/draft-extension-rail.png)
 
 - Start by clicking on the text you want to change. After making the changes, click on the add button to create a draft.</li>
 - If you don't want to add the draft, click the revert button to cancel the change.</li>
