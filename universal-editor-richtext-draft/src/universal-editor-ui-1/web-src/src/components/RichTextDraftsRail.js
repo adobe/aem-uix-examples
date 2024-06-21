@@ -64,6 +64,7 @@ export default function RichTextDraftsRail() {
                 .filter(editable => editable.type === TYPE_REACH_TEXT)
                 .map(editable => ({
                     ...editable,
+                    content: editable.content.replace(/<[^>]*>/g, ''),
                     resource: editable.resource.length > 0 ? editable.resource : editableMap.get(editable.parentid).resource
                 }));
 
