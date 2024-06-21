@@ -135,13 +135,14 @@ export default (props) => {
     })();
   }, [state.categories, state.currentCategory, state.searchText]);
 
+  // @TODO
   // selected products
-  useEffect(() => {
-    setState(state => ({
-      ...state,
-      selectedProducts: selectedProducts || [],
-    }));
-  }, [selectedProducts]);
+  // useEffect(() => {
+  //   setState(state => ({
+  //     ...state,
+  //     selectedProducts: selectedProducts || [],
+  //   }));
+  // }, [selectedProducts]);
 
   // only for products, categories are always displayed as a complete list
   const onLoadMore = async () => {

@@ -18,12 +18,13 @@ import Folder from '@spectrum-icons/illustrations/Folder';
 import ImageIcon from "@spectrum-icons/workflow/Image";
 import NotFound from "@spectrum-icons/illustrations/NotFound";
 
-const renderEmptyState = () => (
-  <IllustratedMessage>
-    <NotFound />
-    <Heading>No items found</Heading>
-  </IllustratedMessage>
-);
+// @TODO
+// const renderEmptyState = () => (
+//   <IllustratedMessage>
+//     <NotFound />
+//     <Heading>No items found</Heading>
+//   </IllustratedMessage>
+// );
 
 const CatalogView = props => {
   const {
@@ -44,7 +45,6 @@ const CatalogView = props => {
       width="100%"
       height="100%"
       density="spacious"
-      renderEmptyState={renderEmptyState}
       selectedKeys={selectedKeys}
       onAction={onClickItemList}
       onSelectionChange={onSelectionChange}
@@ -65,7 +65,6 @@ const CatalogView = props => {
                   <Folder />
                   <View alignSelf={"center"} marginStart={10}>
                     <Text><span dangerouslySetInnerHTML={{ __html: item.name }} /></Text>
-                    {item.childCount > 0 && <Text slot="description">{item.childCount} item(s)</Text>}
                   </View>
                 </Flex>
               ) : (
