@@ -3,7 +3,6 @@
   "version": "0.0.1",
   "private": true,
   "dependencies": {
-    "@adobe/aem-cf-admin-ui-ext-tpl": "^2.1.0",
     "@adobe/aio-sdk": "^5",
     "@adobe/exc-app": "^0.2.21",
     "@adobe/generator-add-action-generic": "^1.0.1",
