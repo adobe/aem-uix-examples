@@ -1,4 +1,4 @@
-# Universal Editor Rich Text Draft
+# Content Drafts
 
 ## Universal Editor Extensibility
 This extension is an example of how to extend the Universal Editor with custom functionality.
