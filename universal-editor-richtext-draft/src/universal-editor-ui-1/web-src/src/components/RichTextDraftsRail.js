@@ -261,7 +261,7 @@ export default function RichTextDraftsRail() {
                                                 </View>
                                             </ActionButton>
                                         </View>
-                                        <Heading marginBottom='size-50' marginTop='size-50' level='4' isHidden={itemsDraftList.get(reachTextItem.id)?.length === 0}>Drafts list:</Heading>
+                                        <Heading marginBottom='size-50' marginTop='size-50' level='4' isHidden={itemsDraftList.get(reachTextItem.id)?.length === 0}>Drafts</Heading>
 
                                         {(itemsDraftList.has(reachTextItem.id)) && itemsDraftList.get(reachTextItem.id).map((itemDraft, i) => {
                                             return (
