@@ -20,9 +20,9 @@ The `universal-editor-richtext-draft` extension provides a rich text editor with
 
 - **Draft Management**: Users can create multiple drafts of their content. Each draft is saved separately, allowing users to switch between different versions of their content easily.
 
-- **Draft Preview**: Each draft can be previewed within the editor. This allows users to review their drafts before finalizing their content.
+- **Draft Preview**: Each draft can be previewed allowing users to check their drafts before finalizing their content.
 
-- **Draft Actions**: For each draft, users can perform several actions including reverting changes, adding a new draft, selecting a draft, saving a draft, and deleting a draft.
+- **Draft Actions**: For each draft, users can perform several actions including reverting changes, adding a new draft, selecting a draft, applying a draft, and deleting a draft.
 
 Please refer to the `src/universal-editor-ui-1/web-src/src/components` file for the implementation details.
 

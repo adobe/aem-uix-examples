@@ -1,5 +1,5 @@
 /*
-Copyright 2022 Adobe
+Copyright 2024 Adobe
 All Rights Reserved.
 NOTICE: Adobe permits you to use, modify, and distribute this file in
 accordance with the terms of the Adobe license agreement accompanying
@@ -9,25 +9,28 @@ it.
 import {
     ActionButton,
     Content,
+    ContextualHelp,
     defaultTheme,
     Divider,
     Flex,
     Heading,
     ProgressCircle,
-    Provider, TextArea,
-    View,
-    Text, ContextualHelp, TooltipTrigger, Tooltip
+    Provider,
+    Text,
+    TextArea,
+    Tooltip,
+    TooltipTrigger,
+    View
 } from "@adobe/react-spectrum";
 import {attach} from "@adobe/uix-guest";
 import {useEffect, useState} from "react";
 import Add from "@spectrum-icons/workflow/Add";
 import Revert from "@spectrum-icons/workflow/Revert";
-import Select from "@spectrum-icons/workflow/Select";
 import Delete from "@spectrum-icons/workflow/Delete";
-import {extensionId, saveDraftAction, STORAGE_KEY_DRAFT_LIST, TYPE_REACH_TEXT, DRAFT_MIN_LENGTH} from "./Constants";
+import {DRAFT_MIN_LENGTH, extensionId, saveDraftAction, STORAGE_KEY_DRAFT_LIST, TYPE_REACH_TEXT} from "./Constants";
 import actionWebInvoke from "../utils";
 import allActions from '../config.json';
-import SaveToLight from "@spectrum-icons/workflow/SaveToLight";
+import CheckmarkCircle from "@spectrum-icons/workflow/CheckmarkCircle";
 
 function saveDraftsInStorage(itemsDraftList) {
     localStorage.setItem(STORAGE_KEY_DRAFT_LIST, JSON.stringify(Array.from(itemsDraftList.entries())));
@@ -308,9 +311,9 @@ export default function RichTextDraftsRail() {
                                                                     margin='size-50'
                                                                     onPress={() => saveDraft(reachTextItem, itemDraft)}
                                                                     isDisabled={isLoading}>
-                                                                    <SaveToLight/>
+                                                                    <CheckmarkCircle/>
                                                                 </ActionButton>
-                                                                <Tooltip>Save this draft</Tooltip>
+                                                                <Tooltip>Apply this draft</Tooltip>
                                                             </TooltipTrigger>
                                                             <TooltipTrigger>
                                                                 <ActionButton
