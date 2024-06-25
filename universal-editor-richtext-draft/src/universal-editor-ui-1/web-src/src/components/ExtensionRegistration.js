@@ -22,7 +22,7 @@ function ExtensionRegistration() {
                                 extension: 'ueRichTextDraft',
                                 id: "ueRichTextDraft",
                                 label: "Rich Texts draft manager",
-                                header: "Manage Rich Texts drafts",
+                                header: "Content drafts",
                                 url: `/index.html#/rich-text-drafts`,
                                 hotkey: "w",
                                 icon: "Draft",
