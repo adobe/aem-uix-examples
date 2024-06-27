@@ -38,7 +38,6 @@ import actionWebInvoke from "../utils";
 import allActions from '../config.json';
 import CheckmarkCircle from "@spectrum-icons/workflow/CheckmarkCircle";
 import Copy from "@spectrum-icons/workflow/Copy";
-import SaveTo from "@spectrum-icons/workflow/SaveTo";
 import Cancel from "@spectrum-icons/workflow/Cancel";
 import Send from "@spectrum-icons/workflow/Send";
 
