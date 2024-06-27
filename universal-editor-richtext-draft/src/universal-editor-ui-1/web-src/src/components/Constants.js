@@ -11,6 +11,7 @@ module.exports = {
   extensionId,
   saveDraftAction: 'save-draft',
   DRAFT_MIN_LENGTH: 50,
+  DEFAULT_NUM_DRAFTS_TO_SHOW: 3,
   TYPE_REACH_TEXT: 'richtext',
   STORAGE_KEY_DRAFT_LIST: `${extensionId}-itemsDraftList`
 }

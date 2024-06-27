@@ -16,13 +16,13 @@ The `universal-editor-richtext-draft` extension provides a rich text editor with
 
 ### Features
 
-- **Rich Text Editing**: The extension provides a rich text editor where users can input and format their text.
+- **Rich Text Editing**: The extension provides a rich text editor where users can edit and format their text.
 
 - **Draft Management**: Users can create multiple drafts of their content. Each draft is saved separately, allowing users to switch between different versions of their content easily.
 
-- **Draft Preview**: Each draft can be previewed allowing users to check their drafts before finalizing their content.
+- **Draft Preview**: Each draft can be previewed allowing users to check and edit their drafts before finalizing their content.
 
-- **Draft Actions**: For each draft, users can perform several actions including reverting changes, adding a new draft, selecting a draft, applying a draft, and deleting a draft.
+- **Draft Actions**: For each draft, users can perform several actions including editing the draft, adding a new draft, applying a draft, and deleting of the draft.
 
 Please refer to the `src/universal-editor-ui-1/web-src/src/components` file for the implementation details.
 
@@ -31,10 +31,10 @@ After enabling the extension in the Universal Editor, you should see the extensi
 
 ![Draft Extension](./docs/draft-extension-rail.png)
 
-- Start by clicking on the text you want to change. After making the changes, click on the add button to create a draft.</li>
-- If you don't want to add the draft, click the revert button to cancel the change.</li>
-- You can select a draft from the list to persist or delete it.</li>
-- You can not edit a draft, only save or delete it. For that, delete the draft and create a new one</li>
+- Start by clicking on create draft from text or create new draft.
+- In the draft text are make the changes you want and select the option you need (save draft, apply the draft or delete cancel the draft)
+- Once the draft is created, you can manage it by clicking in it. Options available are: edit it, save the edition, apply the draft, or delete the draft
+- By default, you will see three drafts, in case you have more, you can click on 'Show all' to see all the rest.
 
 The drafts are persisted on the browser. If you clear the cache, you will lose them.
 The minimum length of a draft is `50` characters.
