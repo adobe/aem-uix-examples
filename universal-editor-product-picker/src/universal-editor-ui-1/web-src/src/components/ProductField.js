@@ -36,7 +36,10 @@ export default function () {
       });
       setGuestConnection(guestConnection);
 
-      // await guestConnection.host.field.setHeight(1500);
+      await guestConnection.host.field.setStyles({
+        current: { paddingBottom: 10 },
+        parent: { paddingBottom: 10 },
+      });
 
     })().catch((e) =>
       console.log("Extension got the error during initialization:", e)
@@ -64,16 +67,6 @@ export default function () {
       window.removeEventListener('storage', handleStorageChange);
     };
   }, [guestConnection]);
-
-  useEffect(() => {
-    (async () => {
-      if (!guestConnection) {
-        return;
-      }
-      // @TODO doesn't work as expected
-      // await guestConnection.host.field.setHeight(selections.length * 48 + 350);
-    })();
-  }, [guestConnection, selections]);
 
   const saveProductField = (value) => {
     guestConnection.host.field.onChange(value);
