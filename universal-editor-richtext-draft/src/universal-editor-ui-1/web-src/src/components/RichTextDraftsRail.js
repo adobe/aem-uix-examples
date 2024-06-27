@@ -84,7 +84,6 @@ export default function RichTextDraftsRail() {
     const [itemsDraftList, setItemsDraftList] = useState(new Map(JSON.parse(localStorage.getItem(STORAGE_KEY_DRAFT_LIST))));
     const [addDraft, setAddDraft] = useState(null);
     const [showAllDraft, setShowAllDraft] = useState(false);
-    const [itemDraftsListSize, setItemDraftsListSize] = useState(0);
 
     function cleanDraftStates() {
         setAddDraft(null);
@@ -267,7 +266,7 @@ export default function RichTextDraftsRail() {
                     <ActionButton
                         margin='size-50'
                         onPress={() => saveDraft(draft)}
-                        isDisabled={draft?.text === draftText || item?.content === draftText}>
+                        isDisabled={draftText.length === 0 || draft?.text === draftText || item?.content === draftText}>
                         <CheckmarkCircle/>
                     </ActionButton>
                     <Tooltip>Save this draft</Tooltip>
@@ -276,7 +275,7 @@ export default function RichTextDraftsRail() {
                     <ActionButton
                         margin='size-50'
                         onPress={() => applyDraft(item, draftText)}
-                        isDisabled={item?.content === draftText}>
+                        isDisabled={draftText.length === 0 || item?.content === draftText}>
                         <Send/>
                     </ActionButton>
                     <Tooltip>Apply this draft to the Content Fragment</Tooltip>
