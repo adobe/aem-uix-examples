@@ -1,8 +1,8 @@
 # Content Drafts
 
 ## Universal Editor Extensibility
-This extension is an example of how to extend the Universal Editor with custom functionality.
-The Universal Editor is a headless content management system that allows users to create, manage, and publish content across multiple channels. It provides a set of core features that can be extended with custom functionality using extensions.
+This extension is an example of extending the Universal Editor with custom functionality.
+The Universal Editor is a headless content management system that allows users to create, manage, and publish content across multiple channels. It provides core features that are extendable with custom functionality using extensions.
 
 ### Documentation
 In this link, you can find the documentation of the UI extensibility: [UIExtensibility Documentation](https://developer.adobe.com/uix/docs)
@@ -10,7 +10,7 @@ In this link, you can find the documentation of the UI extensibility: [UIExtensi
 To get more information about the universal editor extension points, please refer to the [Universal Editor Extension Points](https://developer.adobe.com/uix/docs/services/aem-universal-editor/) documentation.
 ## Functionality
 
-The `universal-editor-richtext-draft` extension provides a rich text editor with draft management capabilities. This allows users to create, edit, and manage multiple drafts of their content of type `reachtext` directly within the editor.
+The `universal-editor-richtext-draft` extension provides a rich text editor with draft management capabilities. It allows users to create, edit, and manage multiple drafts of their content of type `reachtext` directly within the editor.
 
 ![Draft Extension](./docs/draft-extension.png)
 
@@ -18,23 +18,21 @@ The `universal-editor-richtext-draft` extension provides a rich text editor with
 
 - **Rich Text Editing**: The extension provides a rich text editor where users can edit and format their text.
 
-- **Draft Management**: Users can create multiple drafts of their content. Each draft is saved separately, allowing users to switch between different versions of their content easily.
+- **Draft Management**: Users can create multiple content drafts. Each draft is saved separately, allowing users to easily switch between different versions of their content.
 
-- **Draft Preview**: Each draft can be previewed allowing users to check and edit their drafts before finalizing their content.
-
-- **Draft Actions**: For each draft, users can perform several actions including editing the draft, adding a new draft, applying a draft, and deleting of the draft.
+- **Draft Actions**: For each draft, users can perform several actions, including editing it, adding a new draft, applying it, and deleting it.
 
 Please refer to the `src/universal-editor-ui-1/web-src/src/components` file for the implementation details.
 
 ### How to use
-After enabling the extension in the Universal Editor, you should see the extension in the rail panel as the follow:
+After enabling the extension in the Universal Editor, you should see the extension in the rail panel as follows:
 
 ![Draft Extension](./docs/draft-extension-rail.png)
 
-- Start by clicking on create draft from text or create new draft.
-- In the draft text are make the changes you want and select the option you need (save draft, apply the draft or delete cancel the draft)
-- Once the draft is created, you can manage it by clicking in it. Options available are: edit it, save the edition, apply the draft, or delete the draft
-- By default, you will see three drafts, in case you have more, you can click on 'Show all' to see all the rest.
+- Start by clicking Create draft from content text or create an empty draft.
+- In the draft text make the changes you want and select the option you need (save draft, apply the draft or cancel the creation of the draft).
+- For a created draft, you can manage it by clicking in it. Options available are to edit it, save the edition, apply the draft, or delete the draft.
+- By default, you will see three drafts. If you have more, click 'Show all' to see all the rest.
 
 The drafts are persisted on the browser. If you clear the cache, you will lose them.
 The minimum length of a draft is `50` characters.

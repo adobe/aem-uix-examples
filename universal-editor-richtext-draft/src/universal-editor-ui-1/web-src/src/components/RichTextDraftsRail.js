@@ -338,10 +338,10 @@ export default function RichTextDraftsRail() {
                                 <Text>
                                     This extension allows you to manage drafts for rich text elements.
                                     <ul>
-                                        <li>Start by clicking on create draft from text or create new draft.</li>
-                                        <li>In the draft text are make the changes you want and select the option you need (save draft, apply the draft or delete cancel the draft)</li>
-                                        <li>Once the draft is created, you can manage it by clicking in it. Options available are: edit it, save the edition, apply the draft, or delete the draft</li>
-                                        <li>By default you will see three draft, in case you have more, you can click on 'Show all' to see all the drafts.</li>
+                                        <li>Start by clicking Create draft from content text or create an empty draft.</li>
+                                        <li>In the draft text make the changes you want and select the option you need (save draft, apply the draft or cancel the draft).</li>
+                                        <li>For a created draft, you can manage it by clicking in it. Options available are to edit it, save the edition, apply the draft, or delete the draft.</li>
+                                        <li>By default, you will see <strong>{DEFAULT_NUM_DRAFTS_TO_SHOW}</strong> drafts. If you have more, click 'Show all' to see all the rest.</li>
                                     </ul>
                                     The drafts are persisted on the browser. If you clear the cache, you will lose them.<br />
                                     The minimum length of a draft is <strong>{DRAFT_MIN_LENGTH} characters</strong>.
