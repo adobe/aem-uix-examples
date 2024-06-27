@@ -84,6 +84,7 @@ export default function RichTextDraftsRail() {
     const [itemsDraftList, setItemsDraftList] = useState(new Map(JSON.parse(localStorage.getItem(STORAGE_KEY_DRAFT_LIST))));
     const [addDraft, setAddDraft] = useState(null);
     const [showAllDraft, setShowAllDraft] = useState(false);
+    const [itemDraftsListSize, setItemDraftsListSize] = useState(0);
 
     function cleanDraftStates() {
         setAddDraft(null);
@@ -130,13 +131,18 @@ export default function RichTextDraftsRail() {
     }
 
     function validateDraft(draft) {
-        if (selectedItem?.content.length < DRAFT_MIN_LENGTH ||  draftText?.length > DRAFT_MIN_LENGTH) {
+        if (selectedItem?.content.length < DRAFT_MIN_LENGTH || draftText?.length > DRAFT_MIN_LENGTH) {
             setValidationState({draftId: draft.id, draftText: 'valid'});
             return true;
         }
-        setValidationState({draftId: draft.id, draftText: 'invalid', error: `The draft must have at least ${DRAFT_MIN_LENGTH} characters`})
+        setValidationState({
+            draftId: draft.id,
+            draftText: 'invalid',
+            error: `The draft must have at least ${DRAFT_MIN_LENGTH} characters`
+        })
         return false;
     }
+
     function saveDraft(draft) {
         if (!validateDraft(draft)) {
             return;
@@ -261,7 +267,7 @@ export default function RichTextDraftsRail() {
                     <ActionButton
                         margin='size-50'
                         onPress={() => saveDraft(draft)}
-                        isDisabled={draft?.text === draftText || item?.content === draftText }>
+                        isDisabled={draft?.text === draftText || item?.content === draftText}>
                         <CheckmarkCircle/>
                     </ActionButton>
                     <Tooltip>Save this draft</Tooltip>
@@ -270,7 +276,7 @@ export default function RichTextDraftsRail() {
                     <ActionButton
                         margin='size-50'
                         onPress={() => applyDraft(item, draftText)}
-                        isDisabled={item?.content === draftText  }>
+                        isDisabled={item?.content === draftText}>
                         <Send/>
                     </ActionButton>
                     <Tooltip>Apply this draft to the Content Fragment</Tooltip>
@@ -279,7 +285,7 @@ export default function RichTextDraftsRail() {
                     <ActionButton
                         margin='size-50'
                         onPress={() => addDraft ? setAddDraft(null) : deleteDraft(draft)}>
-                        {addDraft ? <Cancel/> : <Delete/> }
+                        {addDraft ? <Cancel/> : <Delete/>}
                     </ActionButton>
                     <Tooltip>{addDraft ? 'Cancel' : 'Delete'} this draft</Tooltip>
                 </TooltipTrigger>
@@ -306,7 +312,6 @@ export default function RichTextDraftsRail() {
         return (
             <View key={draft?.id ?? 0}
                   width='100%'
-                  height='100%'
                   backgroundColor='static-white'
                   borderColor={applyDraftError ? 'red-500' : 'gray-500'}
                   borderWidth='thin'>
@@ -338,12 +343,20 @@ export default function RichTextDraftsRail() {
                                 <Text>
                                     This extension allows you to manage drafts for rich text elements.
                                     <ul>
-                                        <li>Start by clicking Create draft from content text or create an empty draft.</li>
-                                        <li>In the draft text make the changes you want and select the option you need (save draft, apply the draft or cancel the draft).</li>
-                                        <li>For a created draft, you can manage it by clicking in it. Options available are to edit it, save the edition, apply the draft, or delete the draft.</li>
-                                        <li>By default, you will see <strong>{DEFAULT_NUM_DRAFTS_TO_SHOW}</strong> drafts. If you have more, click 'Show all' to see all the rest.</li>
+                                        <li>Start by clicking Create draft from content text or create an empty draft.
+                                        </li>
+                                        <li>In the draft text make the changes you want and select the option you need
+                                            (save draft, apply the draft or cancel the draft).
+                                        </li>
+                                        <li>For a created draft, you can manage it by clicking in it. Options available
+                                            are to edit it, save the edition, apply the draft, or delete the draft.
+                                        </li>
+                                        <li>By default, you will
+                                            see <strong>{DEFAULT_NUM_DRAFTS_TO_SHOW}</strong> drafts. If you have more,
+                                            click 'Show all' to see all the rest.
+                                        </li>
                                     </ul>
-                                    The drafts are persisted on the browser. If you clear the cache, you will lose them.<br />
+                                    The drafts are persisted on the browser. If you clear the cache, you will lose them.<br/>
                                     The minimum length of a draft is <strong>{DRAFT_MIN_LENGTH} characters</strong>.
                                 </Text>
                             </Content>
@@ -383,10 +396,11 @@ export default function RichTextDraftsRail() {
                                                 </TooltipTrigger>
                                             </Flex>
                                         </Flex>
-                                        <Heading marginBottom='size-50' marginTop='size-50' level='4'
-                                                 isHidden={itemsDraftList.get(reachTextItem.id)?.length === 0}>
-                                            Drafts ({itemsDraftList.get(reachTextItem.id)?.length ?? 0})
-                                        </Heading>
+                                        {itemsDraftList.get(reachTextItem.id)?.length > 0 && (
+                                            <Heading marginBottom='size-50' marginTop='size-50' level='4'>
+                                                Drafts ({itemsDraftList.get(reachTextItem.id)?.length ?? 0})
+                                            </Heading>
+                                        )}
                                         <Flex direction='column' isHidden={!(addDraft?.itemId === reachTextItem.id)}>
                                             {!isLoading && renderDraftTextArea(addDraft, true)}
                                             {!isLoading && renderDraftActionButtons(reachTextItem, addDraft)}
@@ -394,7 +408,8 @@ export default function RichTextDraftsRail() {
                                         </Flex>
                                         {(itemsDraftList.has(reachTextItem.id)) && itemsDraftList.get(reachTextItem.id).map((itemDraft, i) => {
                                             return (
-                                                <Flex direction='column' key={itemDraft.id} isHidden={(i+1 > DEFAULT_NUM_DRAFTS_TO_SHOW ) && !showDraft(reachTextItem.id)}>
+                                                <Flex direction='column' key={itemDraft.id}
+                                                      isHidden={(i + 1 > DEFAULT_NUM_DRAFTS_TO_SHOW) && !showDraft(reachTextItem.id)}>
                                                     <View key={itemDraft.id}
                                                           backgroundColor='static-white'
                                                           padding='size-100'
@@ -416,10 +431,15 @@ export default function RichTextDraftsRail() {
                                                 </Flex>
                                             );
                                         })}
-                                        <Flex direction='column' justifyContent='center' isHidden={itemsDraftList.get(reachTextItem.id)?.length <= DEFAULT_NUM_DRAFTS_TO_SHOW}>
-                                            <ActionButton isQuiet isHidden={showDraft(reachTextItem.id)} onPress={() => showDraftsList(reachTextItem)}>Show all</ActionButton>
-                                            <ActionButton isQuiet isHidden={!showDraft(reachTextItem.id)} onPress={() => setShowAllDraft(false)}>Hide all</ActionButton>
-                                        </Flex>
+                                        {itemsDraftList.get(reachTextItem.id)?.length > DEFAULT_NUM_DRAFTS_TO_SHOW && (
+                                                <Flex direction='column' justifyContent='center'>
+                                                    <ActionButton isQuiet isHidden={showDraft(reachTextItem.id)}
+                                                                  onPress={() => showDraftsList(reachTextItem)}>Show
+                                                        all</ActionButton>
+                                                    <ActionButton isQuiet isHidden={!showDraft(reachTextItem.id)}
+                                                                  onPress={() => setShowAllDraft(false)}>Hide all</ActionButton>
+                                                </Flex>
+                                            )}
                                         <Divider size='S' marginBottom='size-100' marginTop='size-100'/>
                                     </Flex>
                                 )
