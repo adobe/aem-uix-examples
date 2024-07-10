@@ -3,14 +3,16 @@
   "version": "0.0.1",
   "dependencies": {
     "@adobe/react-spectrum": "^3.4.0",
-    "@adobe/uix-guest": "^0.10.2",
+    "@adobe/uix-guest": "^0.10.3",
     "@spectrum-icons/workflow": "^4.2.8",
     "chalk": "^4",
     "core-js": "^3.6.4",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-error-boundary": "^1.2.5",
-    "react-router-dom": "^6.3.0"
+    "react-router-dom": "^6.3.0",
+    "ajv": "^8.12.0",
+    "js-yaml": "^4.1.0"
   },
   "devDependencies": {
     "@babel/core": "^7.8.7",
@@ -23,7 +25,8 @@
   },
   "scripts": {
     "test": "jest --passWithNoTests ./test",
-    "e2e": "jest --collectCoverage=false --testRegex ./e2e"
+    "e2e": "jest --collectCoverage=false --testRegex ./e2e",
+    "transform:yaml-to-json": "node node_modules/@adobe/uix-guest/scripts/generate-metadata.js"
   },
   "description": "A sample extension illustrating the extensibility of the AEM Content Fragments Console header menu by adding a custom button.",
   "engines": {

@@ -1,0 +1,12 @@
+{
+    "extensions": [
+        {
+            "extensionPoint": "aem/cf-console-admin/1",
+            "url": "index.html#/cf-admin-console"
+        },
+        {
+            "extensionPoint": "aem/cf-editor/1",
+            "url": "index.html#/cf-editor"
+        }
+    ]
+}

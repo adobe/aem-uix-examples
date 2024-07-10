@@ -1,0 +1,7 @@
+{
+    "extensions": [
+        {
+            "extensionPoint": "aem/cf-editor/1"
+        }
+    ]
+}

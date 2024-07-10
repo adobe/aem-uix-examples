@@ -1,0 +1,7 @@
+{
+    "extensions": [
+        {
+            "extensionPoint": "aem/cf-console-admin/1"
+        }
+    ]
+}

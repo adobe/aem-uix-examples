@@ -7,7 +7,7 @@
     "@adobe/exc-app": "^0.2.21",
     "@adobe/generator-add-action-generic": "^0.2.9",
     "@adobe/react-spectrum": "^3.4.0",
-    "@adobe/uix-guest": "^0.8.0",
+    "@adobe/uix-guest": "^0.10.3",
     "@react-spectrum/list": "^3.0.0-rc.0",
     "@spectrum-icons/workflow": "^3.2.0",
     "core-js": "^3.6.4",
@@ -19,7 +19,9 @@
     "react-error-boundary": "^1.2.5",
     "react-router-dom": "^6.3.0",
     "regenerator-runtime": "^0.13.5",
-    "stream-http": "^3.2.0"
+    "stream-http": "^3.2.0",
+    "ajv": "^8.12.0",
+    "js-yaml": "^4.1.0"
   },
   "devDependencies": {
     "@babel/core": "^7.8.7",
@@ -34,7 +36,8 @@
   },
   "scripts": {
     "test": "jest --passWithNoTests ./test",
-    "lint:fix": "eslint --ext .js --fix ."
+    "lint:fix": "eslint --ext .js --fix .",
+    "transform:yaml-to-json": "node node_modules/@adobe/uix-guest/scripts/generate-metadata.js"
   },
   "description": "Example of CF export based on selected filters",
   "engines": {

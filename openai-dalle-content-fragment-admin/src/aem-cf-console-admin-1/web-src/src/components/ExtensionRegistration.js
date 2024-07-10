@@ -11,11 +11,13 @@ import { generatePath } from "react-router";
 import { Text } from "@adobe/react-spectrum";
 import { register } from "@adobe/uix-guest";
 import { extensionId } from "./Constants";
+import metadata from '../../../../app-metadata.json';
 
 function ExtensionRegistration() {
   const init = async () => {
     const guestConnection = await register({
       id: extensionId,
+      metadata,
       methods: {
         // Configure your Action Bar button here
         actionBar: {
