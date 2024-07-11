@@ -1,0 +1,6 @@
+{
+  "name": "Content drafts",
+  "id": "universal-editor-richtext-draft",
+  "description": "This extension allow the user to manage drafts for contents of type 'richtext'",
+  "version": "0.0.1"
+}
