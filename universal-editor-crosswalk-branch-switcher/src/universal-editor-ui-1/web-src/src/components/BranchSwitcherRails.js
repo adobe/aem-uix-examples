@@ -16,7 +16,8 @@ import {
     InlineAlert,
     Item,
     Provider,
-    View
+    View,
+    TextField
 } from "@adobe/react-spectrum";
 import {attach} from "@adobe/uix-guest";
 import {useEffect, useState} from "react";
@@ -36,6 +37,8 @@ export default function BranchSwitcherRail() {
     const [error, setError] = useState(null);
     const [headers, setHeaders] = useState();
     const [path, setPath] = useState();
+    const [connection, setConnection] = useState();
+    const [editorState, setEditorState] = useState();
     const [fetchedFromStorage, setFetchedFromStorage] = useState(false);
     const [ currentBranch, setCurrentBranch ] = useState('main');
     const [ branches, setBranches ] = useState([
@@ -62,6 +65,7 @@ export default function BranchSwitcherRail() {
             const org = await guestConnection.sharedContext.get('orgId');
             const state = await guestConnection.host.editorState.get();
             const location = new URL(state.location);
+            const queryParams = new URLSearchParams(location.search);
             const builtHeaders = {
                 "Content-Type": "application/json",
                 "Authorization": `Bearer ${token}`,
@@ -69,8 +73,14 @@ export default function BranchSwitcherRail() {
                 'x-gw-ims-org-id': org,
             };
             console.log('Built headers:', builtHeaders);
+
+            if (queryParams.has('ref')) {
+                setCurrentBranch(queryParams.get('ref'));
+            }
+            setConnection(guestConnection);
             setHeaders(builtHeaders);
             setPath(location.pathname);
+            setEditorState(state);
         })()
     }, []);
 
@@ -122,6 +132,14 @@ export default function BranchSwitcherRail() {
     async function changeBranch(branch) {
         console.log('Changing branch to', branch);
         setCurrentBranch(branch);
+        const urlObject = new URL(editorState.location);
+        var queryParams = new URLSearchParams(urlObject.search);
+        queryParams.set('ref', branch);
+
+        const newPath = `${urlObject.protocol}//${urlObject.host}${urlObject.pathname}?${queryParams.toString()}`
+
+        console.log('Navigating to', newPath)
+        await connection.host.remoteApp.triggerEvent("extension:reloadPage", "main", newPath);
     }
 
     return (
@@ -136,13 +154,15 @@ export default function BranchSwitcherRail() {
                 </InlineAlert>
                     <Flex direction='column'>
                         <Heading marginBottom='size-100' level='3'>Branch Switcher</Heading>
+                        <TextField isReadOnly={true} value={repoDetail} label="Repository"/>
                         <ComboBox label="Current Branch"
-                            items={branches}
+                            defaultItems={branches}
                             selectedKey={currentBranch}
-                            onSelectionChange={changeBranch}>
+                            onSelectionChange={changeBranch}
+                            marginBottom='size-100'>
                             {item => <Item key={item.name}>{item.name}</Item>}
                         </ComboBox>
-                        <ActionButton onPress={fetchBranches}>Update Branches</ActionButton>
+                        <ActionButton onPress={fetchBranches}>Fetch Branches from GitHub</ActionButton>
                     </Flex>
                 </View>
             </Content>
