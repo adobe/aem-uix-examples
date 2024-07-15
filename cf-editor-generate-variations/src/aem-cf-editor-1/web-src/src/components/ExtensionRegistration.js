@@ -14,6 +14,7 @@ import { Text } from '@adobe/react-spectrum';
 import { register } from '@adobe/uix-guest';
 import { extensionId } from './Constants.js';
 import { isValidApplicationUrl } from './Utils.js';
+import metadata from '../../../../app-metadata.json';
 
 const DEFAULT_URL = 'https://experience.adobe.com/#/aem/generate-variations/';
 
@@ -21,6 +22,7 @@ function ExtensionRegistration() {
   const init = async () => {
     const guestConnection = await register({
       id: extensionId,
+      metadata,
       methods: {
         headerMenu: {
           getButtons() {

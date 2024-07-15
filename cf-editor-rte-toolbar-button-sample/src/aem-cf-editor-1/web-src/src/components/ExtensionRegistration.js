@@ -13,6 +13,7 @@ import React, { useRef } from "react";
 import { Text } from "@adobe/react-spectrum";
 import { register } from "@adobe/uix-guest";
 import { extensionId } from "./Constants";
+import metadata from '../../../../app-metadata.json';
 
 const messages = [
   "<div><p>Welcome to the extension journey! 🚀 Click once more to discover the UI extensibility docs. 📚︎</p></div>",
@@ -48,6 +49,7 @@ function ExtensionRegistration() {
   const init = async () => {
     const guestConnection = await register({
       id: extensionId,
+      metadata,
       methods: {
         rte: {
           getCustomButtons: () => ([

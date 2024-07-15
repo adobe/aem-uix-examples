@@ -14,6 +14,7 @@ import {Text} from "@adobe/react-spectrum";
 import {register} from "@adobe/uix-guest";
 import {extensionId} from "./Constants";
 import {getContentFragmentConfig} from "../utils";
+import metadata from '../../../../app-metadata.json';
 
 const getKeysWithValueFalse = (jsonObject)=> {
   const keysWithFalseValue = [];
@@ -44,6 +45,7 @@ function ExtensionRegistration() {
   const init = async () => {
     const registrationConfig = {
       id: extensionId,
+      metadata,
       methods: {
         rte: {
           removeButtons: async () => {

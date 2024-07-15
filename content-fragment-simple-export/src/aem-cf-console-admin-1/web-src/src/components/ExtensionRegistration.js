@@ -7,11 +7,13 @@ import { register } from "@adobe/uix-guest";
 import { extensionId } from "./Constants";
 import actions from '../config.json';
 import actionWebInvoke from "../utils.js";
+import metadata from '../../../../app-metadata.json';
 
 function ExtensionRegistration() {
   const init = async () => {
     const guestConnection = await register({
       id: extensionId,
+      metadata,
       methods: {
         headerMenu: {
           getButtons() {
