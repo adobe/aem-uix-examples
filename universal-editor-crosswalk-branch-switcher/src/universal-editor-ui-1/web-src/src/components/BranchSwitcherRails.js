@@ -33,7 +33,8 @@ function isStoredBranches(storedBranches) {
 }
 
 export default function BranchSwitcherRail() {
-    const [repoDetail, setRepoDetail] = useState();
+    const [owner, setOwner] = useState();
+    const [repository, setRepository] = useState();
     const [error, setError] = useState(null);
     const [headers, setHeaders] = useState();
     const [path, setPath] = useState();
@@ -72,7 +73,6 @@ export default function BranchSwitcherRail() {
                 'x-aem-host': location.protocol + '//' + location.host,
                 'x-gw-ims-org-id': org,
             };
-            console.log('Built headers:', builtHeaders);
 
             if (queryParams.has('ref')) {
                 setCurrentBranch(queryParams.get('ref'));
@@ -92,14 +92,15 @@ export default function BranchSwitcherRail() {
     }, [headers, path]);
 
     useEffect(() => {
-        if (!repoDetail) return;
+        if (!owner) return;
+        if (!repository) return;
         if (fetchedFromStorage) return;
 
         fetchBranches();
-    }, [repoDetail]);
+    }, [owner, repository]);
 
     async function fetchBranches() {
-        fetch(`https://api.github.com/repos/${repoDetail}/branches`)
+        fetch(`https://api.github.com/repos/${owner}/${repository}/branches`)
             .then(response => response.json())
             .then(data => {
                 if (data.message && data.message.startsWith('API rate limit exceeded')) {
@@ -124,8 +125,8 @@ export default function BranchSwitcherRail() {
         )
             .then(response => response.json())
             .then(data => {
-                console.log(data)
-                setRepoDetail(data.owner + '/' + data.repo);
+                setOwner(data.owner);
+                setRepository(data.repo);
             })
     }
  
@@ -142,6 +143,11 @@ export default function BranchSwitcherRail() {
         await connection.host.remoteApp.triggerEvent("extension:reloadPage", "main", newPath);
     }
 
+    function openInGitHub() {
+        if (!owner || !repository) return;
+        window.open(`https://github.com/${owner}/${repository}/tree/${currentBranch}`);
+    }
+
     return (
         <Provider theme={defaultTheme} colorScheme='light' height='100vh'>
             <Content height='100%'>
@@ -154,7 +160,9 @@ export default function BranchSwitcherRail() {
                 </InlineAlert>
                     <Flex direction='column'>
                         <Heading marginBottom='size-100' level='3'>Branch Switcher</Heading>
-                        <TextField isReadOnly={true} value={repoDetail} label="Repository"/>
+                        <TextField isReadOnly={true} isDisabled={owner === undefined} value={owner} label="Owner"/>
+                        <TextField isReadOnly={true} isDisabled={repository === undefined} value={repository} label="Repository" marginBottom="size-100" />
+                        <ActionButton onPress={openInGitHub}>Open in GitHub</ActionButton>
                         <ComboBox label="Current Branch"
                             defaultItems={branches}
                             selectedKey={currentBranch}
