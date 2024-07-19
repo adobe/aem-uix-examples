@@ -34,11 +34,5 @@ jobs:
       matrix: ${{fromJson(needs.find-changed-dirs.outputs.changed_directories)}}
     needs:
       - find-changed-dirs
-    steps:
-      - uses: actions/checkout@v3
-      - run: |
-          cd ${{ matrix.dir }} || exit
-          if [ -f package.json ]; then
-            echo "Installing dependencies in ${{ matrix.dir }}"
-            npm install
-          fi
+    working-directory: ${{ matrix.dir }}
+    uses: ./${{ matrix.dir }}/.github/workflows/deploy_prod_new.yml

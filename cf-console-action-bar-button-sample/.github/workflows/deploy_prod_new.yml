@@ -1,0 +1,15 @@
+name: Deploy steps for "cf-console-action-bar-button-sample"
+
+on:
+  workflow_call:
+    inputs:
+    secrets:
+
+jobs:
+    install-deps:
+      runs-on: ubuntu-latest
+      steps:
+        - uses: actions/checkout@v3
+        - run: |
+            echo "Installing dependencies in cf-console-action-bar-button-sample"
+            npm install
