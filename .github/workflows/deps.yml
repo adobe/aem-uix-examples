@@ -35,4 +35,4 @@ jobs:
     needs:
       - find-changed-dirs
     working-directory: cf-console-action-bar-button-sample
-    uses: ./cf-console-action-bar-button-sample/.github/workflows/deploy_prod_new.yml@v1
+    uses: /cf-console-action-bar-button-sample/.github/workflows/deploy_prod_new.yml
