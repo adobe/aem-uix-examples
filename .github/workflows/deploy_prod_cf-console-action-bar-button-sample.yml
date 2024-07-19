@@ -6,6 +6,7 @@ on:
       test: 
         description: 'Test'
         required: false
+        type: string
     secrets:
       test: 
           description: 'Test'
