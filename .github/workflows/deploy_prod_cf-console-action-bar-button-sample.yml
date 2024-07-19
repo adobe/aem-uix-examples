@@ -3,7 +3,9 @@ name: Deploy steps for "cf-console-action-bar-button-sample"
 on:
   workflow_call:
     inputs:
+
     secrets:
+    
 
 jobs:
     install-deps:
