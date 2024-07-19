@@ -5,7 +5,7 @@ on:
     branches: [ main ]
 
 jobs:
-  find-out-changes:
+  find-changed-dirs:
     runs-on: ubuntu-latest
     outputs:
       changed_directories: ${{ steps.set-output.outputs.changed_directories }}  # The `dirs` doesn't exist in the outputs of changed-files@v35 action.
@@ -27,13 +27,13 @@ jobs:
         id: set-output
         run: echo "changed_directories={\"dir\":${{ steps.changed-files.outputs.all_changed_files }}}" >> "$GITHUB_OUTPUT"
 
-  do-stuff:
+  install-deps:
     runs-on: ubuntu-latest
-    if: ${{ needs.find-out-changes.outputs.changed_directories != '' }}  # Without it, the strategy parser will fail if the changed_directories is empty.
+    if: ${{ needs.find-changed-dirs.outputs.changed_directories != '' }}  # Without it, the strategy parser will fail if the changed_directories is empty.
     strategy:
-      matrix: ${{fromJson(needs.find-out-changes.outputs.changed_directories)}}
+      matrix: ${{fromJson(needs.find-changed-dirs.outputs.changed_directories)}}
     needs:
-      - find-out-changes
+      - find-changed-dirs
     steps:
       - uses: actions/checkout@v3
       - run: |
