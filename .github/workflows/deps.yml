@@ -42,4 +42,3 @@ jobs:
             echo "Installing dependencies in ${{ matrix.dir }}"
             npm install
           fi
-          done
