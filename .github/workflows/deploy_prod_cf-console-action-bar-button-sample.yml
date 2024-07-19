@@ -6,13 +6,10 @@ on:
       test: 
         description: 'Test'
         required: false
-        default: 'test'
     secrets:
       test: 
           description: 'Test'
           required: false
-          default: 'test'
-
 
 jobs:
     install-deps:
