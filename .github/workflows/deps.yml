@@ -35,5 +35,5 @@ jobs:
     needs:
       - find-changed-dirs
     steps:
-      - uses: ./.github/workflows/deploy_prod_cf-${{ matrix.dir }}.yml
+      - uses: ./.github/workflows/deploy_prod_cf-console-action-bar-button-sample.yml
     
