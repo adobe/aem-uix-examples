@@ -17,6 +17,7 @@ jobs:
       runs-on: ubuntu-latest
       steps:
         - uses: actions/checkout@v3
+        - working-directory: ./cf-console-action-bar-button-sample
         - run: |
             echo "Installing dependencies in cf-console-action-bar-button-sample"
             npm install
