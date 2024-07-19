@@ -34,5 +34,5 @@ jobs:
       matrix: ${{fromJson(needs.find-changed-dirs.outputs.changed_directories)}}
     needs:
       - find-changed-dirs
-    working-directory: ${{ matrix.dir }}
-    uses: ./${{ matrix.dir }}/.github/workflows/deploy_prod_new.yml
+    working-directory: cf-console-action-bar-button-sample
+    uses: ./cf-console-action-bar-button-sample/.github/workflows/deploy_prod_new.yml
