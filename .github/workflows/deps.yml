@@ -74,4 +74,9 @@ jobs:
 
   install-deps:
     uses: ./.github/workflows/deploy_prod_cf-console-action-bar-button-sample.yml
+    if: ${{ needs.find-changed-dirs.outputs.changed_directories != '' }}  # Without it, the strategy parser will fail if the changed_directories is empty.
+    strategy:
+      matrix: ${{fromJson(needs.find-changed-dirs.outputs.changed_directories)}}
+    needs:
+      - find-changed-dirs
     
