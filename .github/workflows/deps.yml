@@ -73,7 +73,7 @@ jobs:
         run: echo "changed_directories={\"dir\":${{ steps.changed-files.outputs.all_changed_files }}}" >> "$GITHUB_OUTPUT"
 
   install-deps:
-    uses: ./.github/workflows/deploy_prod_cf-console-action-bar-button-sample.yml
+    uses: ./.github/workflows/deploy_prod_${{ matrix.dir }}.yml
     if: ${{ needs.find-changed-dirs.outputs.changed_directories != '' }}  # Without it, the strategy parser will fail if the changed_directories is empty.
     strategy:
       matrix: ${{fromJson(needs.find-changed-dirs.outputs.changed_directories)}}
