@@ -79,4 +79,8 @@ jobs:
       matrix: ${{fromJson(needs.find-changed-dirs.outputs.changed_directories)}}
     needs:
       - find-changed-dirs
+    with:
+      config-path: ${{ matrix.dir }}
+    secrets:
+      envPAT: ${{ matrix.dir }}
     
