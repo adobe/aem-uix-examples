@@ -16,7 +16,7 @@ jobs:
       steps:
         - uses: actions/checkout@v3
         - name: "Install dependencies"
-          working-directory: ./cf-console-action-bar-button-sample
+          working-directory: ./${{ inputs.config-path }}
           run: |
             echo "Installing dependencies in ${{ inputs.config-path }}, with PAT ${{ secrets.envPAT }}"
             npm install
