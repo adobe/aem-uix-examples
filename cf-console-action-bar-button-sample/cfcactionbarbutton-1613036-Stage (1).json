@@ -1,0 +1,42 @@
+{
+  "project": {
+    "id": "4566206088345126905",
+    "name": "cfcactionbarbutton",
+    "title": "CF Console Action Bar Button",
+    "org": {
+      "id": "1613036",
+      "name": "AEM Extensibility",
+      "ims_org_id": "4ACD1E1A654C996E0A495EE3@AdobeOrg"
+    },
+    "workspace": {
+      "id": "4566206088345138799",
+      "name": "Stage",
+      "title": "Stage",
+      "action_url": "https://1613036-cfcactionbarbutton-stage.adobeioruntime.net",
+      "app_url": "https://1613036-cfcactionbarbutton-stage.adobeio-static.net",
+      "details": {
+        "credentials": [],
+        "services": [],
+        "runtime": {
+          "namespaces": [
+            {
+              "name": "1613036-cfcactionbarbutton-stage",
+              "auth": "83b80e8f-5879-468c-b4a0-4fb17ff531ba:T1EQ071vEHJ10Cw7C1RDLaoyDTWo1c576M14sXI7jW72T5uvWkm7P1yF7g734gcx"
+            }
+          ]
+        },
+        "events": { "registrations": [] },
+        "mesh": {}
+      },
+      "endpoints": {
+        "aem/cf-console-admin/1": {
+          "view": [
+            {
+              "href": "https://1613036-cfcactionbarbutton-stage.adobeio-static.net/index.html"
+            }
+          ]
+        }
+      }
+    }
+  }
+}
