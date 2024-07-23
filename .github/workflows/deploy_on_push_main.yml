@@ -45,42 +45,98 @@
           
 # name: Node.js CI
 
-on:
-  push:
-    branches: [ main ]
+# on:
+#   push:
+#     branches: [ main ]
 
-jobs:
-  find-changed-dirs:
-    runs-on: ubuntu-latest
-    outputs:
-      changed_directories: ${{ steps.set-output.outputs.changed_directories }}  # The `dirs` doesn't exist in the outputs of changed-files@v35 action.
-    steps:
-      - uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
+# jobs:
+#   find-changed-dirs:
+#     runs-on: ubuntu-latest
+#     outputs:
+#       changed_directories: ${{ steps.set-output.outputs.changed_directories }}  # The `dirs` doesn't exist in the outputs of changed-files@v35 action.
+#     steps:
+#       - uses: actions/checkout@v3
+#         with:
+#           fetch-depth: 0
 
-      - name: Get changed files
-        id: changed-files
-        uses: tj-actions/changed-files@v35
-        with:
-          dir_names: true
-          dir_names_max_depth: 2  # This is optional. If not provided, full subdirectories' paths will be provided. Use it if you need to trim the output. See docs for details: https://github.com/tj-actions/changed-files/tree/main#inputs.
-          json: true
-          quotepath: false
+#       - name: Get changed files
+#         id: changed-files
+#         uses: tj-actions/changed-files@v35
+#         with:
+#           dir_names: true
+#           dir_names_max_depth: 2  # This is optional. If not provided, full subdirectories' paths will be provided. Use it if you need to trim the output. See docs for details: https://github.com/tj-actions/changed-files/tree/main#inputs.
+#           json: true
+#           quotepath: false
 
-      - name: 'Set output in the matrix format'
-        id: set-output
-        run: echo "changed_directories={\"dir\":${{ steps.changed-files.outputs.all_changed_files }}}" >> "$GITHUB_OUTPUT"
+#       - name: 'Set output in the matrix format'
+#         id: set-output
+#         run: echo "changed_directories={\"dir\":${{ steps.changed-files.outputs.all_changed_files }}}" >> "$GITHUB_OUTPUT"
 
-  install-deps:
-    uses: ./.github/workflows/deploy_stage.yml
-    if: ${{ needs.find-changed-dirs.outputs.changed_directories != '' }}  # Without it, the strategy parser will fail if the changed_directories is empty.
-    strategy:
-      matrix: ${{fromJson(needs.find-changed-dirs.outputs.changed_directories)}}
-    needs:
-      - find-changed-dirs
-    with:
-      config-path: ${{ matrix.dir }}
-    secrets:
-      envPAT: ${{ matrix.dir }}
+#   install-deps:
+#     uses: ./.github/workflows/deploy_stage.yml
+#     if: ${{ needs.find-changed-dirs.outputs.changed_directories != '' }}  # Without it, the strategy parser will fail if the changed_directories is empty.
+#     strategy:
+#       matrix: ${{fromJson(needs.find-changed-dirs.outputs.changed_directories)}}
+#     needs:
+#       - find-changed-dirs
+#     with:
+#       config-path: ${{ matrix.dir }}
+#     secrets:
+#       envPAT: ${{ matrix.dir }}
+
+#   deploy:
+#     name: Deploy to Stage
+#     runs-on: ${{ matrix.os }}
+#     strategy:
+#       max-parallel: 1
+#       matrix:
+#         node-version: ['16']
+#         os: [ubuntu-latest]
+#     steps:
+#       - name: Checkout
+#         uses: actions/checkout@v2
+#       - name: Use Node.js ${{ matrix.node-version }}
+#         uses: actions/setup-node@v1
+#         with:
+#           node-version: ${{ matrix.node-version }}
+#       - name: npm install
+#         run: npm i
+#       - name: Setup CLI
+#         uses: adobe/aio-cli-setup-action@1.1.0
+#         with:
+#           os: ${{ matrix.os }}
+#           version: 9.x.x
+#       - name: Auth
+#         uses: adobe/aio-apps-action@2.0.2
+#         with:
+#           os: ${{ matrix.os }}
+#           command: auth
+#           CLIENTID: ${{ secrets.CLIENTID_STAGE }}
+#           CLIENTSECRET: ${{ secrets.CLIENTSECRET_STAGE }}
+#           TECHNICALACCOUNTID: ${{ secrets.TECHNICALACCID_STAGE }}
+#           IMSORGID: ${{ secrets.IMSORGID_STAGE }}
+#           SCOPES: ${{ secrets.SCOPES_STAGE }}
+#           KEY: ${{ secrets.KEY_STAGE }}
+#       - name: Build
+#         env:
+#           AIO_RUNTIME_NAMESPACE: ${{ secrets.AIO_RUNTIME_NAMESPACE_STAGE }}
+#         uses: adobe/aio-apps-action@2.0.2
+#         with:
+#           os: ${{ matrix.os }}
+#           command: build
+#       - name: Deploy
+#         env:
+#           AIO_RUNTIME_NAMESPACE: ${{ secrets.AIO_RUNTIME_NAMESPACE_STAGE }}
+#           AIO_RUNTIME_AUTH: ${{ secrets.AIO_RUNTIME_AUTH_STAGE }}
+#           AIO_PROJECT_ID: ${{ secrets.AIO_PROJECT_ID_STAGE }}
+#           AIO_PROJECT_NAME: ${{ secrets.AIO_PROJECT_NAME_STAGE }}
+#           AIO_PROJECT_ORG_ID: ${{ secrets.AIO_PROJECT_ORG_ID_STAGE }}
+#           AIO_PROJECT_WORKSPACE_ID: ${{ secrets.AIO_PROJECT_WORKSPACE_ID_STAGE }}
+#           AIO_PROJECT_WORKSPACE_NAME: ${{ secrets.AIO_PROJECT_WORKSPACE_NAME_STAGE }}
+#           AIO_PROJECT_WORKSPACE_DETAILS_SERVICES: ${{ secrets.AIO_PROJECT_WORKSPACE_DETAILS_SERVICES_STAGE }}
+#         uses: adobe/aio-apps-action@2.0.2
+#         with:
+#           os: ${{ matrix.os }}
+#           command: deploy
+#           noPublish: true
     

@@ -1,0 +1,22 @@
+# name: Deploy steps for "cf-console-action-bar-button-sample"
+
+# on:
+#   workflow_call:
+#     inputs:
+#       config-path:
+#         required: true
+#         type: string
+#     secrets:
+#       envPAT:
+#         required: false
+
+# jobs:
+#     install-deps:
+#       runs-on: ubuntu-latest
+#       steps:
+#         - uses: actions/checkout@v3
+#         - name: "Install dependencies"
+#           working-directory: ${{ inputs.config-path }}
+#           run: |
+#             echo "Installing dependencies in ${{ inputs.config-path }}, with PAT ${{ secrets.envPAT }}"
+#             npm install
