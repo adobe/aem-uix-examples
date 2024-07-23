@@ -36,10 +36,10 @@ jobs:
           CLIENTID: ${{ secrets.CLIENTID_STAGE }}
           CLIENTSECRET: ${{ secrets.CLIENTSECRET_STAGE }}
           TECHNICALACCOUNTID: ${{ secrets.TECHNICALACCID_STAGE }}
-          TECHNICALACCOUNTEMAIL: 8964014a-9452-4a1a-ba62-b069f8c9e7ab@techacct.adobe.com
+          TECHNICALACCOUNTEMAIL: "8964014a-9452-4a1a-ba62-b069f8c9e7ab@techacct.adobe.com"
           IMSORGID: ${{ secrets.IMSORGID_STAGE }}
           SCOPES: ${{ secrets.SCOPES_STAGE }}
-          KEY: e7f79226b6a148a1828a057e5e3fcf15
+          KEY: "e7f79226b6a148a1828a057e5e3fcf15"
       - name: Build
         env:
           AIO_RUNTIME_NAMESPACE: ${{ secrets.AIO_RUNTIME_NAMESPACE_STAGE }}
