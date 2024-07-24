@@ -37,7 +37,7 @@ jobs:
           CLIENTID: ${{ secrets.CLIENTID_STAGE }}
           CLIENTSECRET: ${{ secrets.CLIENTSECRET_STAGE }}
           TECHNICALACCOUNTID: ${{ secrets.TECHNICALACCID_STAGE }}
-          TECHNICALACCOUNTEMAIL: ${{ secrets.TECHNICALACCEMAIL_STAGE }}
+          TECHNICALACCOUNTEMAIL: ${{ secrets.TECHNICALACCOUNTEMAIL_STAGE }}
           IMSORGID: ${{ secrets.IMSORGID_STAGE }}
           SCOPES: ${{ secrets.SCOPES_STAGE }}
       - name: Build
