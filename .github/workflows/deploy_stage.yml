@@ -52,6 +52,8 @@ jobs:
       #     os: ${{ matrix.os }}
       #     command: build
       - name: deploy
+        env:
+          AIO_RUNTIME_NAMESPACE: ${{ secrets.AIO_RUNTIME_NAMESPACE_STAGE }}
         run: aio app deploy
         working-directory: ./cf-console-action-bar-button-sample
       # - name: Deploy
