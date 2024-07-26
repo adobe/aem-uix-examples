@@ -24,6 +24,9 @@ jobs:
       - name: npm install
         run: npm i
         working-directory: ./cf-console-action-bar-button-sample
+      - name: aio install
+        run: npm install -g @adobe/aio-cli
+        working-directory: ./cf-console-action-bar-button-sample
       - name: Setup CLI
         uses: adobe/aio-cli-setup-action@1.3.0
         with:
@@ -40,27 +43,29 @@ jobs:
           TECHNICALACCOUNTEMAIL: ${{ secrets.TECHNICALACCOUNTEMAIL_STAGE }}
           IMSORGID: ${{ secrets.IMSORGID_STAGE }}
           SCOPES: ${{ secrets.SCOPES_STAGE }}
-      - name: Build
-        env:
-          AIO_RUNTIME_NAMESPACE: ${{ secrets.AIO_RUNTIME_NAMESPACE_STAGE }}
-        uses: adobe/aio-apps-action@3.3.0
-        with:
-          working-directory: ./cf-console-action-bar-button-sample
-          os: ${{ matrix.os }}
-          command: build
-      - name: Deploy
-        env:
-          AIO_RUNTIME_NAMESPACE: ${{ secrets.AIO_RUNTIME_NAMESPACE_STAGE }}
-          AIO_RUNTIME_AUTH: ${{ secrets.AIO_RUNTIME_AUTH_STAGE }}
-          AIO_PROJECT_ID: ${{ secrets.AIO_PROJECT_ID_STAGE }}
-          AIO_PROJECT_NAME: ${{ secrets.AIO_PROJECT_NAME_STAGE }}
-          AIO_PROJECT_ORG_ID: ${{ secrets.AIO_PROJECT_ORG_ID_STAGE }}
-          AIO_PROJECT_WORKSPACE_ID: ${{ secrets.AIO_PROJECT_WORKSPACE_ID_STAGE }}
-          AIO_PROJECT_WORKSPACE_NAME: ${{ secrets.AIO_PROJECT_WORKSPACE_NAME_STAGE }}
-          AIO_PROJECT_WORKSPACE_DETAILS_SERVICES: ${{ secrets.AIO_PROJECT_WORKSPACE_DETAILS_SERVICES_STAGE }}
-        uses: adobe/aio-apps-action@3.3.0
-        with:
-          working-directory: ./cf-console-action-bar-button-sample
-          os: ${{ matrix.os }}
-          command: deploy
-          noPublish: true
+      # - name: Build
+      #   env:
+      #     AIO_RUNTIME_NAMESPACE: ${{ secrets.AIO_RUNTIME_NAMESPACE_STAGE }}
+      #   uses: adobe/aio-apps-action@3.3.0
+      #   with:
+      #     working-directory: ./cf-console-action-bar-button-sample #not merged
+      #     os: ${{ matrix.os }}
+      #     command: build
+      - name: deploy
+        run: aio app deploy
+      # - name: Deploy
+      #   env:
+      #     AIO_RUNTIME_NAMESPACE: ${{ secrets.AIO_RUNTIME_NAMESPACE_STAGE }}
+      #     AIO_RUNTIME_AUTH: ${{ secrets.AIO_RUNTIME_AUTH_STAGE }}
+      #     AIO_PROJECT_ID: ${{ secrets.AIO_PROJECT_ID_STAGE }}
+      #     AIO_PROJECT_NAME: ${{ secrets.AIO_PROJECT_NAME_STAGE }}
+      #     AIO_PROJECT_ORG_ID: ${{ secrets.AIO_PROJECT_ORG_ID_STAGE }}
+      #     AIO_PROJECT_WORKSPACE_ID: ${{ secrets.AIO_PROJECT_WORKSPACE_ID_STAGE }}
+      #     AIO_PROJECT_WORKSPACE_NAME: ${{ secrets.AIO_PROJECT_WORKSPACE_NAME_STAGE }}
+      #     AIO_PROJECT_WORKSPACE_DETAILS_SERVICES: ${{ secrets.AIO_PROJECT_WORKSPACE_DETAILS_SERVICES_STAGE }}
+      #   uses: adobe/aio-apps-action@3.3.0
+      #   with:
+      #     working-directory: ./cf-console-action-bar-button-sample
+      #     os: ${{ matrix.os }}
+      #     command: deploy
+      #     noPublish: true
