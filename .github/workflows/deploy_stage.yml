@@ -53,6 +53,7 @@ jobs:
       #     command: build
       - name: deploy
         run: aio app deploy
+        working-directory: ./cf-console-action-bar-button-sample
       # - name: Deploy
       #   env:
       #     AIO_RUNTIME_NAMESPACE: ${{ secrets.AIO_RUNTIME_NAMESPACE_STAGE }}
