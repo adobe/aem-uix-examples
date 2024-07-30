@@ -1,0 +1,50 @@
+application:
+  actions: src/actions
+  web: src/web-src
+  runtimeManifest:
+    packages:
+      content-fragment-workflows:
+        license: Apache-2.0
+        actions:
+          get-workflows:
+            function: src/actions/get-workflows/index.js
+            web: 'yes'
+            runtime: nodejs:16
+            inputs:
+              LOG_LEVEL: debug
+            annotations:
+              require-adobe-auth: false
+              final: true
+          get-content-fragments:
+            function: src/actions/get-content-fragments/index.js
+            web: 'yes'
+            runtime: nodejs:16
+            inputs:
+              LOG_LEVEL: debug
+            annotations:
+              require-adobe-auth: false
+              final: true
+          start-workflow:
+            function: src/actions/start-workflow/index.js
+            web: 'yes'
+            runtime: nodejs:16
+            inputs:
+              LOG_LEVEL: debug
+            annotations:
+              require-adobe-auth: false
+              final: true
+extensions:
+  aem/cf-console-admin/1:
+    operations:
+      view:
+        - type: web
+          impl: index.html#/cf-admin-console
+    web: src/web-src
+  aem/cf-editor/1:
+    operations:
+      view:
+        - type: web
+          impl: index.html#/cf-editor
+    web: src/web-src
+
+
