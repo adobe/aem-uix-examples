@@ -134,7 +134,7 @@ export default function () {
           <ActionButton onPress={showModal} aria-label="Select Products">
             <Box />
           </ActionButton>
-          <Tooltip>Select asset</Tooltip>
+          <Tooltip>Select product</Tooltip>
         </TooltipTrigger>
         <ListView
           items={selections}

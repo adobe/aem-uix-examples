@@ -8,7 +8,7 @@ const defaultConfig = {
   "commerce-endpoint": "",
   "commerce-root-category-id": "2",
   "selectionMode": "multiple",
-  "component-type": "product_picker",
+  "dataType": "text",
 };
 
 export default function (guestConnection, setError) {
@@ -16,8 +16,8 @@ export default function (guestConnection, setError) {
   const envConfig = process.env.CATALOG_SERVICE_CONFIG ? JSON.parse(process.env.CATALOG_SERVICE_CONFIG) : {};
 
   const validateConfig = (config) => {
-    if (!config["component-type"]) {
-      setError('Config initialization error: "component-type" is not configured');
+    if (!config["dataType"]) {
+      setError('Config initialization error: "dataType" is not configured');
     }
     if (!config["commerce-endpoint"]) {
       setError('Config initialization error: "commerce-endpoint" is not configured');
@@ -27,10 +27,13 @@ export default function (guestConnection, setError) {
   useEffect(() => {
     const connectionConfig = guestConnection?.configuration || {};
     const config = {...defaultConfig, ...envConfig, ...connectionConfig};
+    console.log(defaultConfig, envConfig, connectionConfig);
+
     validateConfig(config);
 
     setConfig(config);
   }, [guestConnection]);
 
+  console.log("==================== CONFIG", config);
   return config;
 }

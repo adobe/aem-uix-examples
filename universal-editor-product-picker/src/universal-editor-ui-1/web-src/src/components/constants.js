@@ -1,4 +1,4 @@
 module.exports = {
-  extensionId: 'com.adobe.product-picker',
+  extensionId: 'uixproductpicker',
   localStorageKeySelectedProducts: 'uix-product-picker-selected-products',
 };

@@ -11,15 +11,15 @@ function ExtensionRegistration() {
   const init = async () => {
     const guestConnection = await register({
       id: extensionId,
+      debug: true,
       methods: {
         canvas: {
           getRenderers() {
             const config = useConfig(guestConnection, () => {});
-
             return [
               {
-                extension: 'uix-product-picker',
-                dataType: config['component-type'],
+                extension: 'uixproductpicker',
+                dataType: "text",
                 url: '/index.html#/product-field',
                 icon: 'OpenIn',
               },
@@ -28,6 +28,8 @@ function ExtensionRegistration() {
         },
       },
     });
+
+    console.log("registered");
   };
   init().catch(console.error);
 
