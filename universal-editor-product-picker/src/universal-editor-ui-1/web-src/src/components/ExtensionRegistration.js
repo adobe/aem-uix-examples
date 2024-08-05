@@ -5,18 +5,21 @@
 import { Text } from "@adobe/react-spectrum";
 import { register } from "@adobe/uix-guest";
 import { extensionId } from "./Constants";
+import useConfig from "./useConfig";
 
 function ExtensionRegistration() {
   const init = async () => {
-    await register({
+    const guestConnection = await register({
       id: extensionId,
       methods: {
         canvas: {
           getRenderers() {
+            const config = useConfig(guestConnection, () => {});
+
             return [
               {
                 extension: 'uix-product-picker',
-                dataType: 'text',
+                dataType: config['component-type'],
                 url: '/index.html#/product-field',
                 icon: 'OpenIn',
               },
