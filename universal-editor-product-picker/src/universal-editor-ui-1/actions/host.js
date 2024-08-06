@@ -4,24 +4,14 @@
 
 const fetch = require('node-fetch');
 
-async function getConfig(configFile) {
+async function makeGraphqlRequest(params) {
+  const apiEndpoint = `${params["commerce-endpoint"]}?`
+    + new URLSearchParams({ 'query': params.query, variables: params.variables });
   const fetchSettings = {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
-    },
-  };
-
-  const result = await makeRequest(configFile, fetchSettings);
-  return result;
-}
-
-async function makeGraphqlRequest(graphqlApi, params) {
-  const apiEndpoint = `${graphqlApi}?` + new URLSearchParams({ 'query': params.query, variables: params.variables });
-  const fetchSettings = {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
+      ...JSON.parse(params["commerce-http-headers"]),
     },
   };
 
@@ -33,7 +23,7 @@ async function makeRequest(apiEndpoint, fetchSettings) {
   const res = await fetch(apiEndpoint, fetchSettings);
 
   if (!res.ok) {
-    throw new Error(`request to ${apiEndpoint} failed with status code ${res.status} and when sent 
+    throw new Error(`request to ${apiEndpoint} failed with status code ${res.status} and when sent
       fetchSettings: ${JSON.stringify(fetchSettings, null, 2)}`);
   }
 
@@ -45,6 +35,5 @@ async function makeRequest(apiEndpoint, fetchSettings) {
 }
 
 module.exports = {
-  getConfig,
   makeGraphqlRequest,
 };

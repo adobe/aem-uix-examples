@@ -27,8 +27,8 @@ async function main (params) {
     logger.debug(stringParameters(params));
 
     // check for missing request input parameters and headers
-    const requiredParams = ['query'];
-    const requiredHeaders = ['graphqlapi'];
+    const requiredParams = ['commerce-endpoint', 'query'];
+    const requiredHeaders = [];
     const errorMessage = checkMissingRequestInputs(
       params,
       requiredParams,
@@ -39,8 +39,7 @@ async function main (params) {
       return errorResponse(400, errorMessage, logger);
     }
 
-    const graphqlApi = params.__ow_headers.graphqlapi;
-    const result = await makeGraphqlRequest(graphqlApi, params);
+    const result = await makeGraphqlRequest(params);
 
     const response = {
       statusCode: 200,

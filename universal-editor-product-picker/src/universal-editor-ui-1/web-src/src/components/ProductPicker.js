@@ -43,7 +43,7 @@ export default (props) => {
     (async () => {
       let categories = {};
       try {
-        categories = await getCategories(config['commerce-endpoint'], config['commerce-root-category-id']);
+        categories = await getCategories(config);
       } catch (err) {
         setState(state => ({
           ...state,
@@ -106,11 +106,7 @@ export default (props) => {
       let products = {};
       let pageInfo = {};
       try {
-        [products, pageInfo] = await getProducts(
-          config['commerce-endpoint'], 
-          state.currentCategory, 1, 
-          state.searchText
-        );
+        [products, pageInfo] = await getProducts(config, state.currentCategory, 1, state.searchText);
       } catch (err) {
         setState(state => ({
           ...state,
@@ -135,15 +131,6 @@ export default (props) => {
     })();
   }, [state.categories, state.currentCategory, state.searchText]);
 
-  // @TODO
-  // selected products
-  // useEffect(() => {
-  //   setState(state => ({
-  //     ...state,
-  //     selectedProducts: selectedProducts || [],
-  //   }));
-  // }, [selectedProducts]);
-
   // only for products, categories are always displayed as a complete list
   const onLoadMore = async () => {
     if (state.pageInfo.current_page >= state.pageInfo.total_pages || state.loadingState === 'loadingMore') {
@@ -156,9 +143,9 @@ export default (props) => {
     }));
 
     const [products, pageInfo] = await getProducts(
-      config['commerce-endpoint'],
-      state.currentCategory, 
-      state.pageInfo.current_page + 1, 
+      config,
+      state.currentCategory,
+      state.pageInfo.current_page + 1,
       state.searchText
     );
     Object.values(products).forEach(i => {
