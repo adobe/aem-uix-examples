@@ -2,8 +2,6 @@
  * <license header>
  */
 
-import React, { useState, useEffect } from "react";
-
 const defaultConfig = {
   "commerce-endpoint": "",
   "commerce-root-category-id": "2",
@@ -12,10 +10,8 @@ const defaultConfig = {
   "selectionMode": "multiple",
 };
 
-export default function (guestConnection, setError) {
-  // by default should be undefined, @see a rendering condition in ProductPickerModal "{guestConnection && config ? ("
-  const [config, setConfig] = useState();
-
+// @todo: we can put commerceConfig in local storage for exchanging between different iframes.
+export default async function (guestConnection, setError) {
   const validateConfig = (config) => {
     if (!config["commerce-endpoint"] && !config["commerce-configs"]) {
       setError('Configuration initialization error: "commerce-endpoint" or "commerce-configs" is not configured.');
@@ -70,31 +66,20 @@ export default function (guestConnection, setError) {
     }
   }
 
-  useEffect(() => {
-    const mergeConfigs = async () => {
-      const connectionConfig = guestConnection?.configuration || {};
+  const connectionConfig = guestConnection?.configuration || {};
 
-      let config = { ...defaultConfig, ...envConfig, ...connectionConfig };
-      validateConfig(config);
+  let config = { ...defaultConfig, ...envConfig, ...connectionConfig };
 
-      if (config["commerce-configs"]) {
-        try {
-          const commerceConfig = await loadRemoteCommerceConfig(
-            config["commerce-configs"],
-            config["commerce-env"]
-          );
-          config = { ...config, ...commerceConfig };
-        } catch (err) {
-          setError('Configuration error: Unable to load configs from the Commerce instance.\n.');
-        }
-      }
+  if (config["commerce-configs"]) {
+    try {
+      const commerceConfig = await loadRemoteCommerceConfig(config["commerce-configs"], config["commerce-env"]);
+      config = { ...config, ...commerceConfig };
+    } catch (err) {
+      setError('Configuration error: Unable to load configs from the Commerce instance.\n.');
+    }
+  }
 
-      setConfig(config);
-    };
+  validateConfig(config);
 
-    mergeConfigs().catch(console.error);
-  }, [guestConnection]);
-
-  console.log(config);
   return config;
 }

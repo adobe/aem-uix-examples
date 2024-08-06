@@ -13,7 +13,7 @@ function ExtensionRegistration() {
       methods: {
         canvas: {
           getRenderers() {
-            const dataType = guestConnection.configuration?.dataType || "product_picker";
+            const dataType = guestConnection.configuration?.["component-type"] || "product_picker";
 
             return [
               {

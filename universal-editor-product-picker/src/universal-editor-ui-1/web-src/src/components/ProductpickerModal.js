@@ -16,7 +16,8 @@ export default function () {
   const [guestConnection, setGuestConnection] = useState();
   const [selectedProducts, setSelectedProducts] = useState([]);
   const [error, setError] = useState(null);
-  const config = useConfig(guestConnection, setError);
+  // by default should be null, @see a rendering condition "{guestConnection && config ? ("
+  const [config, setConfig] = useState(null);
 
   useEffect(() => {
     (async () => {
@@ -24,6 +25,9 @@ export default function () {
         id: extensionId,
       });
       setGuestConnection(connection);
+
+      const config = await useConfig(connection, setError);
+      setConfig(config);
     })().catch((e) => {
       console.log("Extension got the error during initialization:", e);
       setError("Extension got the error during initialization");
