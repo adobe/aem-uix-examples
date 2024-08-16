@@ -18,14 +18,6 @@ import Folder from '@spectrum-icons/illustrations/Folder';
 import ImageIcon from "@spectrum-icons/workflow/Image";
 import NotFound from "@spectrum-icons/illustrations/NotFound";
 
-// @TODO
-// const renderEmptyState = () => (
-//   <IllustratedMessage>
-//     <NotFound />
-//     <Heading>No items found</Heading>
-//   </IllustratedMessage>
-// );
-
 const CatalogView = props => {
   const {
     config,
