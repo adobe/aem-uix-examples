@@ -185,7 +185,7 @@ export default (props) => {
     } else {
       let selectedProductsSet;
 
-      if (config['selectionMode'] === 'multiple') {
+      if (config['selection-mode'] === 'multiple') {
         selectedProductsSet = new Set(state.selectedProducts);
         if (selectedProductsSet.has(key)) {
           selectedProductsSet.delete(key);

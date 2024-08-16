@@ -7,7 +7,7 @@ const defaultConfig = {
   "commerce-root-category-id": "2",
   "commerce-configs": "",
   "commerce-env": "prod",
-  "selectionMode": "multiple",
+  "selection-mode": "multiple",
 };
 
 // @todo: we can put commerceConfig in local storage for exchanging between different iframes.
