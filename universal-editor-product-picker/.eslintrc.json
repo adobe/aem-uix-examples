@@ -1,0 +1,22 @@
+{
+    "parser": "@babel/eslint-parser",
+    "plugins": ["react"],
+    "rules": {
+        "semi": ["error", "always"],
+        "comma-dangle": [
+            "error",
+            {
+                "arrays": "always-multiline",
+                "objects": "always-multiline",
+                "imports": "always-multiline",
+                "exports": "always-multiline",
+                "functions": "never"
+            }
+        ],
+        "jest/expect-expect": "off",
+        "jsdoc/require-param-type": "off",
+        "jsdoc/require-param-description": "off",
+        "jsdoc/require-returns": "off",
+        "indent": ["error", 2]
+    }
+}
