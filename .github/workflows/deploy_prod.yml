@@ -44,21 +44,21 @@ jobs:
           NEW_V: ${ORIGINAL_STRING//-/_}
         run: |
           NEW_STRING=${ORIGINAL_STRING//-/_}
-          # echo "New string >>: $NEW_STRING"
-          # UPPER_CASE_STRING=$(echo "$NEW_STRING" | tr '[:lower:]' '[:upper:]')
-          # echo "upper case dir name: $UPPER_CASE_STRING ${{ secrets.CF_CONSOLE_ACTION_BAR_BUTTON_SAMPLE }}"
+          echo "New string >>: $NEW_STRING"
+          UPPER_CASE_STRING=$(echo "$NEW_STRING" | tr '[:lower:]' '[:upper:]')
+          echo "upper case dir name: $UPPER_CASE_STRING ${{ secrets.CF_CONSOLE_ACTION_BAR_BUTTON_SAMPLE }}"
           echo "GITHUB_SHA_SHORT=$(echo "$NEW_STRING")" >> $GITHUB_ENV
-          # echo "Secret value: $NEW_V , ${{ secrets[format('{0}', '$UPPER_CASE_STRING')] }}"
+          echo "Secret value: $NEW_V , ${{ secrets[format('{0}', '$UPPER_CASE_STRING')] }}"
       - name: Test
         run: echo ${{ env.GITHUB_SHA_SHORT }}
       - name: Test1
         run: |
           echo "Secret env value: ${{ secrets[format('{0}', env.GITHUB_SHA_SHORT)] }}"
-      # - name: create env file
-      #   run: |
-      #       touch .env
-      #       echo "${{ secrets[format('{0}', env.GITHUB_SHA_SHORT)] }}"" >> .env
-      #       cat .env
+      - name: create env file
+        run: |
+            touch .env
+            echo "${{ secrets[format('{0}', env.GITHUB_SHA_SHORT)] }}"" >> .env
+            cat .env
       - run: |
           if [ -f package.json ]; then
             echo "Installing dependencies in ${{ matrix.dir }}"
