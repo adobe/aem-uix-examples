@@ -65,7 +65,7 @@ jobs:
             npm install
           else
             echo "No package.json found in ${{ matrix.dir }}"
-            return
+            exit 0 # exit gracefully with success
           fi
       - name: Setup AIO CLI
         run: npm install -g @adobe/aio-cli
