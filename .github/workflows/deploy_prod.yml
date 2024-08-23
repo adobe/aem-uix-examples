@@ -42,7 +42,7 @@ jobs:
           ORIGINAL_STRING: ${{ matrix.dir }}
         run: |
           NEW_STRING=${ORIGINAL_STRING//-/_}
-          echo "New string: $NEW_STRING"
+          echo "New string >>: $NEW_STRING"
           SECRET_VALUE=$(secrets["CF_CONSOLE_ACTION_BAR_BUTTON_SAMPLE"])
           echo "Secret value: $SECRET_VALUE"
       - run: |
