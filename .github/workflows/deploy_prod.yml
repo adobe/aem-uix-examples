@@ -37,7 +37,6 @@ jobs:
       - find-changed-dirs
     steps:
       - uses: actions/checkout@v3
-      steps:
       - name: Replace dash with underscore in matrix variable
         env:
           ORIGINAL_STRING: ${{ matrix.os }}-${{ matrix.node }}
