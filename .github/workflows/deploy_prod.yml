@@ -29,7 +29,7 @@ jobs:
         run: echo "changed_directories={\"dir\":${{ steps.changed-files.outputs.all_changed_files }}}" >> "$GITHUB_OUTPUT"
 
   install-deps:
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.os }}
     if: ${{ needs.find-changed-dirs.outputs.changed_directories != '' }}  # Without it, the strategy parser will fail if the changed_directories is empty.
     strategy:
       matrix: ${{fromJson(needs.find-changed-dirs.outputs.changed_directories)}}
@@ -37,6 +37,10 @@ jobs:
         - find-changed-dirs
     steps:
       - uses: actions/checkout@v3
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
       - name: Replace dash with underscore in matrix variable
         env:
           ORIGINAL_STRING: ${{ matrix.dir }}
