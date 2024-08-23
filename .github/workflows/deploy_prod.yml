@@ -43,6 +43,7 @@ jobs:
         run: |
           NEW_STRING=${ORIGINAL_STRING//-/_}
           echo "New string: $NEW_STRING"
+          echo "secret val: ${{ secrets.$NEW_STRING }}"
       - run: |
           if [ -f package.json ]; then
             echo "Installing dependencies in ${{ matrix.dir }}"
