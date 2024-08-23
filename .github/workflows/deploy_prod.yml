@@ -40,11 +40,12 @@ jobs:
       - name: Replace dash with underscore in matrix variable
         env:
           ORIGINAL_STRING: ${{ matrix.dir }}
+          SECRET_V: ${{ secrets.CF_CONSOLE_ACTION_BAR_BUTTON_SAMPLE }}
         run: |
           NEW_STRING=${ORIGINAL_STRING//-/_}
           echo "New string >>: $NEW_STRING"
-          SECRET_VALUE=$(secrets["CF_CONSOLE_ACTION_BAR_BUTTON_SAMPLE"])
-          echo "Secret value: $SECRET_VALUE"
+          
+          echo "Secret value: $SECRET_V"
       - run: |
           if [ -f package.json ]; then
             echo "Installing dependencies in ${{ matrix.dir }}"
