@@ -53,7 +53,12 @@ jobs:
         run: echo ${{ env.GITHUB_SHA_SHORT }}
       - name: Test1
         run: |
-          echo "Secret value 3: ${{ secrets[format('{0}', env.GITHUB_SHA_SHORT)] }}"
+          echo "Secret env value: ${{ secrets[format('{0}', env.GITHUB_SHA_SHORT)] }}"
+      - name: create env file
+        run: |
+            touch .env
+            echo "${{ secrets[format('{0}', env.GITHUB_SHA_SHORT)] }}"" >> .env
+            cat .env
       - run: |
           if [ -f package.json ]; then
             echo "Installing dependencies in ${{ matrix.dir }}"
