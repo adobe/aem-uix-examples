@@ -39,7 +39,7 @@ jobs:
       - uses: actions/checkout@v3
       - name: Replace dash with underscore in matrix variable
         env:
-          ORIGINAL_STRING: "test-my-str"
+          ORIGINAL_STRING: ${{ matrix.dir }}
         run: |
           NEW_STRING=${ORIGINAL_STRING//-/_}
           echo "New string: $NEW_STRING"
