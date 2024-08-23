@@ -73,6 +73,7 @@ jobs:
             exit 0
           fi
       - name: Setup AIO CLI
+        working-directory: ${{ matrix.dir }}
         run: npm install -g @adobe/aio-cli
       - name: deploy to prod
         working-directory: ${{ matrix.dir }}
