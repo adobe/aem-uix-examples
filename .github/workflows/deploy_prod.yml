@@ -63,6 +63,9 @@ jobs:
           if [ -f package.json ]; then
             echo "Installing dependencies in ${{ matrix.dir }}"
             npm install
+          else
+            echo "No package.json found in ${{ matrix.dir }}"
+            return
           fi
       - name: Setup AIO CLI
         run: npm install -g @adobe/aio-cli
