@@ -41,12 +41,13 @@ jobs:
         env:
           ORIGINAL_STRING: ${{ matrix.dir }}
           SECRET_V: ${{ secrets.CF_CONSOLE_ACTION_BAR_BUTTON_SAMPLE }}
+          NEW_V: ${ORIGINAL_STRING//-/_}
         run: |
           NEW_STRING=${ORIGINAL_STRING//-/_}
           echo "New string >>: $NEW_STRING"
           UPPER_CASE_STRING=$(echo "$NEW_STRING" | tr '[:lower:]' '[:upper:]')
           echo "upper case dir name: $UPPER_CASE_STRING ${{ secrets.CF_CONSOLE_ACTION_BAR_BUTTON_SAMPLE }}"
-          echo "Secret value: ${{ secrets[format('{0}', '$UPPER_CASE_STRING')] }}"
+          echo "Secret value: $NEW_V , ${{ secrets[format('{0}', '$UPPER_CASE_STRING')] }}"
       - run: |
           if [ -f package.json ]; then
             echo "Installing dependencies in ${{ matrix.dir }}"
