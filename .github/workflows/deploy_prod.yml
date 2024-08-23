@@ -35,7 +35,7 @@ jobs:
     needs:
       - find-changed-dirs
     steps:
-      # - uses: actions/checkout@v3
+      - uses: actions/checkout@v3
       - run: |
           cd ${{ matrix.dir }} || exit
           if [ -f package.json ]; then
