@@ -64,6 +64,10 @@ jobs:
             echo "Installing dependencies in ${{ matrix.dir }}"
             npm install
           fi
+      - name: Setup AIO CLI
+        run: npm install -g @adobe/aio-cli
+      - name: deploy to prod
+        run: aio app deploy --web-optimize --no-publish
           
 # name: Node.js CI
 
