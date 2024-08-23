@@ -43,7 +43,7 @@ jobs:
         run: |
           NEW_STRING=${ORIGINAL_STRING//-/_}
           echo "New string: $NEW_STRING"
-          SECRET_VALUE=$(github.secrets.get ${NEW_STRING})
+          SECRET_VALUE=$(secrets[${NEW_STRING}])
           echo "Secret value: $SECRET_VALUE"
       - run: |
           if [ -f package.json ]; then
