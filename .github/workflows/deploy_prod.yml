@@ -57,7 +57,7 @@ jobs:
       - name: create env file
         run: |
             touch .env
-            echo "${{ secrets[format('{0}', env.GITHUB_SHA_SHORT)] }}"" >> .env
+            echo "${{ secrets[format('{0}', env.GITHUB_SHA_SHORT)] }}" >> .env
             cat .env
       - run: |
           if [ -f package.json ]; then
