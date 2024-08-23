@@ -1,47 +1,47 @@
-# name: Node.js CI
+name: Node.js CI
 
-# on:
-#   push:
-#     branches: [ main ]
+on:
+  push:
+    branches: [ main ]
 
-# jobs:
-#   find-changed-dirs:
-#     runs-on: ubuntu-latest
-#     outputs:
-#       changed_directories: ${{ steps.set-output.outputs.changed_directories }}  # The `dirs` doesn't exist in the outputs of changed-files@v35 action.
-#     steps:
-#       - uses: actions/checkout@v3
-#         with:
-#           fetch-depth: 0
+jobs:
+  find-changed-dirs:
+    runs-on: ubuntu-latest
+    outputs:
+      changed_directories: ${{ steps.set-output.outputs.changed_directories }}  # The `dirs` doesn't exist in the outputs of changed-files@v35 action.
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
 
-#       - name: Get changed files
-#         id: changed-files
-#         uses: tj-actions/changed-files@v35
-#         with:
-#           dir_names: true
-#           dir_names_max_depth: 2  # This is optional. If not provided, full subdirectories' paths will be provided. Use it if you need to trim the output. See docs for details: https://github.com/tj-actions/changed-files/tree/main#inputs.
-#           json: true
-#           quotepath: false
+      - name: Get changed files
+        id: changed-files
+        uses: tj-actions/changed-files@v35
+        with:
+          dir_names: true
+          dir_names_max_depth: 2  # This is optional. If not provided, full subdirectories' paths will be provided. Use it if you need to trim the output. See docs for details: https://github.com/tj-actions/changed-files/tree/main#inputs.
+          json: true
+          quotepath: false
 
-#       - name: 'Set output in the matrix format'
-#         id: set-output
-#         run: echo "changed_directories={\"dir\":${{ steps.changed-files.outputs.all_changed_files }}}" >> "$GITHUB_OUTPUT"
+      - name: 'Set output in the matrix format'
+        id: set-output
+        run: echo "changed_directories={\"dir\":${{ steps.changed-files.outputs.all_changed_files }}}" >> "$GITHUB_OUTPUT"
 
-#   install-deps:
-#     runs-on: ubuntu-latest
-#     if: ${{ needs.find-changed-dirs.outputs.changed_directories != '' }}  # Without it, the strategy parser will fail if the changed_directories is empty.
-#     strategy:
-#       matrix: ${{fromJson(needs.find-changed-dirs.outputs.changed_directories)}}
-#     needs:
-#       - find-changed-dirs
-#     steps:
-#       - uses: actions/checkout@v3
-#       - run: |
-#           cd ${{ matrix.dir }} || exit
-#           if [ -f package.json ]; then
-#             echo "Installing dependencies in ${{ matrix.dir }}"
-#             npm install
-#           fi
+  install-deps:
+    runs-on: ubuntu-latest
+    if: ${{ needs.find-changed-dirs.outputs.changed_directories != '' }}  # Without it, the strategy parser will fail if the changed_directories is empty.
+    strategy:
+      matrix: ${{fromJson(needs.find-changed-dirs.outputs.changed_directories)}}
+    needs:
+      - find-changed-dirs
+    steps:
+      - uses: actions/checkout@v3
+      - run: |
+          cd ${{ matrix.dir }} || exit
+          if [ -f package.json ]; then
+            echo "Installing dependencies in ${{ matrix.dir }}"
+            npm install
+          fi
           
 # name: Node.js CI
 

@@ -1,0 +1,38 @@
+name: AIO App CI
+
+on:
+  pull_request:
+    types: [merged]
+    branches:
+      - main
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    name: Deploy to Prod
+    runs-on: ${{ matrix.os }}
+    strategy:
+      max-parallel: 1
+      matrix:
+        node-version: ['20']
+        os: [ubuntu-latest]
+    steps:
+      - name: crete env file
+        run: |
+          touch .env
+          echo "${{ secrets.CF_CONSOLE_ACTION_BAR_BUTTON_SAMPLE }}" >> .env
+          cat .env
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+      - name: npm install
+        run: npm i
+      - name: Setup CLI
+        run: npm install -g @adobe/aio-cli
+      - name: deploy
+        run: aio app deploy --web-optimize --no-publish
