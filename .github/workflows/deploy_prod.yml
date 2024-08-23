@@ -47,7 +47,7 @@ jobs:
           echo "New string >>: $NEW_STRING"
           UPPER_CASE_STRING=$(echo "$NEW_STRING" | tr '[:lower:]' '[:upper:]')
           echo "upper case dir name: $UPPER_CASE_STRING ${{ secrets.CF_CONSOLE_ACTION_BAR_BUTTON_SAMPLE }}"
-          echo "GITHUB_SHA_SHORT=$(echo "$NEW_STRING" | tr '[:lower:]' '[:upper:]')" >> $GITHUB_ENV
+          echo "GITHUB_SHA_SHORT=$(echo "$NEW_STRING")" >> $GITHUB_ENV
           echo "Secret value: $NEW_V , ${{ secrets[format('{0}', '$UPPER_CASE_STRING')] }}"
       - name: Test
         run: echo ${{ env.GITHUB_SHA_SHORT }}
