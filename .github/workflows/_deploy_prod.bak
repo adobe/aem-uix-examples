@@ -33,6 +33,6 @@ jobs:
       - name: npm install
         run: npm i
       - name: Setup CLI
-        run: npm install -g @adobe/aio-cli
+        run: sudo npm install -g @adobe/aio-cli
       - name: deploy
         run: aio app deploy --web-optimize --no-publish
