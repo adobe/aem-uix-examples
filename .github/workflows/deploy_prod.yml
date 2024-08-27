@@ -59,15 +59,13 @@ jobs:
       - name: create env file
         working-directory: ${{ matrix.dir }}
         run: |
-          echo "Current directory: $(pwd)"
-          echo "$(ls -la)"
+          # echo "Current directory: $(pwd)"
+          # echo "$(ls -la)"
           touch .env
           echo "${{ secrets[format('{0}', env.GITHUB_SHA_SHORT)] }}" >> .env
           cat .env
       - working-directory: ${{ matrix.dir }}
         run: |
-          echo "Current directory: $(pwd)"
-          echo "$(ls -la)"
           if [ -f package.json ]; then
             echo "Installing dependencies in ${{ matrix.dir }}"
             npm install
@@ -77,12 +75,12 @@ jobs:
       - name: Setup AIO CLI
         working-directory: ${{ matrix.dir }}
         run: |
-          echo "Current directory: $(pwd)"
-          echo "$(ls -la)"
+          # echo "Current directory: $(pwd)"
+          # echo "$(ls -la)"
           npm install -g @adobe/aio-cli
       - name: deploy to prod
         working-directory: ${{ matrix.dir }}
         run: |
-          echo "Current directory: $(pwd)"
-          echo "$(ls -la)"
+          # echo "Current directory: $(pwd)"
+          # echo "$(ls -la)"
           aio app deploy --web-optimize --no-publish
