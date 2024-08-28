@@ -25,8 +25,6 @@ async function getTranslations (params, logger) {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      'X-Adobe-Accept-Unsupported-API': '1',
-      'X-Adobe-Accept-Experimental': '1',
       Authorization: 'Bearer ' + params.authConfig.imsToken,
     },
     body: JSON.stringify({
@@ -42,7 +40,7 @@ async function getTranslations (params, logger) {
   const data = await response.json();
 
   const languageCopiesSet = new Set();
-  const result = Object.values(data.data)
+  const result = data.items
       .flatMap((item) => item.languageCopies)
       .filter((languageCopy) => !languageCopiesSet.has(languageCopy.path) && languageCopiesSet.add(languageCopy.path));
   return result;
