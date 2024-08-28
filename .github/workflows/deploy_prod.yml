@@ -44,9 +44,8 @@ jobs:
           ORIGINAL_STRING: ${{ matrix.dir }}
         run: |
           NEW_STRING=${ORIGINAL_STRING//-/_}
-          echo "New string >>: $NEW_STRING"
-          UPPER_CASE_STRING=$(echo "$NEW_STRING" | tr '[:lower:]' '[:upper:]')
           echo "EXTN_SECRET=$(echo "$NEW_STRING")" >> $GITHUB_ENV
+          echo "Secret env value: ${{ secrets[format('{0}', env.EXTN_SECRET)] }}"
       - name: Echo values
         run: |
           echo "Secret env value: ${{ secrets[format('{0}', env.EXTN_SECRET)] }}"
