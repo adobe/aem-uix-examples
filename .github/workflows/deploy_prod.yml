@@ -42,15 +42,10 @@ jobs:
       - name: Replace dash with underscore in matrix variable
         env:
           ORIGINAL_STRING: ${{ matrix.dir }}
-          SECRET_V: ${{ secrets.CF_CONSOLE_ACTION_BAR_BUTTON_SAMPLE }}
-          NEW_V: ${ORIGINAL_STRING//-/_}
         run: |
           NEW_STRING=${ORIGINAL_STRING//-/_}
-          echo "New string >>: $NEW_STRING"
           UPPER_CASE_STRING=$(echo "$NEW_STRING" | tr '[:lower:]' '[:upper:]')
-          echo "upper case dir name: $UPPER_CASE_STRING ${{ secrets.CF_CONSOLE_ACTION_BAR_BUTTON_SAMPLE }}"
-          echo "GITHUB_SHA_SHORT=$(echo "$NEW_STRING")" >> $GITHUB_ENV
-          echo "Secret value: $NEW_V , ${{ secrets[format('{0}', '$UPPER_CASE_STRING')] }}"
+          echo "New string >>: $NEW_STRING"
       - name: Test
         run: echo ${{ env.GITHUB_SHA_SHORT }}
       - name: Test1
@@ -60,7 +55,6 @@ jobs:
         working-directory: ${{ matrix.dir }}
         run: |
           # echo "Current directory: $(pwd)"
-          # echo "$(ls -la)"
           touch .env
           echo "${{ secrets[format('{0}', env.GITHUB_SHA_SHORT)] }}" >> .env
           cat .env
@@ -76,11 +70,9 @@ jobs:
         working-directory: ${{ matrix.dir }}
         run: |
           # echo "Current directory: $(pwd)"
-          # echo "$(ls -la)"
           npm install -g @adobe/aio-cli
       - name: deploy to prod
         working-directory: ${{ matrix.dir }}
         run: |
           # echo "Current directory: $(pwd)"
-          # echo "$(ls -la)"
           aio app deploy --web-optimize --no-publish
