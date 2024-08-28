@@ -44,19 +44,19 @@ jobs:
           ORIGINAL_STRING: ${{ matrix.dir }}
         run: |
           NEW_STRING=${ORIGINAL_STRING//-/_}
-          UPPER_CASE_STRING=$(echo "$NEW_STRING" | tr '[:lower:]' '[:upper:]')
           echo "New string >>: $NEW_STRING"
-      - name: Test
-        run: echo ${{ env.GITHUB_SHA_SHORT }}
-      - name: Test1
+          UPPER_CASE_STRING=$(echo "$NEW_STRING" | tr '[:lower:]' '[:upper:]')
+          echo "EXTN_SECRET=$(echo "$NEW_STRING")" >> $GITHUB_ENV
+      - name: Echo values
         run: |
-          echo "Secret env value: ${{ secrets[format('{0}', env.GITHUB_SHA_SHORT)] }}"
+          echo "Secret env value: ${{ secrets[format('{0}', env.EXTN_SECRET)] }}"
+          echo ${{ env.EXTN_SECRET }}
       - name: create env file
         working-directory: ${{ matrix.dir }}
         run: |
           # echo "Current directory: $(pwd)"
           touch .env
-          echo "${{ secrets[format('{0}', env.GITHUB_SHA_SHORT)] }}" >> .env
+          echo "${{ secrets[format('{0}', env.EXTN_SECRET)] }}" >> .env
           cat .env
       - working-directory: ${{ matrix.dir }}
         run: |
