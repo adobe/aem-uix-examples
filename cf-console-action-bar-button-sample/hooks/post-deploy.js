@@ -15,7 +15,7 @@ const yaml = require('js-yaml');
 
 module.exports = (config) => {
   try {
-    // read the app.config.yaml file to get the extension points test
+    // read the app.config.yaml file to get the extension points tests
     const yamlFile = fs.readFileSync(`${config.root}/app.config.yaml`, 'utf8');
     const yamlData = yaml.load(yamlFile);
     const { extensions } = yamlData;

@@ -22,7 +22,7 @@ governing permissions and limitations under the License.
  *
  */
 function stringParameters (params) {
-  // hide authorization token without overriding params
+  // hide authorization token without overriding paramss
   let headers = params.__ow_headers || {}
   if (headers.authorization) {
     headers = { ...headers, authorization: '<hidden>' }
