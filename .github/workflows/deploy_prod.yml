@@ -56,7 +56,6 @@ jobs:
           echo "EXTN_DIR_NAME_WITH_UNDERSCORE=$(echo "$EXTN_DIR_NAME_WITH_UNDERSCORE")" >> $GITHUB_ENV
       - name: Echo values
         run: |
-          echo "Secret env value: ${{ secrets[format('{0}', env.EXTN_DIR_NAME_WITH_UNDERSCORE)] }}"
           echo ${{ env.EXTN_DIR_NAME_WITH_UNDERSCORE }}
       - name: Create env file. This file will be used by aio command line to authenticate and deploy extension.
         working-directory: ${{ matrix.dir }}
@@ -64,7 +63,6 @@ jobs:
           # echo "Current directory: $(pwd)"
           touch .env
           echo "${{ secrets[format('{0}', env.EXTN_DIR_NAME_WITH_UNDERSCORE)] }}" >> .env
-          cat .env
       - working-directory: ${{ matrix.dir }}
         run: |
           if [ -f package.json ]; then
