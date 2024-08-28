@@ -39,22 +39,22 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: "20"
-      - name: Replace dash with underscore in matrix variable
+      - name: Replace dash with underscore in matrix variable i.e. extension directory name. This value will be the key of github secret that stores env variables for that particular extension.
         env:
-          ORIGINAL_STRING: ${{ matrix.dir }}
+          EXTN_DIR_NAME: ${{ matrix.dir }}
         run: |
-          NEW_STRING=${ORIGINAL_STRING//-/_}
-          echo "EXTN_SECRET=$(echo ${ORIGINAL_STRING//-/_})" >> $GITHUB_ENV
+          EXTN_DIR_NAME_WITH_UNDERSCORE=${EXTN_DIR_NAME//-/_}
+          echo "EXTN_DIR_NAME_WITH_UNDERSCORE=$(echo "$EXTN_DIR_NAME_WITH_UNDERSCORE")" >> $GITHUB_ENV
       - name: Echo values
         run: |
-          echo "Secret env value: ${{ secrets[format('{0}', env.EXTN_SECRET)] }}"
-          echo ${{ env.EXTN_SECRET }}
-      - name: create env file
+          echo "Secret env value: ${{ secrets[format('{0}', env.EXTN_DIR_NAME_WITH_UNDERSCORE)] }}"
+          echo ${{ env.EXTN_DIR_NAME_WITH_UNDERSCORE }}
+      - name: Create env file. This file will be used by aio command line to authenticate and deploy extension.
         working-directory: ${{ matrix.dir }}
         run: |
           # echo "Current directory: $(pwd)"
           touch .env
-          echo "${{ secrets[format('{0}', env.EXTN_SECRET)] }}" >> .env
+          echo "${{ secrets[format('{0}', env.EXTN_DIR_NAME_WITH_UNDERSCORE)] }}" >> .env
           cat .env
       - working-directory: ${{ matrix.dir }}
         run: |
