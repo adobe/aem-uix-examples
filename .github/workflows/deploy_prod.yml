@@ -1,14 +1,13 @@
 name: Node.js CI
 
 on:
-  pull_request:
-    types:
-      - closed
+ pull_request:
+    types: [merged]
     branches:
       - main
     paths-ignore:
       - '.github/**'
-  push:
+ push:
     branches:
       - main
     paths-ignore:
