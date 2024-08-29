@@ -32,6 +32,10 @@ Here is the list of examples:
 - [Slack Integration for Content Fragment management](./slack-content-fragment-admin/)
 - [Workfront Task Management for Universal Editor](./universal-editor-task-management/)
 
+## Deployment
+Each example has its own GitHub Actions deployment file that should be used as a starting point for individual extensions.
+
+The root-level GitHub deployment file `deploy_prod.yml` is intended as a custom, all-in-one approach for deploying examples with stored secrets. Each example that needs to be deployed at a workspace must have an associated secret. For example, `cf-console-action-bar-button-sample` must have a secret named `cf_console_action_bar_button_sample` (with hyphens replaced by underscores) and the contents of the `.env` file as its value. Deployment will be triggered on merging PRs and push events on the main branch. Deployment will be skipped if this secret is unavailable.
 
 ## Contributing
 
