@@ -1,0 +1,84 @@
+name: Node.js CI
+
+on:
+  pull_request:
+    types: [merged]
+    branches:
+      - main
+    paths-ignore:
+      - ".github/**"
+  push:
+    branches:
+      - main
+    paths-ignore:
+      - ".github/**"
+
+jobs:
+  find-changed-dirs:
+    runs-on: ubuntu-latest
+    outputs:
+      changed_directories: ${{ steps.set-output.outputs.changed_directories }} # The `dirs` doesn't exist in the outputs of changed-files@v35 action.
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Get changed files
+        id: changed-files
+        uses: tj-actions/changed-files@v45
+        with:
+          dir_names: true
+          dir_names_max_depth: 1 # This is optional. If not provided, full subdirectories' paths will be provided. Use it if you need to trim the output. See docs for details: https://github.com/tj-actions/changed-files/tree/main#inputs.
+          json: true
+          quotepath: false
+
+      - name: "Set output in the matrix format"
+        id: set-output
+        run: echo "changed_directories={\"dir\":${{ steps.changed-files.outputs.all_changed_files }}}" >> "$GITHUB_OUTPUT"
+
+  deploy-to-prod:
+    runs-on: ubuntu-latest
+    if: ${{ needs.find-changed-dirs.outputs.changed_directories != '' }} # Without it, the strategy parser will fail if the changed_directories is empty.
+    strategy:
+      matrix: ${{fromJson(needs.find-changed-dirs.outputs.changed_directories)}}
+    needs:
+      - find-changed-dirs
+    steps:
+      - uses: actions/checkout@v4
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+      - name: Replace dash with underscore in matrix variable i.e. extension directory name. This value will be the key of github secret that stores env variables for that particular extension.
+        env:
+          EXTN_DIR_NAME: ${{ matrix.dir }}
+        run: |
+          EXTN_DIR_NAME_WITH_UNDERSCORE=${EXTN_DIR_NAME//-/_}
+          echo "EXTN_DIR_NAME_WITH_UNDERSCORE=$(echo "$EXTN_DIR_NAME_WITH_UNDERSCORE")" >> $GITHUB_ENV
+      - name: Write secret for this extension as env file. This file will be used by aio command line to authenticate and deploy extension.
+        working-directory: ${{ matrix.dir }}
+        run: |
+          # echo "Current directory: $(pwd)"
+          touch .env
+          echo "${{ secrets[format('{0}', env.EXTN_DIR_NAME_WITH_UNDERSCORE)] }}" >> .env
+          echo "EXTN_SECRETS_FOUND=$(echo "${{ secrets[format('{0}', env.EXTN_DIR_NAME_WITH_UNDERSCORE)] }}")" >> $GITHUB_ENV
+      - name: Check secret exists for modified extension directory. If not, further steps will be skipped.
+        if: env.EXTN_SECRETS_FOUND == ''
+        run: |
+            echo "Secret for ${{ matrix.dir }} extension directory not found. Skipping further steps."
+      - name: Install dependencies
+        if: env.EXTN_SECRETS_FOUND != ''
+        working-directory: ${{ matrix.dir }}
+        run: |
+          if [ -f package.json ]; then
+            echo "Installing dependencies in ${{ matrix.dir }}"
+            echo ${{ env.EXTN_SECRETS_FOUND }}
+            npm install
+            npm install -g @adobe/aio-cli
+          else
+            exit 0
+          fi
+      - name: deploy to prod
+        if: env.EXTN_SECRETS_FOUND != ''
+        working-directory: ${{ matrix.dir }}
+        run: |
+          aio app deploy --web-optimize --no-publish
