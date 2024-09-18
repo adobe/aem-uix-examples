@@ -28,7 +28,7 @@ local serverless stack and also run your actions locally use the `aio app run --
 
 ### `.env`
 
-You can generate this file using the command `aio app use`. 
+You can generate this file using the command `aio app use`.
 
 ```bash
 # This file must **not** be committed to source control
@@ -38,15 +38,14 @@ You can generate this file using the command `aio app use`.
 # AIO_RUNTIME_NAMESPACE=
 
 ## AEM instance API
-# HOST_INSTANCE_ENTRY_POINT_TRANSLATIONS=/adobe/cf/fragments/translations
 # HOST_INSTANCE_ENTRY_POINT_QUICK_PUBLISH=/bin/replicate?_charset_=utf-8&cmd=Activate
 # HOST_INSTANCE_ENTRY_POINT_UNPUBLISH=/bin/replicate?_charset_=utf-8&cmd=Deactivate
 ```
 
 ### `app.config.yaml`
 
-- Main configuration file that defines an application's implementation. 
-- More information on this file, application configuration, and extension configuration 
+- Main configuration file that defines an application's implementation.
+- More information on this file, application configuration, and extension configuration
   can be found [here](https://developer.adobe.com/app-builder/docs/guides/appbuilder-configuration/#appconfigyaml)
 
 #### Action Dependencies
@@ -75,12 +74,12 @@ Alternatively, there are also debug configs for only UI and each separate action
 
 ## Typescript support for UI
 
-To use typescript use `.tsx` extension for react components and add a `tsconfig.json` 
+To use typescript use `.tsx` extension for react components and add a `tsconfig.json`
 and make sure you have the below config added
 ```
  {
   "compilerOptions": {
       "jsx": "react"
     }
-  } 
+  }
 ```
