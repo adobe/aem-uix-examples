@@ -35,13 +35,13 @@ export default function () {
   };
 
   return (
-    <Provider theme={defaultTheme} colorScheme='light'>
+    <Provider theme={defaultTheme} colorScheme='light' id="custom-test-modal">
       <Content width="100%">
-        <Text>Modal opened</Text>
+        <Text id="custom-modal-text">Modal opened</Text>
 
         <Flex width="100%" justifyContent="end" alignItems="center" marginTop="size-400">
           <ButtonGroup align="end">
-            <Button variant="primary" onClick={onCloseHandler}>Close</Button>
+            <Button variant="primary"  id="custom-test-modal-close" onClick={onCloseHandler}>Close</Button>
           </ButtonGroup>
         </Flex>
       </Content>
