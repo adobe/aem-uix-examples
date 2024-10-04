@@ -1,0 +1,20 @@
+{
+  "name": "cf-admin-all-points",
+  "id": "cf-admin-all-points",
+  "description": "This extension expose all cf admin extension points for  test purpose",
+  "version": "0.0.1",
+  "actionBarButtons": [
+    {
+      "label": "Custom Action Button",
+      "needsModal": true,
+      "id": "custom-action-button"
+    }
+  ],
+  "headerMenuButtons": [
+    {
+      "label": "Custome Header Button",
+      "needsModal": true,
+      "id": "custome-header-button"
+    }
+  ]
+}
