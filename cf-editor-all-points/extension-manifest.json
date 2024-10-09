@@ -1,0 +1,32 @@
+{
+  "name": "cf-editor-test-all-points",
+  "id": "cf-editor-test-all-points",
+  "description": "This extension implement all editor extension points",
+  "version": "0.0.1",
+  "headerMenuButtons": [
+    {
+      "label": "testcustomButtonHeaderMenu",
+      "needsModal": true,
+      "id": "testcustombuttonheadermenu"
+    }
+  ],
+  "rte": {
+    "toolbarButtons": [
+      {
+        "id": "test-rte-cfebutton",
+        "tooltip": "This button is rendered by an extension for CF Editor"
+      }
+    ],
+    "widgets": [
+      {
+        "label": "RTEWidgetCFEditor",
+        "id": "rtewidgetcfeditor"
+      }
+    ],
+    "badges": [
+      {
+        "id": "testrtebadgecfeditor"
+      }
+    ]
+  }
+}
