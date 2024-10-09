@@ -60,7 +60,7 @@ function ExtensionRegistration() {
              // @todo YOUR RTE TOOLBAR BUTTONS DECLARATION SHOULD BE HERE
              {
                id: "test-rte-cfebutton",
-               tooltip: "This button is rendered by an extension for CF Editor",
+               tooltip: "Extensibility Custom Button",
                icon: 'Airplane',
                onClick: (state) => {
                  return [{

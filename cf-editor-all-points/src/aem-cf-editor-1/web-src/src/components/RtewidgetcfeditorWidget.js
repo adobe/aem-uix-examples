@@ -32,18 +32,18 @@ export default function () {
   };
 
   const options = [
-    {id: "1", name: 'Aerospace'},
-    {id: "2", name: 'Mechanical'},
-    {id: "3", name: 'Civil'},
+    {id: "aerospace", name: 'Aerospace'},
+    {id: "mechanical", name: 'Mechanical'},
+    {id: "civil", name: 'Civil'},
   ];
 
   return (
-    <Provider theme={lightTheme} colorScheme="light">
+    <Provider theme={lightTheme} colorScheme="light" id="custom-widget">
       <ComboBox
         label="RTEWidgetCFEditor"
         defaultItems={options}
         onSelectionChange={onSelectionChangeHandler} autoFocus>
-        {item => <Item>{item.name}</Item>}
+        {item => <Item aria-label={item.id}>{item.name}</Item>}
       </ComboBox>
     </Provider>
   );

@@ -17,7 +17,7 @@ export default () => {
     }
 
     return (
-        <Provider theme={lightTheme} colorScheme="light">
+        <Provider theme={lightTheme} colorScheme="light" id="right-rail-custom">
             <Text>Content generate by the extension Rail#{railId}</Text>
         </Provider>
     );
