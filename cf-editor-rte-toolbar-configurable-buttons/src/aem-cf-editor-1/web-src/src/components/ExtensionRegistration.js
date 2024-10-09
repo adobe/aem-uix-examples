@@ -50,12 +50,16 @@ function ExtensionRegistration() {
         rte: {
           removeButtons: async () => {
             try {
-              const auth = await guestConnection.sharedContext.get('auth')
-              const token = auth.imsToken
-              const imsOrg = auth.imsOrg
-              const config = await getContentFragmentConfig(token, imsOrg);
               const contentFragment = await guestConnection.host.contentFragment.getContentFragment();
-              return processConfig(config, contentFragment.model.title);
+              console.log('contentFragment', contentFragment);
+              const customerSetUp = await guestConnection.configuration;
+              console.log('customerSetUp', customerSetUp);
+              if (!customerSetUp ) {
+                console.error('No configuration found. Please specify ');
+                return [];
+              }
+              const config = getContentFragmentConfig(customerSetUp, contentFragment.model.path);
+              return processConfig(config, contentFragment.model.path);
             } catch (e) {
               console.error('Error while removing buttons', e);
               return [];
@@ -70,5 +74,31 @@ function ExtensionRegistration() {
 
   return <Text>IFrame for integration with Host (AEM)...</Text>;
 }
+
+function getContentFragmentConfig(config, modelPath) {
+  // const path = config['model_path'];
+
+  if (modelPath === config?.['model_path']) {
+    const configItems = config['remove_buttons'].split(",");
+    // Split the input string into an array of items
+    const items = ALLOWED_BUTTONS.split(" | ");
+
+    const jsonObject = {};
+    // Create an object with each item as a key and true as the value
+    items.forEach(item => {
+      if (configItems.includes(item)) {
+        jsonObject[item] = false;
+      }
+    });
+    return {
+      [modelPath]: {
+        'toolbar': {
+          'buttons': jsonObject
+        }
+      }
+    }
+  }
+}
+
 
 export default ExtensionRegistration;
