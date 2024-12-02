@@ -19,7 +19,7 @@ const fetch = require('node-fetch');
  * @param logger
  */
 async function getTranslations (params, logger) {
-  const apiEndpoint = `https://${params.aemHost}${params.HOST_INSTANCE_ENTRY_POINT_TRANSLATIONS}`;
+  const apiEndpoint = `https://${params.aemHost}/adobe/sites/cf/fragments/translations`;
 
   const response = await fetch(apiEndpoint, {
     method: 'POST',

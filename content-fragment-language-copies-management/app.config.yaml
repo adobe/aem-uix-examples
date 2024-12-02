@@ -16,7 +16,6 @@ application:
             runtime: nodejs:14
             inputs:
               LOG_LEVEL: debug
-              HOST_INSTANCE_ENTRY_POINT_TRANSLATIONS: $HOST_INSTANCE_ENTRY_POINT_TRANSLATIONS
             annotations:
               require-adobe-auth: false
               final: true
