@@ -3,13 +3,15 @@
  */
 import { Text } from "@adobe/react-spectrum";
 import { register } from "@adobe/uix-guest";
-import { extensionId } from "./Constants";
+import { extensionId } from "./constants";
+import metadata from '../../app-metadata.json';
 
 function ExtensionRegistration() {
   const init = async () => {
     const guestConnection = await register({
       id: extensionId,
       debug: true,
+      metadata,
       methods: {
         canvas: {
           getRenderers() {

@@ -58,10 +58,20 @@ export default function () {
       const selections = convertProductSelectionsFromStringToList(selectionsAsString);
       setSelections(selections);
 
-      window.addEventListener('storage', handleStorageChange);
     })().catch((e) =>
       console.log("Extension got the error during pre-selected products processing:", e)
     );
+
+    const handleStorageChange = (event) => {
+      if (event.key === localStorageKeySelectedProducts) {
+        const selectionsAsString = event.newValue;
+  
+        saveProductField(selectionsAsString);
+        setSelections(convertProductSelectionsFromStringToList(selectionsAsString));
+      }
+    };
+
+    window.addEventListener('storage', handleStorageChange);
 
     return () => {
       window.removeEventListener('storage', handleStorageChange);
@@ -70,15 +80,6 @@ export default function () {
 
   const saveProductField = (value) => {
     guestConnection.host.field.onChange(value);
-  };
-
-  const handleStorageChange = (event) => {
-    if (event.key === localStorageKeySelectedProducts) {
-      const selectionsAsString = event.newValue;
-
-      saveProductField(selectionsAsString);
-      setSelections(convertProductSelectionsFromStringToList(selectionsAsString));
-    }
   };
 
   const setStorageValue = (value) => {
@@ -144,7 +145,7 @@ export default function () {
           width="100%"
           height="100%"
           density="spacious"
-          aria-label="Selected Products"
+          aria-label="Selected Products 12"
           gridArea="selected-products-list"
         >
           {(item) => <Item>{item.sku}</Item>}
