@@ -11,7 +11,6 @@
  */
 
 import { useEffect } from 'react';
-import { generatePath } from 'react-router';
 import { Text } from '@adobe/react-spectrum';
 import { extensionId } from './constants';
 import { register } from '@adobe/uix-guest';
