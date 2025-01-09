@@ -1,4 +1,4 @@
 module.exports = {
-  extensionId: 'uixproductpicker',
+  extensionId: 'uixproductpicker-files',
   localStorageKeySelectedProducts: 'uix-product-picker-selected-products',
 };

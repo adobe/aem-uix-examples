@@ -1,0 +1,32 @@
+[
+  {
+    "id": "1",
+    "name": "Category 1",
+    "parentId": null,
+    "path": "1"
+  },
+  {
+    "id": "2",
+    "name": "Category 2",
+    "parentId": "1",
+    "path": "1/2"
+  },
+  {
+    "id": "3",
+    "name": "Category 3",
+    "parentId": "2",
+    "path": "1/2/3"
+  },
+  {
+    "id": "4",
+    "name": "Category 4",
+    "parentId": "1",
+    "path": "1/4"
+  },
+  {
+    "id": "5",
+    "name": "Category 5",
+    "parentId": "1",
+    "path": "1/5"
+  }
+]

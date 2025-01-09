@@ -11,6 +11,8 @@ import { getCategories, getProducts } from "../catalog-service/catalog-service";
 import useConfig from "./useConfig";
 import Spinner from "./Spinner";
 import ExtensionError from "./ExtensionError";
+import ItemPicker from "./ItemPicker";
+import {getDirs, getItems} from "../data-provider/items-service";
 
 export default function () {
   const [guestConnection, setGuestConnection] = useState();
@@ -26,8 +28,8 @@ export default function () {
       });
       setGuestConnection(connection);
 
-      const config = await useConfig(connection, setError);
-      setConfig(config);
+      //const config = await useConfig(connection, setError);
+      //setConfig(config);
     })().catch((e) => {
       console.log("Extension got the error during initialization:", e);
       setError("Extension got the error during initialization");
@@ -60,20 +62,19 @@ export default function () {
   return (
     <Provider theme={defaultTheme} colorScheme='light'>
       <Content>
-        {guestConnection && config ? (
-          <ProductPicker
-            config={config}
-            getCategories={getCategories}
-            getProducts={getProducts}
+        {guestConnection ? (
+          <ItemPicker
+            getDirs={getDirs}
+            getItems={getItems}
             onConfirm={onConfirm}
             onCancel={onCancel}
-            selectedProducts={selectedProducts}
+            selectedItems={selectedProducts}
           />
         ) : (
           <View width="97%" height="100%">
             <Spinner />
           </View>
-        )}     
+        )}
       </Content>
     </Provider>
   );
