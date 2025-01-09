@@ -6,4 +6,6 @@
 html,
 body {
   margin: 0;
+  overflow: hidden;
+  padding-bottom: 1rem;
 }
