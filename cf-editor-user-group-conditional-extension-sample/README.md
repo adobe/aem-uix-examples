@@ -1,10 +1,14 @@
-# AEM Content Fragment Editor Form Field Dropdown Example
+# AEM Content Fragment Editor Conditional Rendering Based on Uset Groups
 
 A sample extension demonstrating the customization of a form field in the AEM Content Fragment Editor.
 
 ## Setup
 
 - Populate the `.env` file in the project root and fill it as shown [below](#env)
+
+## Servlet Installation
+The conditional rendering based on user groups requires custom servlet installation. The sample of servlet that provides
+information about the user groups is provided in the `servlet-example` folder. The servlet is built using the AEM Maven Archetype. 
 
 ## Local Dev
 
