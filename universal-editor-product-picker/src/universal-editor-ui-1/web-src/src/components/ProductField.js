@@ -121,9 +121,11 @@ export default function () {
     getAllowedDropOperations: () => ['move'],
   });
 
+  const isCFAdmin = localStorage.getItem('product-picker-is-cf-admin') === 'true';
+
   return (
     <Provider theme={defaultTheme}>
-      <View padding="size-100">
+      <View padding={isCFAdmin ? "" : "size-100"} marginTop={isCFAdmin ? "size-100" : ""} backgroundColor={isCFAdmin ? "gray-50" : ""}>
         <Grid
           areas={[
             "field-label product-picker-button",

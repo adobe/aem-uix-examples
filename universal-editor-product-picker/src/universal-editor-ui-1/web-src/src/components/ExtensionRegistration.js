@@ -28,6 +28,7 @@ function ExtensionRegistration() {
         },
       },
     });
+    localStorage.setItem('product-picker-is-cf-admin', 'false');
   };
   init().catch(console.error);
 

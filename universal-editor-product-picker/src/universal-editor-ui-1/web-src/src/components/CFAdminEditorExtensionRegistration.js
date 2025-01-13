@@ -37,6 +37,7 @@ export default function () {
           },
         },
       });
+      localStorage.setItem('product-picker-is-cf-admin', 'true');
     };
     init().catch(console.error);
   }, []);
