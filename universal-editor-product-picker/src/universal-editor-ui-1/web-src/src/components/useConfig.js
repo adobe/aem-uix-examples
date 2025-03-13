@@ -4,7 +4,7 @@
 const defaultConfig = {
   "commerce-endpoint": "",
   "commerce-root-category-id": "2",
-  "commerce-configs": "",
+  "commerce-configs": "https://main--xwalk-playground--felix-test-org.hlx.live/tools/commerce/summit.json",
   "commerce-env": "prod",
   "selection-mode": "multiple",
 };
