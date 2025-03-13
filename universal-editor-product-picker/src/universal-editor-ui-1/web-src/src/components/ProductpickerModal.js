@@ -13,11 +13,13 @@ import Spinner from "./Spinner";
 import ExtensionError from "./ExtensionError";
 
 export default function () {
+  const [searchParams, setSearchParams] = useSearchParams();
   const [guestConnection, setGuestConnection] = useState();
   const [selectedProducts, setSelectedProducts] = useState([]);
   const [error, setError] = useState(null);
   // by default should be null, @see a rendering condition "{guestConnection && config ? ("
   const [config, setConfig] = useState(null);
+  const [model, setModel] = useState(null);
 
   useEffect(() => {
     (async () => {
@@ -27,6 +29,7 @@ export default function () {
       setGuestConnection(connection);
 
       const config = await useConfig(connection, setError);
+      setModel(await connection.host.field.getModel());
       setConfig(config);
     })().catch((e) => {
       console.log("Extension got the error during initialization:", e);
@@ -35,15 +38,15 @@ export default function () {
   }, []);
 
   useEffect(() => {
-    const productFieldValue = localStorage.getItem(localStorageKeySelectedProducts);
+    const productFieldValue = sessionStorage.getItem(localStorageKeySelectedProducts);
     const selectedProducts = productFieldValue?.split(',').map((item) => item);
     if (selectedProducts) {
       setSelectedProducts(selectedProducts);
     }
   }, []);
 
-  const onConfirm = (products) => {
-    localStorage.setItem(localStorageKeySelectedProducts, products.join(","));
+  const onConfirm = async (products) => {
+    sessionStorage.setItem(localStorageKeySelectedProducts, products.join(","));
     onCancel();
   };
 
@@ -73,7 +76,7 @@ export default function () {
           <View width="97%" height="100%">
             <Spinner />
           </View>
-        )}     
+        )}
       </Content>
     </Provider>
   );
