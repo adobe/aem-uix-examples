@@ -13,13 +13,11 @@ import Spinner from "./Spinner";
 import ExtensionError from "./ExtensionError";
 
 export default function () {
-  const [searchParams, setSearchParams] = useSearchParams();
   const [guestConnection, setGuestConnection] = useState();
   const [selectedProducts, setSelectedProducts] = useState([]);
   const [error, setError] = useState(null);
   // by default should be null, @see a rendering condition "{guestConnection && config ? ("
   const [config, setConfig] = useState(null);
-  const [model, setModel] = useState(null);
 
   useEffect(() => {
     (async () => {
@@ -29,7 +27,6 @@ export default function () {
       setGuestConnection(connection);
 
       const config = await useConfig(connection, setError);
-      setModel(await connection.host.field.getModel());
       setConfig(config);
     })().catch((e) => {
       console.log("Extension got the error during initialization:", e);
