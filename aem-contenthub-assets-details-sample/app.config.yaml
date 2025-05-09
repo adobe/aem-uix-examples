@@ -1,0 +1,3 @@
+extensions:
+  aem/contenthub/assets/details/1:
+    $include: src/aem-contenthub-assets-details-1/ext.config.yaml

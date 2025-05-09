@@ -31,6 +31,7 @@ Here is the list of examples:
 - [Image genaration through 3rd party GenAI](./openai-dalle-content-fragment-admin/)
 - [Slack Integration for Content Fragment management](./slack-content-fragment-admin/)
 - [Workfront Task Management for Universal Editor](./universal-editor-task-management/)
+- [AEM Content Hub Asset Details](./aem-contenthub-assets-details-sample/)
 
 ## Deployment
 Each example has its own GitHub Actions deployment file that should be used as a starting point for individual extensions.
