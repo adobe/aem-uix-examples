@@ -1,0 +1,20 @@
+{
+  "name": "Sample Extension",
+  "id": "sample-extension",
+  "description": "Sample Extension for Content Hub Asset Details Dialog",
+  "version": "0.0.1",
+  "assetDetailsTabPanels": [
+    {
+      "tooltip": "Asset Details Extension Tab",
+      "title": "Asset Details Extension Tab",
+      "icon": "Extension",
+      "id": "asset-details-extension-tab",
+      "componentName": "PanelAssetDetailsExtensionTab"
+    }
+  ],
+  "runtimeActions": [
+    {
+      "name": "generic"
+    }
+  ]
+}
