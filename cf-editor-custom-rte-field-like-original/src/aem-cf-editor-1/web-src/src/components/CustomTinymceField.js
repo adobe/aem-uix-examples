@@ -75,21 +75,19 @@ import contentUiCss from "tinymce/skins/ui/oxide/content.min.css";
 
 const plugins = [
   "advlist autolink lists link image charmap preview anchor",
-  "searchreplace visualblocks code",
+  "searchreplace visualblocks code directionality",
   "insertdatetime media table fullscreen",
 ].join(" ");
 
 const toolbar = [
-  "undo redo pastetext copy",
-  "blocks table",
-  "bold italic underline strikethrough backcolor subscript superscript",
+  "undo redo pastetext copy blocks table bold italic underline",
+  "backcolor subscript superscript",
   "alignleft aligncenter alignright alignjustify",
   "bullist numlist outdent indent",
   "removeformat",
   "link unlink",
-  "charmap",
-  // "fullscreen",
-].join(" | ");
+  "ltr rtl charmap",
+].join(" ");
 
 export const RTE_URL =
   "https://exc-unifiedcontent.experience.adobe.net/solutions/CQ-aem-headless-rte/assets/tinymce-592/js/tinymce/tinymce.min.js";
