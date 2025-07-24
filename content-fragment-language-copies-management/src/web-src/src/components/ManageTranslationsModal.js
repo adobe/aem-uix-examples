@@ -68,6 +68,10 @@ export default function () {
     return () => clearInterval(interval);
   }, []);
 
+  // Calculate if all items are selected
+  const allItemsSelected = selectedTranslations.size === translations.length && translations.length > 0;
+  const selectAllButtonText = allItemsSelected ? 'Clear All' : 'Select All';
+
   return (
       <Provider theme={defaultTheme} colorScheme={'light'}>
         <Content width="97%">
@@ -83,6 +87,7 @@ export default function () {
                     aria-label="Static ListView items example"
                     margin="size-175"
                     onSelectionChange={onSelectionChangeHandler}
+                    selectedKeys={selectedTranslations}
                 >
                   {translations.map(translation => {
                     return (
@@ -95,6 +100,16 @@ export default function () {
                     );
                   })}
                 </ListView>
+                <ButtonGroup align="start" margin="size-175">
+                  <Button
+                      variant="secondary"
+                      type="button"
+                      isDisabled={translations.length === 0}
+                      onClick={onSelectAllHandler}
+                  >
+                    {selectAllButtonText}
+                  </Button>
+                </ButtonGroup>
                 <ButtonGroup align="end" margin="size-175">
                   <Button
                       variant="cta"
@@ -141,6 +156,22 @@ export default function () {
     console.log('Selected translations: ', [...selection]);
     setSelectedTranslations(selection);
     setManagementIsDisabled(selection.size === 0);
+  }
+
+  /**
+   * Toggle between selecting all items and deselecting all items
+   */
+  function onSelectAllHandler () {
+    if (allItemsSelected) {
+      // Clear all items
+      setSelectedTranslations(new Set());
+      setManagementIsDisabled(true);
+    } else {
+      // Select all items
+      const allKeys = new Set(translations.map(translation => translation.path));
+      setSelectedTranslations(allKeys);
+      setManagementIsDisabled(false);
+    }
   }
 
   /**
