@@ -75,21 +75,19 @@ import contentUiCss from "tinymce/skins/ui/oxide/content.min.css";
 
 const plugins = [
   "advlist autolink lists link image charmap preview anchor",
-  "searchreplace visualblocks code",
+  "searchreplace visualblocks code directionality",
   "insertdatetime media table fullscreen",
 ].join(" ");
 
 const toolbar = [
-  "undo redo pastetext copy",
-  "blocks table",
-  "bold italic underline strikethrough backcolor subscript superscript",
+  "undo redo pastetext copy blocks table bold italic underline",
+  "backcolor subscript superscript",
   "alignleft aligncenter alignright alignjustify",
   "bullist numlist outdent indent",
   "removeformat",
   "link unlink",
-  "charmap",
-  // "fullscreen",
-].join(" | ");
+  "ltr rtl charmap addBg",
+].join(" ");
 
 export const RTE_URL =
   "https://exc-unifiedcontent.experience.adobe.net/solutions/CQ-aem-headless-rte/assets/tinymce-592/js/tinymce/tinymce.min.js";
@@ -151,42 +149,10 @@ const CustomTinymceField = () => {
     init().catch(console.error);
   }, []);
 
-  const setToLimit = (value, limit, charactersQty) => {
-    const body = (new DOMParser()).parseFromString(value, "text/html").body;
-    const r = (node, toRemoveLimit) => {
-      for (let i = node.childNodes.length-1; i >= 0; i--) {
-        if (toRemoveLimit <= 0) {
-          return { node, toRemoveLimit }
-        }
-
-        if (node.childNodes[i].nodeType === Node.TEXT_NODE) {
-          const contentLength = node.childNodes[i].textContent.length;
-          if (contentLength > toRemoveLimit) {
-            node.childNodes[i].textContent = node.childNodes[i].textContent.substring(0, contentLength-toRemoveLimit);
-            return { node, toRemoveLimit: 0 }
-          }
-          node.childNodes[i].remove();
-          toRemoveLimit -= contentLength;
-        } else {
-          const childNodeResult = r(node.childNodes[i], toRemoveLimit);
-          node.childNodes[i] = childNodeResult.node
-          toRemoveLimit = childNodeResult.toRemoveLimit
-        }
-      }
-      if (!node.childNodes.length) {
-        node.remove()
-      }
-      return { node, toRemoveLimit }
-    }
-    r(body, charactersQty - limit );
-    return body.innerHTML;
-  }
-
   const onEditorChangeHandler = (newValue, editor) => {
     let currentLength = editor.getContent({ format: "text" }).length;
     let value = newValue;
     if (characterLimitEnforcement && characterLimit && currentLength > characterLimit) {
-      value = setToLimit(newValue, characterLimit, currentLength);
       currentLength = characterLimit;
     }
     guestConnection.host.field.onChange(value);
@@ -219,6 +185,37 @@ const CustomTinymceField = () => {
               skin: false,
               content_css: false,
               content_style: [contentCss, contentUiCss].join("\n"),
+              setup: (editor) => {
+                editor.ui.registry.addToggleButton('addBg', {
+                  text: 'Add background',
+                  onAction: (api) => {
+                    editor.formatter.toggle('customHighlight');
+                    api.setActive(editor.formatter.match('customHighlight'));
+                  },
+                  onSetup: (api) => {
+                    api.setActive(editor.formatter.match('customHighlight'));
+                    const changed = editor.formatter.formatChanged('customHighlight', (state) => api.setActive(state));
+                    return () => changed.unbind();
+                  }
+                });
+
+                editor.ui.registry.addToggleButton('customToggleStrikethrough', {
+                  icon: 'highlight-bg-color',
+                  tooltip: 'Yellow highlight',
+                  onAction: (_) => editor.formatter.toggle('customHighlight'),
+                  onSetup: (api) => {
+                    api.setActive(editor.formatter.match('customHighlight'));
+                    const changed = editor.formatter.formatChanged('customHighlight', (state) => api.setActive(state));
+                    return () => changed.unbind();
+                  }
+                });
+                editor.on('init', (e) => {
+                  editor.formatter.register('customHighlight', {
+                    inline: 'span',
+                    styles: { backgroundColor: '#ffff00' }
+                  });
+                });
+              },
             }}
             value={currentValue}
             onInit={onInit}
