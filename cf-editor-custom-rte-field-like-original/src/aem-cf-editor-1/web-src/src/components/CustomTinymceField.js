@@ -86,7 +86,7 @@ const toolbar = [
   "bullist numlist outdent indent",
   "removeformat",
   "link unlink",
-  "ltr rtl charmap addBg",
+  "ltr rtl charmap addBg fullscreen",
 ].join(" ");
 
 export const RTE_URL =
@@ -163,6 +163,23 @@ const CustomTinymceField = () => {
     color: 'var(--spectrum-gray-800)',
   };
 
+  const style = {
+    position: 'fixed',
+    top: '50px',
+    left: 0,
+    width: '100vw',
+    height: '95vh',
+    zIndex: 10000,
+  }
+
+  const noStyle = {
+    position: 'static',
+    top: 'initial',
+    left: 'initial',
+    width: 'auto',
+    height: `${EDITOR_HEIGHT + 100}px`,
+    zIndex: 10,
+  }
 
   // note that skin and content_css is disabled to avoid the normal
   // loading process and is instead loaded as a string via content_style
@@ -199,21 +216,25 @@ const CustomTinymceField = () => {
                   }
                 });
 
-                editor.ui.registry.addToggleButton('customToggleStrikethrough', {
-                  icon: 'highlight-bg-color',
-                  tooltip: 'Yellow highlight',
-                  onAction: (_) => editor.formatter.toggle('customHighlight'),
-                  onSetup: (api) => {
-                    api.setActive(editor.formatter.match('customHighlight'));
-                    const changed = editor.formatter.formatChanged('customHighlight', (state) => api.setActive(state));
-                    return () => changed.unbind();
-                  }
-                });
                 editor.on('init', (e) => {
                   editor.formatter.register('customHighlight', {
                     inline: 'span',
                     styles: { backgroundColor: '#ffff00' }
                   });
+                });
+
+                 editor.on('FullscreenStateChanged', (e) => {
+                  if (e.state) {
+                    guestConnection.host.field.setStyles({
+                      current: { ...style, position: 'static' },
+                      parent: { ...style },
+                    });
+                  } else {
+                    guestConnection.host.field.setStyles({
+                      current: { ...noStyle },
+                      parent: { ...noStyle, position: 'relative', },
+                    });
+                  }
                 });
               },
             }}
