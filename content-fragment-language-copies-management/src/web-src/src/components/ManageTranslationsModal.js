@@ -100,22 +100,20 @@ export default function () {
                     );
                   })}
                 </ListView>
-                <ButtonGroup align="start" margin="size-175">
+                <ButtonGroup align="end" margin="size-175">
                   <Button
                       variant="secondary"
                       type="button"
                       isDisabled={translations.length === 0}
-                      onClick={onSelectAllHandler}
+                      onPress={onSelectAllHandler}
                   >
                     {selectAllButtonText}
                   </Button>
-                </ButtonGroup>
-                <ButtonGroup align="end" margin="size-175">
                   <Button
                       variant="cta"
                       type="button"
                       isDisabled={managementIsDisabled}
-                      onClick={onQuickPublishHandler}
+                      onPress={onQuickPublishHandler}
                   >
                     Publish
                   </Button>
@@ -123,7 +121,7 @@ export default function () {
                       variant="cta"
                       type="button"
                       isDisabled={managementIsDisabled}
-                      onClick={onUnPublishHandler}
+                      onPress={onUnPublishHandler}
                   >
                     Unpublish
                   </Button>
