@@ -7,7 +7,7 @@ import { Text } from '@adobe/react-spectrum';
 import { register } from '@adobe/uix-guest';
 import { extensionId } from './Constants';
 
-const allowedRepos = ['your-repo-name'];
+const allowedRepos = ['delivery-p137170-e1381935.adobeaemcloud.com'];
 
 function getRepo() {
   const search = new URLSearchParams(window.location.search);
@@ -36,9 +36,9 @@ function ExtensionRegistration() {
             // YOUR SIDE PANELS CODE SHOULD BE HERE
             return [
               {
-                'id': 'asset-details-extension-tab',
+                'id': 'asset-details-extension-tab-1',
                 'tooltip': 'Asset Details Extension Tab',
-                'icon': 'Extension',
+                'icon': 'Feedback',
                 'title': 'Asset Details Extension Tab',
                 'contentUrl': '/#asset-details-extension-tab',
               },
