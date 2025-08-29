@@ -13,6 +13,7 @@ html,
 body {
   padding: 0 !important;
   margin: 0 !important;
+  overflow: hidden;
 }
 
 .rte-top-block {

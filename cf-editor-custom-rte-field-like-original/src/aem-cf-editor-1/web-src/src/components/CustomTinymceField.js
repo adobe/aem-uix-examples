@@ -95,6 +95,8 @@ export const RTE_URL =
 
 const EDITOR_HEIGHT = 500;
 
+const MARGIN = 30;
+
 const defaultConfig = {
   height: EDITOR_HEIGHT,
   menubar: false,
@@ -110,6 +112,31 @@ const defaultConfig = {
   lists_indent_on_tab: false,
   valid_elements: "*[*]",
 };
+
+function updateFrameStyles(guestConnection, style, position) {
+  guestConnection.host.field.setStyles({
+    current: { ...style },
+    parent: { ...style, position, },
+  });
+}
+
+const openEditorCss = {
+  position: 'fixed',
+  top: '50px',
+  left: 0,
+  width: '100vw',
+  height: '95vh',
+  zIndex: 10000,
+}
+
+const closedEditorCss= {
+  position: 'static',
+  top: 'initial',
+  left: 'initial',
+  width: 'auto',
+  height: `${EDITOR_HEIGHT + MARGIN}px`,
+  zIndex: 10,
+}
 
 const CustomTinymceField = () => {
   const [guestConnection, setGuestConnection] = useState(null);
@@ -163,30 +190,12 @@ const CustomTinymceField = () => {
     color: 'var(--spectrum-gray-800)',
   };
 
-  const style = {
-    position: 'fixed',
-    top: '50px',
-    left: 0,
-    width: '100vw',
-    height: '95vh',
-    zIndex: 10000,
-  }
-
-  const noStyle = {
-    position: 'static',
-    top: 'initial',
-    left: 'initial',
-    width: 'auto',
-    height: `${EDITOR_HEIGHT + 100}px`,
-    zIndex: 10,
-  }
-
   // note that skin and content_css is disabled to avoid the normal
   // loading process and is instead loaded as a string via content_style
   return (
     <Provider theme={lightTheme} colorScheme="light">
       {fieldData.ready &&
-        <View height={EDITOR_HEIGHT + 100}>
+        <View height={EDITOR_HEIGHT + MARGIN}>
           <div className={'rte-top-block'}>
             <Label
               isRequired={fieldData.required}
@@ -223,17 +232,13 @@ const CustomTinymceField = () => {
                   });
                 });
 
+                updateFrameStyles(guestConnection, closedEditorCss, 'relative');
+
                  editor.on('FullscreenStateChanged', (e) => {
                   if (e.state) {
-                    guestConnection.host.field.setStyles({
-                      current: { ...style, position: 'static' },
-                      parent: { ...style },
-                    });
+                    updateFrameStyles(guestConnection, openEditorCss, 'static');
                   } else {
-                    guestConnection.host.field.setStyles({
-                      current: { ...noStyle },
-                      parent: { ...noStyle, position: 'relative', },
-                    });
+                    updateFrameStyles(guestConnection, closedEditorCss, 'relative');
                   }
                 });
               },
