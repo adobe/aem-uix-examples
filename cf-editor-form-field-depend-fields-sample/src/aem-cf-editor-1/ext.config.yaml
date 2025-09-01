@@ -1,0 +1,31 @@
+operations:
+  view:
+    - type: web
+      impl: index.html
+actions: actions
+web: web-src
+runtimeManifest:
+  packages:
+    aem-cf-editor1:
+      license: Apache-2.0
+      actions:
+        dropdown-data:
+          function: actions/dropdown-data/index.js
+          web: 'yes'
+          runtime: nodejs:16
+          inputs:
+            LOG_LEVEL: debug
+            API_ENDPOINT: $API_ENDPOINT
+          annotations:
+            require-adobe-auth: false
+            final: true
+        get-by-fields:
+          function: actions/get-by-fields/index.js
+          web: 'yes'
+          runtime: nodejs:16
+          inputs:
+            LOG_LEVEL: debug
+            API_ENDPOINT: $API_ENDPOINT
+          annotations:
+            require-adobe-auth: false
+            final: true
