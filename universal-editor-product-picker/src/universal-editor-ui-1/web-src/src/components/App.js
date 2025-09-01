@@ -5,6 +5,7 @@
 import React from "react";
 import ErrorBoundary from "react-error-boundary";
 import { HashRouter as Router, Routes, Route } from "react-router-dom";
+import CFAdminEditorExtensionRegistration from './CFAdminEditorExtensionRegistration';
 import ExtensionRegistration from "./ExtensionRegistration";
 import ProductField from "./ProductField";
 import ProductPickerModal from "./ProductPickerModal";
@@ -20,11 +21,15 @@ function App() {
             element={<ExtensionRegistration />}
           />
           <Route
-            exact path="product-field"
+            exact path="/cf-admin-console"
+            element={<CFAdminEditorExtensionRegistration />}
+          />
+          <Route
+            exact path="/product-field"
             element={<ProductField />}
           />
           <Route
-            exact path="product-picker-modal"
+            exact path="/product-picker-modal"
             element={<ProductPickerModal />}
           />
         </Routes>
