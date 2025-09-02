@@ -42,9 +42,16 @@ export function  Dropdown() {
           defaultItems={items}
           onOpenChange={(isOpen, menuTrigger) => {
               if (isOpen) {
-                connection.host.field.setHeight(defaultHeight + (items.length * 20))
+                const height = defaultHeight + (items.length * 20);
+                connection.host.field.setStyles({
+                  current: { height },
+                  parent: { height },
+                })
               } else {
-                connection.host.field.setHeight(defaultHeight)
+                connection.host.field.setStyles({
+                  current: { height: defaultHeight },
+                  parent: { height: defaultHeight },
+                })
               }
             }
           }
