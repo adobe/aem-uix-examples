@@ -44,8 +44,8 @@ export function  Dropdown() {
               if (isOpen) {
                 const height = defaultHeight + (items.length * 20);
                 connection.host.field.setStyles({
-                  current: { height },
-                  parent: { height },
+                  current: { height, },
+                  parent: { height, },
                 })
               } else {
                 connection.host.field.setStyles({
