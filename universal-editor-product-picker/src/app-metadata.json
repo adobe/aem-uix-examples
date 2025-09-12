@@ -1,0 +1,11 @@
+{
+    "extensions": [
+        {
+            "extensionPoint": "universal-editor/ui/1"
+        },
+        {
+            "extensionPoint": "aem/cf-console-admin/1",
+            "url": "index.html#/cf-admin-console"
+        }
+    ]
+}
