@@ -1,0 +1,3 @@
+extensions:
+  aem/assets/browse/1:
+    $include: src/aem-assets-browse-1/ext.config.yaml

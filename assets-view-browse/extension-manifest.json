@@ -1,0 +1,23 @@
+{
+  "name": "Assets View UIX Browse Example",
+  "id": "assets-view-uix-browse-example",
+  "description": "Shows a Action Bar button that opens a Modal dialog and renders data fetched using Adobe IO Actions",
+  "version": "0.0.1",
+  "actionBarActions": [
+    {
+      "label": "Open Metadata",
+      "icon": "FileData",
+      "needsModal": true,
+      "modalTitle": "Asset Data",
+      "modalType": "modal",
+      "modalSize": "M",
+      "id": "open-metadata",
+      "componentName": "ModalOpenMetadata"
+    }
+  ],
+  "runtimeActions": [
+    {
+      "name": "fetchMetadata"
+    }
+  ]
+}
