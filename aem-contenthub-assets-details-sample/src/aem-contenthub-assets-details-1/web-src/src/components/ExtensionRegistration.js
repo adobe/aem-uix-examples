@@ -42,6 +42,13 @@ function ExtensionRegistration() {
                 'title': 'Asset Details Extension Tab',
                 'contentUrl': '/#asset-details-extension-tab',
               },
+              {
+                'id': 'extend-expiry-tab',
+                'tooltip': 'Extend Expiry',
+                'icon': 'AssetsExpired',
+                'title': 'Extend Expiry',
+                'contentUrl': '/#extend-expiry-tab',
+              },
             ];
           },
         },
