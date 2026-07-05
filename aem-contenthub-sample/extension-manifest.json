@@ -1,0 +1,20 @@
+{
+  "name": "Sample Extension",
+  "id": "sample-extension",
+  "description": "Sample Extension for Content Hub (assetDetails, card, selectionBar)",
+  "version": "0.0.1",
+  "assetDetailsTabPanels": [
+    {
+      "tooltip": "Asset Details Tab",
+      "title": "Asset Details Tab",
+      "icon": "Extension",
+      "id": "asset-details-tab",
+      "componentName": "TabPanel"
+    }
+  ],
+  "runtimeActions": [
+    {
+      "name": "generic"
+    }
+  ]
+}

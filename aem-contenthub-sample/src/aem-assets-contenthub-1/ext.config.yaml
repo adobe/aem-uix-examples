@@ -8,7 +8,7 @@ hooks:
   post-app-deploy: ./hooks/post-deploy.js
 runtimeManifest:
   packages:
-    aem-contenthub-assets-details-1:
+    aem-assets-contenthub-1:
       license: Apache-2.0
       actions:
         generic:
@@ -17,7 +17,6 @@ runtimeManifest:
           runtime: nodejs:22
           inputs:
             LOG_LEVEL: debug
-            API_ENDPOINT: $API_ENDPOINT
           annotations:
             require-adobe-auth: false
             final: true

@@ -10,7 +10,7 @@ const fetch = require('node-fetch')
 const namespace = Config.get('runtime.namespace')
 const hostname = Config.get('cna.hostname') || 'adobeioruntime.net'
 const packagejson = JSON.parse(fs.readFileSync('package.json').toString())
-const runtimePackage = 'aem-contenthub-assets-details-1'
+const runtimePackage = 'aem-assets-contenthub-1'
 const actionUrl = `https://${namespace}.${hostname}/api/v1/web/${runtimePackage}/generic`
 
 // The deployed actions are secured with the `require-adobe-auth` annotation.

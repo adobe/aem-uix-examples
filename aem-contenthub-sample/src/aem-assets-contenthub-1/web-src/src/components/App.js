@@ -3,10 +3,12 @@
  */
 
 import React from 'react';
-import ErrorBoundary from 'react-error-boundary';
+import { ErrorBoundary } from 'react-error-boundary';
 import { HashRouter as Router, Routes, Route } from 'react-router-dom';
 import ExtensionRegistration from './ExtensionRegistration';
-import PanelAssetDetailsExtensionTab from './PanelAssetDetailsExtensionTab';
+import TabPanel from './TabPanel';
+import CardActionModal from './CardActionModal';
+import SelectionBarModal from './SelectionBarModal';
 
 function App() {
   return (
@@ -14,20 +16,20 @@ function App() {
       <ErrorBoundary onError={onError} FallbackComponent={fallbackComponent}>
         <Routes>
           <Route index element={<ExtensionRegistration />} />
-          <Route exact path="index.html" element={<ExtensionRegistration />} />
-          <Route path="asset-details-extension-tab" element={<PanelAssetDetailsExtensionTab />} />
-          // YOUR CUSTOM ROUTES SHOULD BE HERE
+          <Route path="index.html" element={<ExtensionRegistration />} />
+          {/* assetDetails namespace */}
+          <Route path="extension-template" element={<TabPanel />} />
+          {/* card namespace */}
+          <Route path="card-action-modal" element={<CardActionModal />} />
+          {/* selectionBar namespace */}
+          <Route path="selection-bar-modal" element={<SelectionBarModal />} />
         </Routes>
       </ErrorBoundary>
     </Router>
   );
 
-  // Methods
-
-  // error handler on UI rendering failure
   function onError(e, componentStack) {}
 
-  // component to show if UI fails rendering
   function fallbackComponent({ componentStack, error }) {
     return (
       <React.Fragment>
