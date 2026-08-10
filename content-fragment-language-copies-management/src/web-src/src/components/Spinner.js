@@ -10,16 +10,22 @@
  * governing permissions and limitations under the License.
  */
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
   Flex,
   ProgressCircle,
 } from '@adobe/react-spectrum';
+import { announce } from "@react-aria/live-announcer";
 
 /**
  * @param props
  */
 export default function Spinner (props) {
+
+  useEffect(() => {
+    announce("Loading…", "polite");
+  },[]);
+
   return (
     <Flex alignItems="center" justifyContent="center" height="50vh">
       <ProgressCircle size="L" aria-label="Loading…" isIndeterminate />
