@@ -48,9 +48,7 @@ function ExtensionRegistration() {
         card: {
           getActionButtons(actionContext) {
             // YOUR CARD ACTION BUTTONS CODE SHOULD BE HERE
-            // actionContext.context tells you which surface the button renders on
-            // (SourceType.ASSETS / COLLECTION / COLLECTIONS / LINK_SHARE), so the
-            // button can differ for asset cards vs collection tiles.
+            // context is SourceType.ASSETS (asset cards) or SourceType.COLLECTIONS (collection tiles).
             const { context } = actionContext || {};
             return [
               {

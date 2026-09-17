@@ -4,15 +4,13 @@
 
 export const extensionId = 'sample-extension';
 
-// Mirrors Content Hub's SourceType — the value the host passes as `actionContext.context`.
+// Values the host passes as actionContext.context on card actions.
 export const SourceType = {
   ASSETS: 'assets',
-  COLLECTION: 'collection',
   COLLECTIONS: 'collections',
-  LINK_SHARE: 'share',
 };
 
-// Mirrors Content Hub's ResourceType — the value the host passes as `resourceType` in onActionClick.
+// Values the host passes as resourceType in card onActionClick.
 export const ResourceType = {
   ASSET: 'asset',
   COLLECTION: 'collection',
