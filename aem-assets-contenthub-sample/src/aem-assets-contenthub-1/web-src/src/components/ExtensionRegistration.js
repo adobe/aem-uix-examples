@@ -5,7 +5,7 @@
 import React from 'react';
 import { Text } from '@adobe/react-spectrum';
 import { register } from '@adobe/uix-guest';
-import { extensionId } from './Constants';
+import { extensionId, SourceType } from './Constants';
 
 const allowedRepos = ['your-repo-name'];
 
@@ -46,12 +46,16 @@ function ExtensionRegistration() {
           },
         },
         card: {
-          getActionButtons() {
+          getActionButtons(actionContext) {
             // YOUR CARD ACTION BUTTONS CODE SHOULD BE HERE
+            // actionContext.context tells you which surface the button renders on
+            // (SourceType.ASSETS / COLLECTION / COLLECTIONS / LINK_SHARE), so the
+            // button can differ for asset cards vs collection tiles.
+            const { context } = actionContext || {};
             return [
               {
                 'id': 'customId',
-                'label': 'Custom label',
+                'label': context === SourceType.COLLECTIONS ? 'Collection label' : 'Asset label',
                 'icon': 'Form',
               },
             ];
