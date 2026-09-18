@@ -32,6 +32,7 @@ Here is the list of examples:
 - [Slack Integration for Content Fragment management](./slack-content-fragment-admin/)
 - [Workfront Task Management for Universal Editor](./universal-editor-task-management/)
 - [AEM Content Hub Asset Details](./aem-contenthub-assets-details-sample/)
+- [AEM Content Hub Extension Sample (assetDetails, card, selectionBar)](./aem-assets-contenthub-sample/)
 
 ## Deployment
 Each example has its own GitHub Actions deployment file that should be used as a starting point for individual extensions.

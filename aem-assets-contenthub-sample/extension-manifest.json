@@ -1,0 +1,36 @@
+{
+  "name": "Sample Extension",
+  "id": "sample-extension",
+  "description": "Sample Extension for Content Hub (assetDetails, card, selectionBar)",
+  "version": "0.0.1",
+  "assetDetailsTabPanels": [
+    {
+      "tooltip": "Asset Details Extension Tab",
+      "title": "Asset Details Extension Tab",
+      "icon": "Extension",
+      "id": "asset-details-extension-tab",
+      "componentName": "PanelAssetDetailsExtensionTab"
+    }
+  ],
+  "cardActions": [
+    {
+      "id": "customId",
+      "label": "Custom label",
+      "icon": "Form",
+      "componentName": "CardActionModal"
+    }
+  ],
+  "selectionBarActions": [
+    {
+      "id": "customId",
+      "label": "Custom label",
+      "icon": "Form",
+      "componentName": "SelectionBarModal"
+    }
+  ],
+  "runtimeActions": [
+    {
+      "name": "generic"
+    }
+  ]
+}
