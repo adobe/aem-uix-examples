@@ -1,0 +1,35 @@
+{
+  "name": "universal-editor-domain-button-sample",
+  "version": "0.0.1",
+  "private": true,
+  "dependencies": {
+    "@adobe/aio-sdk": "^5",
+    "@adobe/exc-app": "^0.2.21",
+    "@adobe/react-spectrum": "^3.4.0",
+    "@adobe/uix-guest": "1.1.8",
+    "@spectrum-icons/workflow": "^3.2.0",
+    "core-js": "^3.6.4",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "react-error-boundary": "^1.2.5",
+    "react-router-dom": "^6.3.0",
+    "regenerator-runtime": "^0.13.5"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.8.7",
+    "@babel/plugin-transform-react-jsx": "^7.8.3",
+    "@babel/polyfill": "^7.8.7",
+    "@babel/preset-env": "^7.8.7",
+    "eslint": "^8",
+    "jest": "^27.2.4"
+  },
+  "scripts": {
+    "test": "jest --passWithNoTests ./test",
+    "lint": "eslint --ignore-pattern web-src --no-error-on-unmatched-pattern src",
+    "transform:yaml-to-json": "node node_modules/@adobe/uix-guest/scripts/generate-metadata.js"
+  },
+  "description": "Universal Editor extension that adds a header menu action button with domain-based visibility control",
+  "engines": {
+    "node": ">=18"
+  }
+}
