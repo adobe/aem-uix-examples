@@ -1,0 +1,18 @@
+{
+  "version": "v1",
+  "packages": {
+    "@adobe/uix-host": {
+      "signature": "9b851b43c3700718637d462a5be11a4d",
+      "file": true
+    },
+    "@adobe/uix-guest": {
+      "signature": "97be6114e9f63ec7a1e06e2b9f548c8e",
+      "file": true,
+      "replaced": "^0.10.3"
+    },
+    "@adobe/uix-host-react": {
+      "signature": "f4ff6dc6abf1d342873b58abde03c994",
+      "file": true
+    }
+  }
+}
