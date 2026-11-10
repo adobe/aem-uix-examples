@@ -7,6 +7,7 @@ import ErrorBoundary from 'react-error-boundary';
 import { HashRouter as Router, Routes, Route } from 'react-router-dom';
 import ExtensionRegistration from './ExtensionRegistration';
 import PanelAssetDetailsExtensionTab from './PanelAssetDetailsExtensionTab';
+import PanelExtendExpiryTab from './PanelExtendExpiryTab';
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
           <Route index element={<ExtensionRegistration />} />
           <Route exact path="index.html" element={<ExtensionRegistration />} />
           <Route path="asset-details-extension-tab" element={<PanelAssetDetailsExtensionTab />} />
+          <Route path="extend-expiry-tab" element={<PanelExtendExpiryTab />} />
           // YOUR CUSTOM ROUTES SHOULD BE HERE
         </Routes>
       </ErrorBoundary>
