@@ -42,6 +42,13 @@ function ExtensionRegistration() {
                 'title': 'Asset Details Extension Tab',
                 'contentUrl': '/#asset-details-extension-tab',
               },
+              {
+                'id': 'workfront-extension-tab',
+                'tooltip': 'Workfront Extension Tab',
+                'icon': 'Edit',
+                'title': 'Workfront Extension Tab',
+                'contentUrl': '/#workfront-extension-tab',
+              },
             ];
           },
         },
