@@ -1,0 +1,21 @@
+operations:
+  view:
+    - type: web
+      impl: index.html
+web: web-src
+hooks:
+  post-app-deploy: ./hooks/post-deploy.js
+runtimeManifest:
+  packages:
+    aem-assets-assetsview-1:
+      license: Apache-2.0
+      actions:
+        inbox:
+          function: actions/core/inbox/index.js
+          web: 'yes'
+          runtime: nodejs:22
+          inputs:
+            LOG_LEVEL: debug
+          annotations:
+            require-adobe-auth: false
+            web-export: true
